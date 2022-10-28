@@ -21,6 +21,11 @@ project("Cader")
 		"Include/"
 	}
 
+	removefiles{
+		"Source/**/Platform/**.h",
+		"Source/**/Platform/**.cpp"
+	}
+
 	filter("configurations:Debug")
 		optimize("Off")
 		symbols("On")
@@ -46,4 +51,10 @@ project("Cader")
 		defines{
 			"NDEBUG",
 			"CDR_FINAL"
+		}
+
+	filter("system:Windows")
+		files{
+			"Source/**/Platform/Win/**.h",
+			"Source/**/Platform/Win/**.cpp"
 		}
