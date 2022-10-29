@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Cader/Core/ProjectSettings.h"
+
 namespace CDR {
 
 	int Main();
@@ -10,6 +12,7 @@ namespace CDR {
 
 		static inline Engine* sEngine;
 
+		ProjectSettings mProjectSettings;
 		bool mRunning = true;
 
 		Engine();
