@@ -2,9 +2,9 @@
 
 using namespace CDR;
 
-void Project::Setup(ProjectSettings& pSettings)
+void Project::Setup(ProjectSettings& pProjectSettings, StartupSettings& pStartupSettings)
 {
-	pSettings.title = "Playground";
+	pProjectSettings.title = "Playground";
 }
 
 void Project::Init()

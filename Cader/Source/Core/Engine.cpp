@@ -1,6 +1,8 @@
 #include "Cader/Core/Engine.h"
 
 #include "Cader/Core/Project.h"
+#include "Cader/Core/StartupSettings.h"
+#include "Cader/Window/Window.h"
 
 namespace CDR {
 
@@ -8,13 +10,22 @@ namespace CDR {
 	{
 		sEngine = this;
 
-		Project::Setup(mProjectSettings);
+		StartupSettings startupSettings;
+		Project::Setup(mProjectSettings, startupSettings);
+
+		mWindow = new Window(mProjectSettings.title, startupSettings);
+
 		Project::Init();
+
+		mWindow->Show();
 	}
 
 	Engine::~Engine()
 	{
 		Project::PreCleanup();
+
+		delete mWindow;
+
 		Project::Cleanup();
 	}
 
@@ -22,7 +33,15 @@ namespace CDR {
 	{
 		while(mRunning)
 		{
-			Project::Update();
+			if(!mWindow->IsFocused())
+			{
+				mWindow->WaitEvents();
+			}
+			else
+			{
+				mWindow->PollEvents();
+				Project::Update();
+			}
 		}
 	}
 

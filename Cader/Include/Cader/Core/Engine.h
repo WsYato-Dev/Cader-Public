@@ -6,6 +6,8 @@ namespace CDR {
 
 	int Main();
 
+	class Window;
+
 	class Engine final
 	{
 		friend int Main();
@@ -13,6 +15,8 @@ namespace CDR {
 		static inline Engine* sEngine;
 
 		ProjectSettings mProjectSettings;
+		Window* mWindow = nullptr;
+
 		bool mRunning = true;
 
 		Engine();
@@ -21,9 +25,12 @@ namespace CDR {
 		void Loop();
 
 	public:
+		void Quit();
+
 		static inline Engine& Get() { return *sEngine; }
 
-		void Quit();
+		inline const ProjectSettings& GetProjectSettings() const noexcept { return mProjectSettings; }
+		inline Window* GetWindow() const noexcept { return mWindow; }
 	};
 
 }

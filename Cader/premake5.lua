@@ -1,3 +1,5 @@
+include("external")
+
 project("Cader")
 	kind("StaticLib")
 	language("C++")
@@ -17,13 +19,18 @@ project("Cader")
 		"Source/**.cpp"
 	}
 
-	includedirs{
-		"Include/"
-	}
-
 	removefiles{
 		"Source/**/Platform/**.h",
 		"Source/**/Platform/**.cpp"
+	}
+
+	includedirs{
+		"Include/",
+		"%{glfw.Include}"
+	}
+
+	links{
+		"%{glfw.Lib}"
 	}
 
 	filter("configurations:Debug")

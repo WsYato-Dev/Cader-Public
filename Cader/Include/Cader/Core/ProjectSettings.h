@@ -1,10 +1,12 @@
 #pragma once
 
+#include "Cader/Types/Common.h"
+
 namespace CDR {
 
 	struct ProjectSettings final
 	{
-		const char* title = "";
+		Text title = "";
 	};
 
 }
