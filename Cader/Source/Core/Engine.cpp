@@ -2,6 +2,7 @@
 
 #include "Cader/Core/Project.h"
 #include "Cader/Core/StartupSettings.h"
+#include "Cader/Core/Time.h"
 #include "Cader/Window/Window.h"
 
 namespace CDR {
@@ -15,6 +16,7 @@ namespace CDR {
 
 		mWindow = new Window(mProjectSettings.title, startupSettings);
 
+		Time::Init();
 		Project::Init();
 
 		mWindow->Show();
@@ -39,6 +41,8 @@ namespace CDR {
 			}
 			else
 			{
+				Time::Update();
+
 				mWindow->PollEvents();
 				Project::Update();
 			}
