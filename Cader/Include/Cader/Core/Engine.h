@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Cader/Core/ProjectSettings.h"
+#include "Cader/Window/EventSystem.h"
 
 namespace CDR {
 
@@ -15,6 +16,8 @@ namespace CDR {
 		static inline Engine* sEngine;
 
 		ProjectSettings mProjectSettings;
+		EventSystem mEventSystem;
+
 		Window* mWindow = nullptr;
 
 		bool mRunning = true;
@@ -23,6 +26,7 @@ namespace CDR {
 		~Engine();
 
 		void Loop();
+		void HandleEvents();
 
 	public:
 		void Quit();

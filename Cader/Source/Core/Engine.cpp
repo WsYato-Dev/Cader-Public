@@ -3,6 +3,7 @@
 #include "Cader/Core/Project.h"
 #include "Cader/Core/StartupSettings.h"
 #include "Cader/Core/Time.h"
+#include "Cader/Types/Common.h"
 #include "Cader/Window/Window.h"
 
 namespace CDR {
@@ -14,7 +15,7 @@ namespace CDR {
 		StartupSettings startupSettings;
 		Project::Setup(mProjectSettings, startupSettings);
 
-		mWindow = new Window(mProjectSettings.title, startupSettings);
+		mWindow = new Window(mEventSystem, mProjectSettings.title, startupSettings);
 
 		Time::Init();
 		Project::Init();
@@ -38,15 +39,39 @@ namespace CDR {
 			if(!mWindow->IsFocused())
 			{
 				mWindow->WaitEvents();
+				HandleEvents();
 			}
 			else
 			{
-				Time::Update();
-
 				mWindow->PollEvents();
+				HandleEvents();
+
+				Time::Update();
 				Project::Update();
 			}
 		}
+	}
+
+	void Engine::HandleEvents()
+	{
+		if(mEventSystem.IsEmpty())
+			return;
+
+		for(u8 i = 0; i < mEventSystem.Count(); i++)
+		{
+			const Event e = mEventSystem.GetEvent(i);
+
+			switch(e.type)
+			{
+				case EEventType::WindowClose: Quit(); break;
+				case EEventType::WindowMinimize: break;
+				case EEventType::WindowFocus: break;
+				case EEventType::WindowResize: break;
+				default: break;
+			}
+		}
+
+		mEventSystem.Release();
 	}
 
 	void Engine::Quit()
