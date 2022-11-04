@@ -1,4 +1,8 @@
+#include <Cader/Core/Engine.h>
 #include <Cader/Core/Project.h>
+#include <Cader/Core/ProjectSettings.h>
+#include <Cader/Core/StartupSettings.h>
+#include <Cader/Window/Input.h>
 
 using namespace CDR;
 
@@ -11,7 +15,10 @@ void Project::Init()
 {}
 
 void Project::Update()
-{}
+{
+	if(Input::KeyDown(EKeyCode::Escape))
+		Engine::Get().Quit();
+}
 
 void Project::PreCleanup()
 {}

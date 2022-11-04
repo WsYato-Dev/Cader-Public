@@ -7,18 +7,20 @@ namespace CDR {
 
 	int Main();
 
+	class Input;
 	class Window;
 
 	class Engine final
 	{
 		friend int Main();
 
-		static inline Engine* sEngine;
+		static Engine* sEngine;
 
 		ProjectSettings mProjectSettings;
 		EventSystem mEventSystem;
 
-		Window* mWindow = nullptr;
+		Window* mWindow;
+		Input* mInput;
 
 		bool mRunning = true;
 

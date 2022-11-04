@@ -1,13 +1,15 @@
 #pragma once
 
 #include "Cader/Types/Common.h"
+#include "Cader/Window/InputInfo.h"
 
 namespace CDR {
 
 	enum class EEventType: u8
 	{
 		None = 0,
-		WindowClose, WindowMinimize, WindowFocus, WindowResize
+		WindowClose, WindowMinimize, WindowFocus, WindowResize,
+		Key, MouseButton, MousePosition, MouseScroll
 	};
 
 	struct Event final
@@ -16,19 +18,28 @@ namespace CDR {
 
 		union
 		{
-			bool minimized;
-			bool focused;
+			struct {} initializer = {};
+
+			bool windowMinimized;
+			bool windowFocused;
 
 			struct
 			{
 				u16 width;
 				u16 height;
-			} size;
+			} windowSize;
+
+			Key key;
+			MouseButton mouseButton;
+			MousePosition mousePosition;
+			i8 mouseScroll;
 		};
 
-		Event() = default;
-		
-		Event(EEventType pType)
+		constexpr Event()
+			: type(EEventType::None)
+		{}
+
+		constexpr Event(EEventType pType)
 			: type(pType)
 		{}
 	};

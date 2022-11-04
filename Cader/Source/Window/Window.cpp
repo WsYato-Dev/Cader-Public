@@ -1,6 +1,7 @@
 #include "Cader/Window/Window.h"
 
 #include "Cader/Window/Event.h"
+#include "Cader/Window/EventSystem.h"
 
 #include <assert.h>
 
@@ -8,9 +9,8 @@
 
 namespace CDR {
 
-	Window::Window(EventSystem& pEventSystem, Text pTitle, const StartupSettings& pStartupSettings)
-		: mEventSystem(pEventSystem)
-		, mTitle(pTitle)
+	Window::Window(Text pTitle, const StartupSettings& pStartupSettings)
+		: mTitle(pTitle)
 		, mMode(pStartupSettings.windowMode)
 	{
 		glfwInit();
@@ -69,10 +69,8 @@ namespace CDR {
 	{
 		glfwSetWindowCloseCallback(mWindow, [](GLFWwindow* pWindow)
 		{
-			const Window& user = *(Window*)glfwGetWindowUserPointer(pWindow);
-
 			Event e(EEventType::WindowClose);
-			user.mEventSystem.FireEvent(e, true);
+			EventSystem::FireEvent(e, true);
 		});
 
 		glfwSetWindowSizeCallback(mWindow, [](GLFWwindow* pWindow, int pWidth, int pHeight)
@@ -84,16 +82,16 @@ namespace CDR {
 				user.mMinimized = true;
 
 				Event e(EEventType::WindowMinimize);
-				e.minimized = true;
-				user.mEventSystem.FireEvent(e);
+				e.windowMinimized = true;
+				EventSystem::FireEvent(e);
 			}
 			else if(user.mMinimized)
 			{
 				user.mMinimized = false;
 
 				Event e(EEventType::WindowMinimize);
-				e.minimized = false;
-				user.mEventSystem.FireEvent(e);
+				e.windowMinimized = false;
+				EventSystem::FireEvent(e);
 			}
 			else
 			{
@@ -108,8 +106,8 @@ namespace CDR {
 			user.mFocused = pFocused;
 
 			Event e(EEventType::WindowFocus);
-			e.focused = pFocused;
-			user.mEventSystem.FireEvent(e);
+			e.windowFocused = pFocused;
+			EventSystem::FireEvent(e);
 		});
 	}
 
@@ -122,10 +120,9 @@ namespace CDR {
 		mSize.height = (u16)height;
 
 		Event e(EEventType::WindowResize);
-		e.size.width = mSize.width;
-		e.size.height = mSize.height;
-		mEventSystem.FireEvent(e);
-		
+		e.windowSize = {mSize.width, mSize.height};
+		EventSystem::FireEvent(e);
+
 		mResized = false;
 	}
 

@@ -29,7 +29,8 @@ namespace CDR {
 
 		sLastTickTimePoint = currentTimePoint;
 
-		// Temporary. This is to limit the cpu usage
+		// Temporary. This is to limit the cpu usage.
+		// This is also to get the correct delta for now. If the fps is higher than 1000, the delta will be 0 because it is milliseconds. Using microseconds will be very inefficient.
 		std::this_thread::sleep_for(std::chrono::milliseconds(1));
 	}
 }

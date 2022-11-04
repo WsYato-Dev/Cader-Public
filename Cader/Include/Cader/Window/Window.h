@@ -2,7 +2,6 @@
 
 #include "Cader/Core/StartupSettings.h"
 #include "Cader/Types/Common.h"
-#include "Cader/Window/EventSystem.h"
 #include "Cader/Window/WindowSettings.h"
 
 struct GLFWwindow;
@@ -15,8 +14,6 @@ namespace CDR {
 	{
 		friend Engine;
 
-		EventSystem& mEventSystem;
-
 		GLFWwindow* mWindow = nullptr;
 
 		Text mTitle;
@@ -27,7 +24,7 @@ namespace CDR {
 		bool mFocused = true;
 		bool mResized = false;
 
-		Window(EventSystem& pEventSystem, Text pTitle, const StartupSettings& pStartupSettings);
+		Window(Text pTitle, const StartupSettings& pStartupSettings);
 		~Window();
 
 		void SetCallbacks();

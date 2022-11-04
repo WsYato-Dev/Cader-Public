@@ -4,28 +4,31 @@
 
 namespace CDR {
 
+	Event EventSystem::sEvents[MaxEvents] = {};
+	u8 EventSystem::sCount = 0;
+
 	void EventSystem::FireEvent(Event pEvent, bool pPriority)
 	{
-		if(mCount >= MaxEvents)
+		if(sCount >= MaxEvents)
 		{
 			if(pPriority)
-				mEvents[0] = pEvent;
+				sEvents[0] = pEvent;
 
 			return;
 		}
 
-		mEvents[mCount++] = pEvent;
+		sEvents[sCount++] = pEvent;
 	}
 
 	Event EventSystem::GetEvent(u8 pIndex)
 	{
-		assert(pIndex < mCount);
-		return mEvents[pIndex];
+		assert(pIndex < sCount);
+		return sEvents[pIndex];
 	}
 
 	void EventSystem::Release()
 	{
-		mCount = 0;
+		sCount = 0;
 	}
 
 }

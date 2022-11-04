@@ -4,9 +4,12 @@
 #include "Cader/Core/StartupSettings.h"
 #include "Cader/Core/Time.h"
 #include "Cader/Types/Common.h"
+#include "Cader/Window/Input.h"
 #include "Cader/Window/Window.h"
 
 namespace CDR {
+
+	Engine* Engine::sEngine;
 
 	Engine::Engine()
 	{
@@ -15,7 +18,8 @@ namespace CDR {
 		StartupSettings startupSettings;
 		Project::Setup(mProjectSettings, startupSettings);
 
-		mWindow = new Window(mEventSystem, mProjectSettings.title, startupSettings);
+		mWindow = new Window(mProjectSettings.title, startupSettings);
+		mInput = new Input(mWindow);
 
 		Time::Init();
 		Project::Init();
@@ -27,6 +31,7 @@ namespace CDR {
 	{
 		Project::PreCleanup();
 
+		delete mInput;
 		delete mWindow;
 
 		Project::Cleanup();
@@ -48,6 +53,8 @@ namespace CDR {
 
 				Time::Update();
 				Project::Update();
+
+				mInput->Update();
 			}
 		}
 	}
@@ -64,9 +71,6 @@ namespace CDR {
 			switch(e.type)
 			{
 				case EEventType::WindowClose: Quit(); break;
-				case EEventType::WindowMinimize: break;
-				case EEventType::WindowFocus: break;
-				case EEventType::WindowResize: break;
 				default: break;
 			}
 		}

@@ -5,23 +5,27 @@
 
 namespace CDR {
 
+	class Engine;
+
 	class EventSystem final
 	{
+		friend Engine;
+
 	public:
 		static constexpr u8 MaxEvents = 5;
 
 	private:
-		Event mEvents[MaxEvents];
-		u8 mCount = 0;
+		static Event sEvents[MaxEvents];
+		static u8 sCount;
 
-	public:
-		void FireEvent(Event pEvent, bool pPriority = false);
 		Event GetEvent(u8 pIndex);
-
 		void Release();
 
-		inline u8 Count() const noexcept { return mCount; }
-		inline bool IsEmpty() const noexcept { return mCount <= 0; }
+	public:
+		static void FireEvent(Event pEvent, bool pPriority = false);
+
+		static inline u8 Count() noexcept { return sCount; }
+		static inline bool IsEmpty() noexcept { return sCount <= 0; }
 	};
 
 }
