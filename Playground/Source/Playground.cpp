@@ -16,7 +16,7 @@ void Project::Init()
 
 void Project::Update()
 {
-	if(Input::KeyDown(EKeyCode::Escape))
+	if(Input::GetKeyDown(EKeyCode::Escape))
 		Engine::Get().Quit();
 }
 

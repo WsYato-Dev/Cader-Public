@@ -24,7 +24,7 @@ namespace CDR {
 		else
 			mSize = {1280, 720};
 
-		switch(mMode)
+		switch(pStartupSettings.windowMode)
 		{
 			case EWindowMode::Windowed:
 			{
@@ -152,8 +152,8 @@ namespace CDR {
 		if(mTitle == pTitle)
 			return;
 
-		mTitle = pTitle;
 		glfwSetWindowTitle(mWindow, pTitle);
+		mTitle = pTitle;
 	}
 
 	void Window::SetSize(WindowSize pSize)
@@ -161,8 +161,8 @@ namespace CDR {
 		if(mSize == pSize || mMode != EWindowMode::Windowed)
 			return;
 
-		mSize = pSize;
 		glfwSetWindowSize(mWindow, pSize.width, pSize.height);
+		mSize = pSize;
 	}
 
 	void Window::SetMode(EWindowMode pMode)
@@ -172,8 +172,6 @@ namespace CDR {
 
 		if(mMode == EWindowMode::Fullscreen)
 			glfwSetWindowMonitor(mWindow, nullptr, 100, 100, mSize.width, mSize.height, GLFW_DONT_CARE);
-
-		mMode = pMode;
 
 		switch(pMode)
 		{
@@ -195,6 +193,8 @@ namespace CDR {
 				break;
 			}
 		}
+
+		mMode = pMode;
 	}
 
 }

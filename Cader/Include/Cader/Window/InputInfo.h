@@ -63,6 +63,13 @@ namespace CDR {
 		Released, Pressed, Repeated
 	};
 
+	enum class EInputMode: u8
+	{
+		Default = 0,
+		Hidded,
+		Locked
+	};
+
 	struct Key final
 	{
 		EKeyCode keyCode = EKeyCode::None;

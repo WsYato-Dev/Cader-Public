@@ -12,6 +12,8 @@ namespace CDR {
 	{
 		friend Engine;
 
+		static EInputMode sInputMode;
+
 		static EInputState sKeyStates[(i8)EKeyCode::Count];
 		static EInputState sMouseButtonStates[(i8)EMouseButton::Count];
 
@@ -22,16 +24,19 @@ namespace CDR {
 		void Update();
 
 	public:
-		static inline bool KeyDown(EKeyCode pKeyCode) noexcept { return sKeyStates[(i8)pKeyCode] == EInputState::Pressed; }
-		static inline bool Key(EKeyCode pKeyCode) noexcept { return (u8)sKeyStates[(i8)pKeyCode] > (u8)EInputState::Released; }
-		static inline bool KeyUp(EKeyCode pKeyCode) noexcept { return sKeyStates[(i8)pKeyCode] == EInputState::Released; }
+		static void SetInputMode(EInputMode pInputMode);
+		static inline EInputMode GetInputMode() noexcept { return sInputMode; }
 
-		static inline bool MouseButtonDown(EMouseButton pButton) noexcept { return sMouseButtonStates[(i8)pButton] == EInputState::Pressed; }
-		static inline bool MouseButton(EMouseButton pButton) noexcept { return (u8)sMouseButtonStates[(i8)pButton] > (u8)EInputState::Released; }
-		static inline bool MouseButtonUp(EMouseButton pButton) noexcept { return sMouseButtonStates[(i8)pButton] == EInputState::Released; }
+		static inline bool GetKeyDown(EKeyCode pKeyCode) noexcept { return sKeyStates[(i8)pKeyCode] == EInputState::Pressed; }
+		static inline bool GetKey(EKeyCode pKeyCode) noexcept { return (u8)sKeyStates[(i8)pKeyCode] > (u8)EInputState::Released; }
+		static inline bool GetKeyUp(EKeyCode pKeyCode) noexcept { return sKeyStates[(i8)pKeyCode] == EInputState::Released; }
 
-		static inline MousePosition MousePosition() noexcept { return sMousePosition; }
-		static inline i8 MouseScroll() noexcept { return sMouseScroll; }
+		static inline bool GetMouseButtonDown(EMouseButton pButton) noexcept { return sMouseButtonStates[(i8)pButton] == EInputState::Pressed; }
+		static inline bool GetMouseButton(EMouseButton pButton) noexcept { return (u8)sMouseButtonStates[(i8)pButton] > (u8)EInputState::Released; }
+		static inline bool GetMouseButtonUp(EMouseButton pButton) noexcept { return sMouseButtonStates[(i8)pButton] == EInputState::Released; }
+
+		static inline MousePosition GetMousePosition() noexcept { return sMousePosition; }
+		static inline i8 GetMouseScroll() noexcept { return sMouseScroll; }
 	};
 
 }

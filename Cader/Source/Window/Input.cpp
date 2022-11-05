@@ -1,5 +1,6 @@
 #include "Cader/Window/Input.h"
 
+#include "Cader/Core/Engine.h"
 #include "Cader/Window/Event.h"
 #include "Cader/Window/EventSystem.h"
 #include "Cader/Window/Window.h"
@@ -137,6 +138,8 @@ namespace CDR {
 		}
 	}
 
+	EInputMode Input::sInputMode = EInputMode::Default;
+
 	EInputState Input::sKeyStates[(i8)EKeyCode::Count] = {};
 	EInputState Input::sMouseButtonStates[(i8)EMouseButton::Count] = {};
 
@@ -244,6 +247,36 @@ namespace CDR {
 				default: break;
 			}
 		}
+	}
+
+	void Input::SetInputMode(EInputMode pInputMode)
+	{
+		if(sInputMode == pInputMode)
+			return;
+
+		GLFWwindow* window = Engine::Get().GetWindow()->GetWindow();
+
+		switch(pInputMode)
+		{
+			case CDR::EInputMode::Default:
+			{
+				glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+				break;
+			}
+			case CDR::EInputMode::Hidded:
+			{
+				glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+				break;
+			}
+			case CDR::EInputMode::Locked:
+			{
+				glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+				break;
+			}
+			default: break;
+		}
+
+		sInputMode = pInputMode;
 	}
 
 }
