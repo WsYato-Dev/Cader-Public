@@ -44,7 +44,7 @@ namespace CDR {
 		inline WindowSize GetSize() const noexcept { return mSize; }
 		inline EWindowMode GetMode() const noexcept { return mMode; }
 
-		inline GLFWwindow* GetWindow() const noexcept { return mWindow; }
+		inline GLFWwindow* GetNativeWindow() const noexcept { return mWindow; }
 
 		inline bool IsFocused() const noexcept { return mFocused; }
 	};

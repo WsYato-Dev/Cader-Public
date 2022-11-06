@@ -3,6 +3,7 @@
 #include "Cader/Core/Project.h"
 #include "Cader/Core/StartupSettings.h"
 #include "Cader/Core/Time.h"
+#include "Cader/Graphics/Graphics.h"
 #include "Cader/Types/Common.h"
 #include "Cader/Window/Input.h"
 #include "Cader/Window/Window.h"
@@ -21,6 +22,8 @@ namespace CDR {
 		mWindow = new Window(mProjectSettings.title, startupSettings);
 		mInput = new Input(mWindow);
 
+		mGraphics = new Graphics(mWindow);
+
 		Time::Init();
 		Project::Init();
 
@@ -30,6 +33,8 @@ namespace CDR {
 	Engine::~Engine()
 	{
 		Project::PreCleanup();
+
+		delete mGraphics;
 
 		delete mInput;
 		delete mWindow;
@@ -71,6 +76,9 @@ namespace CDR {
 			switch(e.type)
 			{
 				case EEventType::WindowClose: Quit(); break;
+				case EEventType::WindowMinimize: mGraphics->OnWindowMinimize(e); break;
+				case EEventType::WindowResize: mGraphics->OnWindowResize(e); break;
+
 				default: break;
 			}
 		}

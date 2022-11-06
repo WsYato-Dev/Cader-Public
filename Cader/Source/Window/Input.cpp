@@ -148,7 +148,7 @@ namespace CDR {
 
 	Input::Input(Window* pWindow)
 	{
-		GLFWwindow* window = pWindow->GetWindow();
+		GLFWwindow* window = pWindow->GetNativeWindow();
 
 		glfwSetKeyCallback(window, [](GLFWwindow* pWindow, int pKey, int pScanCode, int pAction, int pMods)
 		{
@@ -254,7 +254,7 @@ namespace CDR {
 		if(sInputMode == pInputMode)
 			return;
 
-		GLFWwindow* window = Engine::Get().GetWindow()->GetWindow();
+		GLFWwindow* window = Engine::Get().GetWindow()->GetNativeWindow();
 
 		switch(pInputMode)
 		{

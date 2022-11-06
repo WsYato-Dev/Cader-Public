@@ -7,6 +7,7 @@ namespace CDR {
 
 	int Main();
 
+	class Graphics;
 	class Input;
 	class Window;
 
@@ -22,6 +23,8 @@ namespace CDR {
 		Window* mWindow;
 		Input* mInput;
 
+		Graphics* mGraphics;
+
 		bool mRunning = true;
 
 		Engine();
@@ -36,7 +39,9 @@ namespace CDR {
 		static inline Engine& Get() { return *sEngine; }
 
 		inline const ProjectSettings& GetProjectSettings() const noexcept { return mProjectSettings; }
+		
 		inline Window* GetWindow() const noexcept { return mWindow; }
+		inline Graphics* GetGraphics() const noexcept { return mGraphics; }
 	};
 
 }
