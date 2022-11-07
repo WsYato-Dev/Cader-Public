@@ -9,6 +9,7 @@ namespace CDR {
 
 	namespace VK {
 
+		class Device;
 		class Instance;
 
 	}
@@ -18,6 +19,7 @@ namespace CDR {
 		friend Engine;
 
 		VK::Instance* mInstance = nullptr;
+		VK::Device* mDevice = nullptr;
 
 		Graphics(Window* pWindow);
 		~Graphics();
