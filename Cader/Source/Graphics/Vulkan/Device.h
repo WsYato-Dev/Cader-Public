@@ -28,14 +28,14 @@ namespace CDR {
 
 			const Instance& mInstance;
 
-			VkPhysicalDevice mPhysicalDevice = nullptr;
+			VkPhysicalDevice mPhysicalDevice;
 			QueueIndicies mQueueIndicies = {};
 
-			VkDevice mDevice = nullptr;
+			VkDevice mDevice;
 
-			VkQueue mGraphicsQueue = nullptr;
-			VkQueue mPresentQueue = nullptr;
-			VkQueue mTransferQueue = nullptr;
+			VkQueue mGraphicsQueue;
+			VkQueue mPresentQueue;
+			VkQueue mTransferQueue;
 
 			Device(const Instance& pInstance);
 			~Device();

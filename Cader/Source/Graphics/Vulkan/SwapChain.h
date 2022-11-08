@@ -31,9 +31,10 @@ namespace CDR {
 
 			SwapChainStaticInfo mStaticInfo = {};
 
-			VkSwapchainKHR mSwapChain = nullptr;
+			VkSwapchainKHR mSwapChain;
 			std::vector<VkImage> mImages;
 			std::vector<VkImageView> mImageViews;
+			VkExtent2D mExtent;
 
 			bool mDestroyed = true;
 
@@ -49,9 +50,12 @@ namespace CDR {
 			void InitSwapChainImageViews();
 
 		public:
+			inline const SwapChainStaticInfo& GetStaticInfo() const noexcept { return mStaticInfo; }
+
 			inline const VkSwapchainKHR& GetSwapChain() const noexcept { return mSwapChain; }
 			inline const std::vector<VkImage>& GetImages() const noexcept { return mImages; }
 			inline const std::vector<VkImageView>& GetImagesViews() const noexcept { return mImageViews; }
+			inline VkExtent2D GetExtent() const noexcept { return mExtent; }
 		};
 
 	}

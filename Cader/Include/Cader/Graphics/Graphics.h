@@ -12,6 +12,7 @@ namespace CDR {
 		class Device;
 		class Instance;
 		class SwapChain;
+		class Sync;
 
 	}
 
@@ -22,6 +23,7 @@ namespace CDR {
 		VK::Instance* mInstance = nullptr;
 		VK::Device* mDevice = nullptr;
 		VK::SwapChain* mSwapChain = nullptr;
+		VK::Sync* mSync = nullptr;
 
 		Graphics(const Window& pWindow);
 		~Graphics();

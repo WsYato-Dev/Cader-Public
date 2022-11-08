@@ -7,6 +7,7 @@
 #include "Vulkan/Device.h"
 #include "Vulkan/Instance.h"
 #include "Vulkan/SwapChain.h"
+#include "Vulkan/Sync.h"
 
 namespace CDR {
 
@@ -15,12 +16,14 @@ namespace CDR {
 		mInstance = new VK::Instance(pWindow);
 		mDevice = new VK::Device(*mInstance);
 		mSwapChain = new VK::SwapChain(*mInstance, *mDevice);
+		mSync = new VK::Sync(*mDevice, *mSwapChain);
 	}
 
 	Graphics::~Graphics()
 	{
 		mDevice->WaitIdle();
 
+		delete mSync;
 		delete mSwapChain;
 		delete mDevice;
 		delete mInstance;

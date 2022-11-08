@@ -13,8 +13,8 @@ namespace CDR{
 		{
 			friend Graphics;
 
-			VkInstance mInstance = nullptr;
-			VkSurfaceKHR mSurface = nullptr;
+			VkInstance mInstance;
+			VkSurfaceKHR mSurface;
 
 			Instance(const Window& pWindow);
 			~Instance();

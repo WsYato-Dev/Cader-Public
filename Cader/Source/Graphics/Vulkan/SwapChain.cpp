@@ -82,10 +82,12 @@ namespace CDR::VK {
 
 	void SwapChain::InitSwapChain(u16 pWidth, u16 pHeight)
 	{
+		mExtent = {pWidth, pHeight};
+
 		VkSwapchainCreateInfoKHR swapChainInfo = {VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR};
 		swapChainInfo.surface = mInstance.GetSurface();
 
-		swapChainInfo.imageExtent = {pWidth, pHeight};
+		swapChainInfo.imageExtent = mExtent;
 		swapChainInfo.preTransform = VK_SURFACE_TRANSFORM_IDENTITY_BIT_KHR;
 
 		swapChainInfo.presentMode = VK_PRESENT_MODE_FIFO_KHR;
