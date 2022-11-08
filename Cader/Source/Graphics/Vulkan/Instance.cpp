@@ -41,7 +41,7 @@ namespace CDR::VK {
 		instanceInfo.enabledExtensionCount = extensionsCount;
 		instanceInfo.ppEnabledExtensionNames = extensions;
 
-	#if defined(CDR_DEBUG)
+	#if !defined(CDR_FINAL)
 
 		constexpr u8 requestedLayersCount = 1;
 		constexpr Text requestedLayers[requestedLayersCount]
