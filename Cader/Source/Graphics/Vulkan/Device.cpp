@@ -189,7 +189,7 @@ namespace CDR::VK {
 		deviceInfo.ppEnabledExtensionNames = RequiredExtensions;
 
 		i8 uniqueQueues[3];
-		u8 uniqueQueuesCount = mQueueIndicies.GetUniqueIndicies(uniqueQueues);
+		const u8 uniqueQueuesCount = mQueueIndicies.GetUniqueIndicies(uniqueQueues);
 
 		VkDeviceQueueCreateInfo queueCreateInfos[3] = {};
 

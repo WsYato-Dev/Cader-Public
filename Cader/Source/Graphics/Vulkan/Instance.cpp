@@ -12,7 +12,7 @@
 
 namespace CDR::VK {
 
-	Instance::Instance(Window* pWindow)
+	Instance::Instance(const Window& pWindow)
 	{
 		InitInstance();
 		InitSurface(pWindow);
@@ -85,9 +85,9 @@ namespace CDR::VK {
 		VK_VERIFY(vkCreateInstance(&instanceInfo, nullptr, &mInstance));
 	}
 
-	void Instance::InitSurface(Window* pWindow)
+	void Instance::InitSurface(const Window& pWindow)
 	{
-		GLFWwindow* window = pWindow->GetNativeWindow();
+		GLFWwindow* window = pWindow.GetNativeWindow();
 		VK_VERIFY(glfwCreateWindowSurface(mInstance, window, nullptr, &mSurface));
 	}
 

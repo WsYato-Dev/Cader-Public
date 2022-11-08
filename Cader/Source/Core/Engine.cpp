@@ -22,7 +22,7 @@ namespace CDR {
 		mWindow = new Window(mProjectSettings.title, startupSettings);
 		mInput = new Input(mWindow);
 
-		mGraphics = new Graphics(mWindow);
+		mGraphics = new Graphics(*mWindow);
 
 		Time::Init();
 		Project::Init();

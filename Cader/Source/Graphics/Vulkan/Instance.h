@@ -16,11 +16,11 @@ namespace CDR{
 			VkInstance mInstance = nullptr;
 			VkSurfaceKHR mSurface = nullptr;
 
-			Instance(Window* pWindow);
+			Instance(const Window& pWindow);
 			~Instance();
 
 			void InitInstance();
-			void InitSurface(Window* pWindow);
+			void InitSurface(const Window& pWindow);
 
 		public:
 			inline const VkInstance& GetInstance() const noexcept { return mInstance; }

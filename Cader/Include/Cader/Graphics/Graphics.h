@@ -11,6 +11,7 @@ namespace CDR {
 
 		class Device;
 		class Instance;
+		class SwapChain;
 
 	}
 
@@ -20,8 +21,9 @@ namespace CDR {
 
 		VK::Instance* mInstance = nullptr;
 		VK::Device* mDevice = nullptr;
+		VK::SwapChain* mSwapChain = nullptr;
 
-		Graphics(Window* pWindow);
+		Graphics(const Window& pWindow);
 		~Graphics();
 
 		void OnWindowMinimize(Event pEvent);
