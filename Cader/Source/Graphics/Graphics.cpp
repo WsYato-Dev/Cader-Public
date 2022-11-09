@@ -4,6 +4,7 @@
 #include "Cader/Window/Window.h"
 #include "Cader/Window/WindowSettings.h"
 
+#include "Vulkan/Commands.h"
 #include "Vulkan/Device.h"
 #include "Vulkan/Instance.h"
 #include "Vulkan/RenderPass.h"
@@ -19,12 +20,14 @@ namespace CDR {
 		mSwapChain = new VK::SwapChain(*mInstance, *mDevice);
 		mRenderPass = new VK::RenderPass(*mDevice, *mSwapChain);
 		mSync = new VK::Sync(*mDevice, *mSwapChain);
+		mCommands = new VK::Commands(*mDevice, *mSwapChain);
 	}
 
 	Graphics::~Graphics()
 	{
 		mDevice->WaitIdle();
 
+		delete mCommands;
 		delete mSync;
 		delete mRenderPass;
 		delete mSwapChain;

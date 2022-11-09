@@ -15,22 +15,22 @@ namespace CDR::VK {
 		VK_KHR_SWAPCHAIN_EXTENSION_NAME
 	};
 
-	bool QueueIndicies::IsComplete() const noexcept
+	bool QueueFamilyIndicies::IsComplete() const noexcept
 	{
-		return graphicsIndex >= 0 && presentIndex >= 0 && transferIndex >= 0;
+		return graphicsFamilyIndex >= 0 && presentFamilyIndex >= 0 && transferFamilyIndex >= 0;
 	}
 
-	u8 QueueIndicies::GetUniqueIndicies(i8 pIndicies[3]) const
+	u8 QueueFamilyIndicies::GetUniqueFamilyIndicies(i8 pIndicies[3]) const
 	{
 		u8 count = 0;
 
-		pIndicies[count++] = graphicsIndex;
+		pIndicies[count++] = graphicsFamilyIndex;
 
-		if(presentIndex != graphicsIndex)
-			pIndicies[count++] = presentIndex;
+		if(presentFamilyIndex != graphicsFamilyIndex)
+			pIndicies[count++] = presentFamilyIndex;
 
-		if(transferIndex != graphicsIndex)
-			pIndicies[count++] = transferIndex;
+		if(transferFamilyIndex != graphicsFamilyIndex)
+			pIndicies[count++] = transferFamilyIndex;
 
 		return count;
 	}
@@ -60,31 +60,31 @@ namespace CDR::VK {
 		{
 			u8 index = 0;
 			u8 score = 0;
-			QueueIndicies queueIndicies = {};
+			QueueFamilyIndicies queueFamilyIndicies = {};
 		};
 
 		PhysicalDeviceRating physicalDeviceRating;
 
 		for(u8 i = 0; i < (u8)physicalDevicesCount; i++)
 		{
-			QueueIndicies queueIndicies;
-			const u8 score = RatePhysicalDevice(physicalDevices[i], queueIndicies);
+			QueueFamilyIndicies queueFamilyIndicies;
+			const u8 score = RatePhysicalDevice(physicalDevices[i], queueFamilyIndicies);
 
 			if(score > physicalDeviceRating.score)
 			{
 				physicalDeviceRating.index = i;
 				physicalDeviceRating.score = score;
-				physicalDeviceRating.queueIndicies = queueIndicies;
+				physicalDeviceRating.queueFamilyIndicies = queueFamilyIndicies;
 			}
 		}
 
 		assert(physicalDeviceRating.score);
 
 		mPhysicalDevice = physicalDevices[physicalDeviceRating.index];
-		mQueueIndicies = physicalDeviceRating.queueIndicies;
+		mQueueFamilyIndicies = physicalDeviceRating.queueFamilyIndicies;
 	}
 
-	u8 Device::RatePhysicalDevice(const VkPhysicalDevice& pPhysicalDevice, QueueIndicies& pQueueIndicies) const
+	u8 Device::RatePhysicalDevice(const VkPhysicalDevice& pPhysicalDevice, QueueFamilyIndicies& pQueueFamilyIndicies) const
 	{
 		u32 score = 0;
 
@@ -125,45 +125,45 @@ namespace CDR::VK {
 
 		for(u8 i = 0; i < (u8)queueFamilyPropertiesCount; i++)
 		{
-			if(pQueueIndicies.graphicsIndex < 0 && queueFamilyProperties[i].queueFlags & VK_QUEUE_GRAPHICS_BIT)
+			if(pQueueFamilyIndicies.graphicsFamilyIndex < 0 && queueFamilyProperties[i].queueFlags & VK_QUEUE_GRAPHICS_BIT)
 			{
-				pQueueIndicies.graphicsIndex = i;
+				pQueueFamilyIndicies.graphicsFamilyIndex = i;
 				goto ASSIGNED;
 			}
 
-			if(pQueueIndicies.presentIndex < 0)
+			if(pQueueFamilyIndicies.presentFamilyIndex < 0)
 			{
 				u32 surfaceSupported;
 				VK_VERIFY(vkGetPhysicalDeviceSurfaceSupportKHR(pPhysicalDevice, i, mInstance.GetSurface(), &surfaceSupported));
 
 				if(surfaceSupported)
 				{
-					pQueueIndicies.presentIndex = i;
+					pQueueFamilyIndicies.presentFamilyIndex = i;
 					goto ASSIGNED;
 				}
 			}
 
-			if(pQueueIndicies.transferIndex < 0 && queueFamilyProperties[i].queueFlags & VK_QUEUE_TRANSFER_BIT)
+			if(pQueueFamilyIndicies.transferFamilyIndex < 0 && queueFamilyProperties[i].queueFlags & VK_QUEUE_TRANSFER_BIT)
 			{
-				pQueueIndicies.transferIndex = i;
+				pQueueFamilyIndicies.transferFamilyIndex = i;
 				goto ASSIGNED;
 			}
 
 		ASSIGNED:
-			if(pQueueIndicies.IsComplete())
+			if(pQueueFamilyIndicies.IsComplete())
 				break;
 		}
 
-		if(pQueueIndicies.graphicsIndex < 0)
+		if(pQueueFamilyIndicies.graphicsFamilyIndex < 0)
 			return 0;
 
-		if(pQueueIndicies.presentIndex < 0)
-			pQueueIndicies.presentIndex = pQueueIndicies.graphicsIndex;
+		if(pQueueFamilyIndicies.presentFamilyIndex < 0)
+			pQueueFamilyIndicies.presentFamilyIndex = pQueueFamilyIndicies.graphicsFamilyIndex;
 		else
 			score++;
 
-		if(pQueueIndicies.transferIndex < 0)
-			pQueueIndicies.transferIndex = pQueueIndicies.graphicsIndex;
+		if(pQueueFamilyIndicies.transferFamilyIndex < 0)
+			pQueueFamilyIndicies.transferFamilyIndex = pQueueFamilyIndicies.graphicsFamilyIndex;
 		else
 			score++;
 
@@ -188,22 +188,22 @@ namespace CDR::VK {
 		deviceInfo.enabledExtensionCount = RequiredExtensionsCount;
 		deviceInfo.ppEnabledExtensionNames = RequiredExtensions;
 
-		i8 uniqueQueues[3];
-		const u8 uniqueQueuesCount = mQueueIndicies.GetUniqueIndicies(uniqueQueues);
+		i8 uniqueQueueFamilies[3];
+		const u8 uniqueQueueFamiliesCount = mQueueFamilyIndicies.GetUniqueFamilyIndicies(uniqueQueueFamilies);
 
 		VkDeviceQueueCreateInfo queueCreateInfos[3] = {};
 
 		constexpr float queuePriority = 1.0f;
 
-		for(u8 i = 0; i < uniqueQueuesCount; i++)
+		for(u8 i = 0; i < uniqueQueueFamiliesCount; i++)
 		{
 			queueCreateInfos[i].sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
 			queueCreateInfos[i].pQueuePriorities = &queuePriority;
-			queueCreateInfos[i].queueFamilyIndex = uniqueQueues[i];
+			queueCreateInfos[i].queueFamilyIndex = uniqueQueueFamilies[i];
 			queueCreateInfos[i].queueCount = 1;
 		}
 
-		deviceInfo.queueCreateInfoCount = uniqueQueuesCount;
+		deviceInfo.queueCreateInfoCount = uniqueQueueFamiliesCount;
 		deviceInfo.pQueueCreateInfos = queueCreateInfos;
 
 		VkPhysicalDeviceFeatures deviceFeatures = {};
@@ -212,9 +212,9 @@ namespace CDR::VK {
 
 		VK_VERIFY(vkCreateDevice(mPhysicalDevice, &deviceInfo, nullptr, &mDevice));
 
-		vkGetDeviceQueue(mDevice, mQueueIndicies.graphicsIndex, 0, &mGraphicsQueue);
-		vkGetDeviceQueue(mDevice, mQueueIndicies.presentIndex, 0, &mPresentQueue);
-		vkGetDeviceQueue(mDevice, mQueueIndicies.transferIndex, 0, &mTransferQueue);
+		vkGetDeviceQueue(mDevice, mQueueFamilyIndicies.graphicsFamilyIndex, 0, &mGraphicsQueue);
+		vkGetDeviceQueue(mDevice, mQueueFamilyIndicies.presentFamilyIndex, 0, &mPresentQueue);
+		vkGetDeviceQueue(mDevice, mQueueFamilyIndicies.transferFamilyIndex, 0, &mTransferQueue);
 	}
 
 	void Device::WaitIdle()

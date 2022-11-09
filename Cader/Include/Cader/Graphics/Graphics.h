@@ -9,6 +9,7 @@ namespace CDR {
 
 	namespace VK {
 
+		class Commands;
 		class Device;
 		class Instance;
 		class RenderPass;
@@ -26,6 +27,7 @@ namespace CDR {
 		VK::SwapChain* mSwapChain = nullptr;
 		VK::RenderPass* mRenderPass = nullptr;
 		VK::Sync* mSync = nullptr;
+		VK::Commands* mCommands = nullptr;
 
 		Graphics(const Window& pWindow);
 		~Graphics();

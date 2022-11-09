@@ -12,14 +12,14 @@ namespace CDR {
 
 		class Instance;
 
-		struct QueueIndicies final
+		struct QueueFamilyIndicies final
 		{
-			i8 graphicsIndex = -1;
-			i8 presentIndex = -1;
-			i8 transferIndex = -1;
+			i8 graphicsFamilyIndex = -1;
+			i8 presentFamilyIndex = -1;
+			i8 transferFamilyIndex = -1;
 
 			bool IsComplete() const noexcept;
-			u8 GetUniqueIndicies(i8 pIndicies[3]) const;
+			u8 GetUniqueFamilyIndicies(i8 pIndicies[3]) const;
 		};
 
 		class Device final
@@ -29,7 +29,7 @@ namespace CDR {
 			const Instance& mInstance;
 
 			VkPhysicalDevice mPhysicalDevice;
-			QueueIndicies mQueueIndicies = {};
+			QueueFamilyIndicies mQueueFamilyIndicies = {};
 
 			VkDevice mDevice;
 
@@ -41,7 +41,7 @@ namespace CDR {
 			~Device();
 
 			void InitPhysicalDevice();
-			u8 RatePhysicalDevice(const VkPhysicalDevice& pPhysicalDevice, QueueIndicies& pQueueIndicies) const;
+			u8 RatePhysicalDevice(const VkPhysicalDevice& pPhysicalDevice, QueueFamilyIndicies& pQueueFamilyIndicies) const;
 
 			void InitDevice();
 
@@ -49,6 +49,7 @@ namespace CDR {
 			void WaitIdle();
 
 			inline const VkPhysicalDevice& GetPhysicalDevice() const noexcept { return mPhysicalDevice; }
+			inline QueueFamilyIndicies GetQueueFamilyIndicies() const noexcept { return mQueueFamilyIndicies; }
 
 			inline const VkDevice& GetDevice() const noexcept { return mDevice; }
 

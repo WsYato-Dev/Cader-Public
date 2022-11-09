@@ -15,6 +15,8 @@ namespace CDR {
 		class Device;
 		class Instance;
 
+		constexpr u8 DesiredFramesInFlight = 3;
+
 		struct SwapChainStaticInfo final
 		{
 			VkSurfaceCapabilitiesKHR surfaceCapabilities;
@@ -36,6 +38,8 @@ namespace CDR {
 			std::vector<VkImageView> mImageViews;
 			VkExtent2D mExtent;
 
+			u8 mMaxFramesInFlight = 0;
+
 			bool mDestroyed = true;
 
 			SwapChain(const Instance& pInstance, const Device& pDevice);
@@ -56,6 +60,8 @@ namespace CDR {
 			inline const std::vector<VkImage>& GetImages() const noexcept { return mImages; }
 			inline const std::vector<VkImageView>& GetImagesViews() const noexcept { return mImageViews; }
 			inline VkExtent2D GetExtent() const noexcept { return mExtent; }
+
+			inline u8 GetMaxFramesInFlight() const noexcept { return mMaxFramesInFlight; }
 		};
 
 	}

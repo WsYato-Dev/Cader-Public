@@ -54,6 +54,8 @@ namespace CDR::VK {
 
 		mImages.resize(mStaticInfo.imageCount);
 		mImageViews.resize(mStaticInfo.imageCount);
+
+		mMaxFramesInFlight = mStaticInfo.imageCount > DesiredFramesInFlight ? mStaticInfo.imageCount : DesiredFramesInFlight;
 	}
 
 	void SwapChain::CreateSwapChain(u16 pWidth, u16 pHeight)

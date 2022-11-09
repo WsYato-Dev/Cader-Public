@@ -9,13 +9,10 @@ namespace CDR::VK {
 	Sync::Sync(const Device& pDevice, const SwapChain& pSwapChain)
 		: mDevice(pDevice)
 	{
-		u8 framesInFlightCount = pSwapChain.GetStaticInfo().imageCount;
+		const u8 syncObjectsCount = pSwapChain.GetMaxFramesInFlight();
 
-		if(framesInFlightCount > MaxFramesInFlight)
-			framesInFlightCount = MaxFramesInFlight;
-
-		InitSemaphores(framesInFlightCount);
-		InitFences(framesInFlightCount);
+		InitSemaphores(syncObjectsCount);
+		InitFences(syncObjectsCount);
 	}
 
 	Sync::~Sync()
