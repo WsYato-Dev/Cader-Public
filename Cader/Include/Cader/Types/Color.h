@@ -14,22 +14,22 @@ namespace CDR {
 		constexpr Color() = default;
 
 		explicit constexpr Color(float pValue)
-			: r(pValue)
-			, g(pValue)
-			, b(pValue)
+			: r{pValue}
+			, g{pValue}
+			, b{pValue}
 		{}
 
 		constexpr Color(float pR, float pG, float pB)
-			: r(pR)
-			, g(pG)
-			, b(pB)
+			: r{pR}
+			, g{pG}
+			, b{pB}
 		{}
 
 		constexpr Color(float pR, float pG, float pB, float pA)
-			: r(pR)
-			, g(pG)
-			, b(pB)
-			, a(pA)
+			: r{pR}
+			, g{pG}
+			, b{pB}
+			, a{pA}
 		{}
 
 		explicit constexpr Color(u32 pHex)
