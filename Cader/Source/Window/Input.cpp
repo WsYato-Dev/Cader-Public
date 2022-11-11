@@ -143,12 +143,12 @@ namespace CDR {
 	EInputState Input::sKeyStates[(i8)EKeyCode::Count] = {};
 	EInputState Input::sMouseButtonStates[(i8)EMouseButton::Count] = {};
 
-	MousePosition Input::sMousePosition;
+	MousePosition Input::sMousePosition = {};
 	i8 Input::sMouseScroll = 0;
 
-	Input::Input(Window* pWindow)
+	Input::Input(const Window& pWindow)
 	{
-		GLFWwindow* window = pWindow->GetNativeWindow();
+		GLFWwindow* window = pWindow.GetNativeWindow();
 
 		glfwSetKeyCallback(window, [](GLFWwindow* pWindow, int pKey, int pScanCode, int pAction, int pMods)
 		{
@@ -247,6 +247,8 @@ namespace CDR {
 				default: break;
 			}
 		}
+
+		sMouseScroll = 0;
 	}
 
 	void Input::SetInputMode(EInputMode pInputMode)
@@ -254,7 +256,7 @@ namespace CDR {
 		if(sInputMode == pInputMode)
 			return;
 
-		GLFWwindow* window = Engine::Get().GetWindow()->GetNativeWindow();
+		GLFWwindow* window = Engine::Get().GetWindow().GetNativeWindow();
 
 		switch(pInputMode)
 		{

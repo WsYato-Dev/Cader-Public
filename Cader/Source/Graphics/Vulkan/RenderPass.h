@@ -30,7 +30,7 @@ namespace CDR {
 			RenderPass(const Device& pDevice, const SwapChain& pSwapChain);
 			~RenderPass();
 
-			void InitRenderPass(const SwapChain& pSwapChain);
+			void InitRenderPass();
 
 			void CreateFrameBuffers(u16 pWidth, u16 pHeight);
 			void DestroyFrameBuffers();

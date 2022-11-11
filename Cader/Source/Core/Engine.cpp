@@ -10,7 +10,7 @@
 
 namespace CDR {
 
-	Engine* Engine::sEngine;
+	Engine* Engine::sEngine = nullptr;
 
 	Engine::Engine()
 	{
@@ -20,7 +20,7 @@ namespace CDR {
 		Project::Setup(mProjectSettings, startupSettings);
 
 		mWindow = new Window(mProjectSettings.title, startupSettings);
-		mInput = new Input(mWindow);
+		mInput = new Input(*mWindow);
 
 		mGraphics = new Graphics(*mWindow);
 
@@ -57,7 +57,12 @@ namespace CDR {
 				HandleEvents();
 
 				Time::Update();
+
+				mGraphics->NewFrame();
+
 				Project::Update();
+
+				mGraphics->RenderFrame();
 
 				mInput->Update();
 			}

@@ -10,7 +10,7 @@ namespace CDR::VK {
 		: mDevice(pDevice)
 		, mSwapChain(pSwapChain)
 	{
-		InitRenderPass(pSwapChain);
+		InitRenderPass();
 
 		mFrameBuffers.resize(pSwapChain.GetStaticInfo().imageCount);
 
@@ -24,10 +24,10 @@ namespace CDR::VK {
 		vkDestroyRenderPass(mDevice.GetDevice(), mRenderPass, nullptr);
 	}
 
-	void RenderPass::InitRenderPass(const SwapChain& pSwapChain)
+	void RenderPass::InitRenderPass()
 	{
 		VkAttachmentDescription colorAttachment = {};
-		colorAttachment.format = pSwapChain.GetStaticInfo().surfaceFormat.format;
+		colorAttachment.format = mSwapChain.GetStaticInfo().surfaceFormat.format;
 		colorAttachment.samples = VK_SAMPLE_COUNT_1_BIT;
 
 		colorAttachment.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;

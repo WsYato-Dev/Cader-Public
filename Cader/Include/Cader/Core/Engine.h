@@ -17,13 +17,13 @@ namespace CDR {
 
 		static Engine* sEngine;
 
-		ProjectSettings mProjectSettings;
-		EventSystem mEventSystem;
+		ProjectSettings mProjectSettings = {};
+		EventSystem mEventSystem = {};
 
-		Window* mWindow;
-		Input* mInput;
+		Window* mWindow = nullptr;
+		Input* mInput = nullptr;
 
-		Graphics* mGraphics;
+		Graphics* mGraphics = nullptr;
 
 		bool mRunning = true;
 
@@ -39,9 +39,9 @@ namespace CDR {
 		static inline Engine& Get() { return *sEngine; }
 
 		inline const ProjectSettings& GetProjectSettings() const noexcept { return mProjectSettings; }
-		
-		inline Window* GetWindow() const noexcept { return mWindow; }
-		inline Graphics* GetGraphics() const noexcept { return mGraphics; }
+
+		inline Window& GetWindow() const noexcept { return *mWindow; }
+		inline Graphics& GetGraphics() const noexcept { return *mGraphics; }
 	};
 
 }

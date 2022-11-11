@@ -23,7 +23,7 @@ namespace CDR {
 
 			const Device& mDevice;
 
-			std::vector<VkSemaphore> mImageAquired;
+			std::vector<VkSemaphore> mImageAcquired;
 			std::vector<VkSemaphore> mRenderingDone;
 
 			std::vector<VkFence> mInFlightFrames;
@@ -35,7 +35,7 @@ namespace CDR {
 			void InitFences(u8 pFramesInFlightCount);
 
 		public:
-			inline const std::vector<VkSemaphore>& GetImageAquired() const noexcept { return mImageAquired; }
+			inline const std::vector<VkSemaphore>& GetImageAcquired() const noexcept { return mImageAcquired; }
 			inline const std::vector<VkSemaphore>& GetRenderingDone() const noexcept { return mRenderingDone; }
 
 			inline const std::vector<VkFence>& GetInFlightFrames() const noexcept { return mInFlightFrames; }

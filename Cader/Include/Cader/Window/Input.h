@@ -20,7 +20,7 @@ namespace CDR {
 		static MousePosition sMousePosition;
 		static i8 sMouseScroll;
 
-		Input(Window* pWindow);
+		Input(const Window& pWindow);
 		void Update();
 
 	public:

@@ -24,6 +24,8 @@ namespace CDR {
 		else
 			mSize = {1280, 720};
 
+		mSizeBeforeFullscreen = mSize;
+
 		switch(pStartupSettings.windowMode)
 		{
 			case EWindowMode::Windowed:
@@ -171,7 +173,7 @@ namespace CDR {
 			return;
 
 		if(mMode == EWindowMode::Fullscreen)
-			glfwSetWindowMonitor(mWindow, nullptr, 100, 100, mSize.width, mSize.height, GLFW_DONT_CARE);
+			glfwSetWindowMonitor(mWindow, nullptr, 100, 100, mSizeBeforeFullscreen.width, mSizeBeforeFullscreen.height, GLFW_DONT_CARE);
 
 		switch(pMode)
 		{
@@ -187,6 +189,8 @@ namespace CDR {
 			}
 			case CDR::EWindowMode::Fullscreen:
 			{
+				mSizeBeforeFullscreen = mSize;
+
 				GLFWmonitor* primaryMonitor = glfwGetPrimaryMonitor();
 				const GLFWvidmode* videoMode = glfwGetVideoMode(primaryMonitor);
 				glfwSetWindowMonitor(mWindow, primaryMonitor, 0, 0, videoMode->width, videoMode->height, GLFW_DONT_CARE);

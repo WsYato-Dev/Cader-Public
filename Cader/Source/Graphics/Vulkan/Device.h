@@ -41,7 +41,7 @@ namespace CDR {
 			~Device();
 
 			void InitPhysicalDevice();
-			u8 RatePhysicalDevice(const VkPhysicalDevice& pPhysicalDevice, QueueFamilyIndicies& pQueueFamilyIndicies) const;
+			u8 RatePhysicalDevice(VkPhysicalDevice pPhysicalDevice, QueueFamilyIndicies* pQueueFamilyIndicies) const;
 
 			void InitDevice();
 

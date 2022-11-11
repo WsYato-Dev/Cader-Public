@@ -23,20 +23,20 @@ namespace CDR::VK {
 		for(const auto& semaphore : mRenderingDone)
 			vkDestroySemaphore(mDevice.GetDevice(), semaphore, nullptr);
 
-		for(const auto& semaphore : mImageAquired)
+		for(const auto& semaphore : mImageAcquired)
 			vkDestroySemaphore(mDevice.GetDevice(), semaphore, nullptr);
 	}
 
 	void Sync::InitSemaphores(u8 pFramesInFlightCount)
 	{
-		mImageAquired.resize(pFramesInFlightCount);
+		mImageAcquired.resize(pFramesInFlightCount);
 		mRenderingDone.resize(pFramesInFlightCount);
 
 		VkSemaphoreCreateInfo semaphoreInfo = {VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO};
 
 		for(u8 i = 0; i < pFramesInFlightCount; i++)
 		{
-			VK_VERIFY(vkCreateSemaphore(mDevice.GetDevice(), &semaphoreInfo, nullptr, &mImageAquired[i]));
+			VK_VERIFY(vkCreateSemaphore(mDevice.GetDevice(), &semaphoreInfo, nullptr, &mImageAcquired[i]));
 			VK_VERIFY(vkCreateSemaphore(mDevice.GetDevice(), &semaphoreInfo, nullptr, &mRenderingDone[i]));
 		}
 	}
