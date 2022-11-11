@@ -15,8 +15,6 @@ namespace CDR {
 		class Device;
 		class SwapChain;
 
-		constexpr u8 MaxFramesInFlight = 3;
-
 		class Sync final
 		{
 			friend Graphics;

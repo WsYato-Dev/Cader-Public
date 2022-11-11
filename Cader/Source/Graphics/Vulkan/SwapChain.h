@@ -15,13 +15,13 @@ namespace CDR {
 		class Device;
 		class Instance;
 
-		constexpr u8 DesiredFramesInFlight = 3;
+		constexpr u8 DesiredFramesInFlight{3};
 
 		struct SwapChainStaticInfo final
 		{
 			VkSurfaceCapabilitiesKHR surfaceCapabilities;
 			VkSurfaceFormatKHR surfaceFormat;
-			u8 imageCount = 0;
+			u8 imageCount{0};
 		};
 
 		class SwapChain final
@@ -31,16 +31,16 @@ namespace CDR {
 			const Instance& mInstance;
 			const Device& mDevice;
 
-			SwapChainStaticInfo mStaticInfo = {};
+			SwapChainStaticInfo mStaticInfo{};
 
 			VkSwapchainKHR mSwapChain;
 			std::vector<VkImage> mImages;
 			std::vector<VkImageView> mImageViews;
 			VkExtent2D mExtent;
 
-			u8 mMaxFramesInFlight = 0;
+			u8 mMaxFramesInFlight{0};
 
-			bool mDestroyed = true;
+			bool mSwapChainDestroyed{true};
 
 			SwapChain(const Instance& pInstance, const Device& pDevice);
 			~SwapChain();

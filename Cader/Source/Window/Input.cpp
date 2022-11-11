@@ -138,13 +138,13 @@ namespace CDR {
 		}
 	}
 
-	EInputMode Input::sInputMode = EInputMode::Default;
+	EInputMode Input::sInputMode{EInputMode::Default};
 
-	EInputState Input::sKeyStates[(i8)EKeyCode::Count] = {};
-	EInputState Input::sMouseButtonStates[(i8)EMouseButton::Count] = {};
+	EInputState Input::sKeyStates[(i8)EKeyCode::Count]{};
+	EInputState Input::sMouseButtonStates[(i8)EMouseButton::Count]{};
 
-	MousePosition Input::sMousePosition = {};
-	i8 Input::sMouseScroll = 0;
+	MousePosition Input::sMousePosition{};
+	i8 Input::sMouseScroll{0};
 
 	Input::Input(const Window& pWindow)
 	{

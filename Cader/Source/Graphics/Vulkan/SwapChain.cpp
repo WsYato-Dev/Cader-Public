@@ -9,8 +9,8 @@
 namespace CDR::VK {
 
 	SwapChain::SwapChain(const Instance& pInstance, const Device& pDevice)
-		: mInstance(pInstance)
-		, mDevice(pDevice)
+		: mInstance{pInstance}
+		, mDevice{pDevice}
 	{
 		InitStaticInfo();
 		CreateSwapChain((u16)mStaticInfo.surfaceCapabilities.currentExtent.width, (u16)mStaticInfo.surfaceCapabilities.currentExtent.height);
@@ -60,18 +60,18 @@ namespace CDR::VK {
 
 	void SwapChain::CreateSwapChain(u16 pWidth, u16 pHeight)
 	{
-		if(!mDestroyed)
+		if(!mSwapChainDestroyed)
 			return;
 
 		InitSwapChain(pWidth, pHeight);
 		InitSwapChainImageViews();
 
-		mDestroyed = false;
+		mSwapChainDestroyed = false;
 	}
 
 	void SwapChain::DestroySwapChain()
 	{
-		if(mDestroyed)
+		if(mSwapChainDestroyed)
 			return;
 
 		for(const auto& view : mImageViews)
@@ -79,7 +79,7 @@ namespace CDR::VK {
 
 		vkDestroySwapchainKHR(mDevice.GetDevice(), mSwapChain, nullptr);
 
-		mDestroyed = true;
+		mSwapChainDestroyed = true;
 	}
 
 	void SwapChain::InitSwapChain(u16 pWidth, u16 pHeight)

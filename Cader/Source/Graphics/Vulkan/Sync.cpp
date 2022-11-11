@@ -7,7 +7,7 @@
 namespace CDR::VK {
 
 	Sync::Sync(const Device& pDevice, const SwapChain& pSwapChain)
-		: mDevice(pDevice)
+		: mDevice{pDevice}
 	{
 		const u8 syncObjectsCount = pSwapChain.GetMaxFramesInFlight();
 

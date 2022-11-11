@@ -26,7 +26,7 @@ namespace CDR {
 	struct Timer final
 	{
 	private:
-		Milliseconds mEnd = 0;
+		Milliseconds mEnd{0};
 
 	public:
 		inline void Start(Milliseconds pMilliseconds)
@@ -43,7 +43,7 @@ namespace CDR {
 	struct StopWatch final
 	{
 	private:
-		Milliseconds mStart = 0;
+		Milliseconds mStart{0};
 
 	public:
 		inline void Start()

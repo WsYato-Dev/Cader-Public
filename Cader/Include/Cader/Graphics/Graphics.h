@@ -25,16 +25,16 @@ namespace CDR {
 	{
 		friend Engine;
 
-		VK::Instance* mInstance = nullptr;
-		VK::Device* mDevice = nullptr;
-		VK::SwapChain* mSwapChain = nullptr;
-		VK::RenderPass* mRenderPass = nullptr;
-		VK::Sync* mSync = nullptr;
-		VK::Commands* mCommands = nullptr;
+		VK::Instance* mInstance{nullptr};
+		VK::Device* mDevice{nullptr};
+		VK::SwapChain* mSwapChain{nullptr};
+		VK::RenderPass* mRenderPass{nullptr};
+		VK::Sync* mSync{nullptr};
+		VK::Commands* mCommands{nullptr};
 
-		u32 mSwapChainImageIndex = 0;
-		u8 mInFlightFrameIndex = 0;
-		bool mCanRender = true;
+		u32 mSwapChainImageIndex{0};
+		u8 mInFlightFrameIndex{0};
+		bool mCanRender{true};
 
 	public:
 		Color clearColor;

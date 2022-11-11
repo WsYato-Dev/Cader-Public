@@ -19,7 +19,7 @@
 namespace CDR {
 
 	Graphics::Graphics(const Window& pWindow, const StartupSettings& pStartupSettings)
-		: clearColor(pStartupSettings.windowClearColor)
+		: clearColor{pStartupSettings.windowClearColor}
 	{
 		mInstance = new VK::Instance(pWindow);
 		mDevice = new VK::Device(*mInstance);

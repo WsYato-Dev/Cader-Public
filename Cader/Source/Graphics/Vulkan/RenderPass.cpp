@@ -7,8 +7,8 @@
 namespace CDR::VK {
 
 	RenderPass::RenderPass(const Device& pDevice, const SwapChain& pSwapChain)
-		: mDevice(pDevice)
-		, mSwapChain(pSwapChain)
+		: mDevice{pDevice}
+		, mSwapChain{pSwapChain}
 	{
 		InitRenderPass();
 
@@ -61,7 +61,7 @@ namespace CDR::VK {
 
 	void RenderPass::CreateFrameBuffers(u16 pWidth, u16 pHeight)
 	{
-		if(!mDestroyed)
+		if(!mFrameBuffersDestroyed)
 			return;
 
 		VkFramebufferCreateInfo frameBufferInfo = {VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO};
@@ -78,18 +78,18 @@ namespace CDR::VK {
 			VK_VERIFY(vkCreateFramebuffer(mDevice.GetDevice(), &frameBufferInfo, nullptr, &mFrameBuffers[i]));
 		}
 
-		mDestroyed = false;
+		mFrameBuffersDestroyed = false;
 	}
 
 	void RenderPass::DestroyFrameBuffers()
 	{
-		if(mDestroyed)
+		if(mFrameBuffersDestroyed)
 			return;
 
 		for(const auto& buffer : mFrameBuffers)
 			vkDestroyFramebuffer(mDevice.GetDevice(), buffer, nullptr);
 
-		mDestroyed = true;
+		mFrameBuffersDestroyed = true;
 	}
 
 }

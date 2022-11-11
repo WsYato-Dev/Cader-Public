@@ -25,7 +25,7 @@ namespace CDR {
 			VkRenderPass mRenderPass;
 			std::vector<VkFramebuffer> mFrameBuffers;
 
-			bool mDestroyed = true;
+			bool mFrameBuffersDestroyed{true};
 
 			RenderPass(const Device& pDevice, const SwapChain& pSwapChain);
 			~RenderPass();

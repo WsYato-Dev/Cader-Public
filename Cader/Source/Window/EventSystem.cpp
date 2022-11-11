@@ -4,8 +4,8 @@
 
 namespace CDR {
 
-	Event EventSystem::sEvents[MaxEvents] = {};
-	u8 EventSystem::sCount = 0;
+	Event EventSystem::sEvents[MaxEvents]{};
+	u8 EventSystem::sCount{0};
 
 	void EventSystem::FireEvent(Event pEvent, bool pPriority)
 	{

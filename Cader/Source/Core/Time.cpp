@@ -11,8 +11,8 @@ namespace CDR {
 	static TimePoint sAppStartTimePoint;
 	static TimePoint sLastTickTimePoint;
 
-	Milliseconds Time::sNow = 0;
-	float Time::sDelta = 0.0f;
+	Milliseconds Time::sNow{0};
+	float Time::sDelta{0.0f};
 
 	void Time::Init()
 	{

@@ -14,9 +14,9 @@ namespace CDR {
 
 		struct QueueFamilyIndicies final
 		{
-			i8 graphicsFamilyIndex = -1;
-			i8 presentFamilyIndex = -1;
-			i8 transferFamilyIndex = -1;
+			i8 graphicsFamilyIndex{-1};
+			i8 presentFamilyIndex{-1};
+			i8 transferFamilyIndex{-1};
 
 			bool IsComplete() const noexcept;
 			u8 GetUniqueFamilyIndicies(i8 pIndicies[3]) const;
@@ -29,7 +29,7 @@ namespace CDR {
 			const Instance& mInstance;
 
 			VkPhysicalDevice mPhysicalDevice;
-			QueueFamilyIndicies mQueueFamilyIndicies = {};
+			QueueFamilyIndicies mQueueFamilyIndicies{};
 
 			VkDevice mDevice;
 

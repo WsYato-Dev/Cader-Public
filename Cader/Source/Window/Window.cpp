@@ -10,8 +10,8 @@
 namespace CDR {
 
 	Window::Window(Text pTitle, const StartupSettings& pStartupSettings)
-		: mTitle(pTitle)
-		, mMode(pStartupSettings.windowMode)
+		: mTitle{pTitle}
+		, mMode{pStartupSettings.windowMode}
 	{
 		glfwInit();
 

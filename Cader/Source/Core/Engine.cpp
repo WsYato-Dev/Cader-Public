@@ -10,7 +10,7 @@
 
 namespace CDR {
 
-	Engine* Engine::sEngine = nullptr;
+	Engine* Engine::sEngine{nullptr};
 
 	Engine::Engine()
 	{

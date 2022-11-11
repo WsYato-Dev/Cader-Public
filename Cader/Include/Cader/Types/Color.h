@@ -6,14 +6,14 @@ namespace CDR {
 
 	struct Color final
 	{
-		float r = 1.0f;
-		float g = 1.0f;
-		float b = 1.0f;
-		float a = 1.0f;
+		float r{1.0f};
+		float g{1.0f};
+		float b{1.0f};
+		float a{1.0f};
 
 		constexpr Color() = default;
 
-		constexpr Color(float pValue)
+		explicit constexpr Color(float pValue)
 			: r(pValue)
 			, g(pValue)
 			, b(pValue)
@@ -91,17 +91,17 @@ namespace CDR {
 
 	namespace ColorList {
 
-		static constexpr Color White			/**/ = {1.0f};
-		static constexpr Color Gray				/**/ = {0.5f};
-		static constexpr Color Black			/**/ = {0.0f};
+		static constexpr Color White			/**/{1.0f};
+		static constexpr Color Gray				/**/{0.5f};
+		static constexpr Color Black			/**/{0.0f};
 
-		static constexpr Color Red				/**/ = {1.0f, 0.0f, 0.0f};
-		static constexpr Color Green			/**/ = {0.0f, 1.0f, 0.0f};
-		static constexpr Color Blue				/**/ = {0.0f, 0.0f, 1.0f};
+		static constexpr Color Red				/**/{1.0f, 0.0f, 0.0f};
+		static constexpr Color Green			/**/{0.0f, 1.0f, 0.0f};
+		static constexpr Color Blue				/**/{0.0f, 0.0f, 1.0f};
 
-		static constexpr Color Yellow			/**/ = {1.0f, 1.0f, 0.0f};
-		static constexpr Color Magenta			/**/ = {1.0f, 0.0f, 1.0f};
-		static constexpr Color Cyan				/**/ = {0.0f, 1.0f, 1.0f};
+		static constexpr Color Yellow			/**/{1.0f, 1.0f, 0.0f};
+		static constexpr Color Magenta			/**/{1.0f, 0.0f, 1.0f};
+		static constexpr Color Cyan				/**/{0.0f, 1.0f, 1.0f};
 
 	}
 

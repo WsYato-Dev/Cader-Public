@@ -9,7 +9,7 @@
 namespace CDR::VK {
 
 	Commands::Commands(const Device& pDevice, const SwapChain& pSwapChain)
-		: mDevice(pDevice)
+		: mDevice{pDevice}
 	{
 		InitCommandPools();
 		InitGraphicsCommandBuffers(pSwapChain);

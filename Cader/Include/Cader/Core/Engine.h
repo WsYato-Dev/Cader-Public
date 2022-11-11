@@ -17,15 +17,15 @@ namespace CDR {
 
 		static Engine* sEngine;
 
-		ProjectSettings mProjectSettings = {};
-		EventSystem mEventSystem = {};
+		ProjectSettings mProjectSettings{};
+		EventSystem mEventSystem{};
 
-		Window* mWindow = nullptr;
-		Input* mInput = nullptr;
+		Window* mWindow{nullptr};
+		Input* mInput{nullptr};
 
-		Graphics* mGraphics = nullptr;
+		Graphics* mGraphics{nullptr};
 
-		bool mRunning = true;
+		bool mRunning{true};
 
 		Engine();
 		~Engine();

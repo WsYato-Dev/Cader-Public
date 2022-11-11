@@ -36,7 +36,7 @@ namespace CDR::VK {
 	}
 
 	Device::Device(const Instance& pInstance)
-		: mInstance(pInstance)
+		: mInstance{pInstance}
 	{
 		InitPhysicalDevice();
 		InitDevice();

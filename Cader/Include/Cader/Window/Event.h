@@ -18,7 +18,7 @@ namespace CDR {
 
 		union
 		{
-			struct {} initializer = {};
+			struct {} initializer{};
 
 			bool windowMinimized;
 			bool windowFocused;
@@ -36,11 +36,11 @@ namespace CDR {
 		};
 
 		constexpr Event()
-			: type(EEventType::None)
+			: type{EEventType::None}
 		{}
 
-		constexpr Event(EEventType pType)
-			: type(pType)
+		explicit constexpr Event(EEventType pType)
+			: type{pType}
 		{}
 	};
 

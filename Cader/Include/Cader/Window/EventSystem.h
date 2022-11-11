@@ -12,7 +12,7 @@ namespace CDR {
 		friend Engine;
 
 	public:
-		static constexpr u8 MaxEvents = 5;
+		static constexpr u8 MaxEvents{5};
 
 	private:
 		static Event sEvents[MaxEvents];

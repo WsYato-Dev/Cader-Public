@@ -6,7 +6,7 @@ namespace CDR {
 
 	struct ProjectSettings final
 	{
-		Text title = nullptr;
+		Text title{nullptr};
 	};
 
 }
