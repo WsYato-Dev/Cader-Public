@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Cader/Core/StartupSettings.h"
+#include "Cader/Types/Color.h"
 #include "Cader/Types/Common.h"
 #include "Cader/Window/Event.h"
 
@@ -34,7 +36,11 @@ namespace CDR {
 		u8 mInFlightFrameIndex = 0;
 		bool mCanRender = true;
 
-		Graphics(const Window& pWindow);
+	public:
+		Color clearColor;
+
+	private:
+		Graphics(const Window& pWindow, const StartupSettings& pStartupSettings);
 		~Graphics();
 
 		void NewFrame();

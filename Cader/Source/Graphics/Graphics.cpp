@@ -18,7 +18,8 @@
 
 namespace CDR {
 
-	Graphics::Graphics(const Window& pWindow)
+	Graphics::Graphics(const Window& pWindow, const StartupSettings& pStartupSettings)
+		: clearColor(pStartupSettings.windowClearColor)
 	{
 		mInstance = new VK::Instance(pWindow);
 		mDevice = new VK::Device(*mInstance);
@@ -58,7 +59,7 @@ namespace CDR {
 
 		VK_VERIFY(vkBeginCommandBuffer(commandBuffer, &commandbufferBeginInfo));
 
-		constexpr VkClearValue clearColor = {0.1f, 0.1f, 0.1f, 1.0f};
+		const VkClearValue clearValue = {clearColor.r, clearColor.g, clearColor.b, 1.0f};
 		const VkRect2D rect = {{0, 0}, mSwapChain->GetExtent()};
 
 		VkRenderPassBeginInfo renderPassBeginInfo = {VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO};
@@ -66,7 +67,7 @@ namespace CDR {
 		renderPassBeginInfo.framebuffer = mRenderPass->GetFrameBuffers()[mSwapChainImageIndex];
 
 		renderPassBeginInfo.clearValueCount = 1;
-		renderPassBeginInfo.pClearValues = &clearColor;
+		renderPassBeginInfo.pClearValues = &clearValue;
 
 		renderPassBeginInfo.renderArea = rect;
 
