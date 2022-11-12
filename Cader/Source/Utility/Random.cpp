@@ -5,7 +5,7 @@
 namespace CDR {
 
 	static std::random_device sRandomDevice;
-	static std::mt19937 sMt(sRandomDevice());
+	static std::mt19937 sMt{sRandomDevice()};
 
 	i16 Random::Int16()
 	{
