@@ -68,6 +68,13 @@ namespace CDR {
 		{
 			return Color(r * pColor.r, g * pColor.g, b * pColor.b);
 		}
+
+		constexpr void Lerp(const Color& pColor, float pT)
+		{
+			r = r + pT * (pColor.r - r);
+			g = g + pT * (pColor.g - g);
+			b = b + pT * (pColor.b - b);
+		}
 	};
 
 	static constexpr Color RGB2Color(u8 pR, u8 pG, u8 pB)
@@ -86,6 +93,15 @@ namespace CDR {
 			(float)pG / 255.0f,
 			(float)pB / 255.0f,
 			(float)pA / 255.0f
+		);
+	}
+
+	static constexpr Color Lerp(const Color& pLhs, const Color& pRhs, float pT)
+	{
+		return Color(
+			pLhs.r + pT * (pRhs.r - pLhs.r),
+			pLhs.g + pT * (pRhs.g - pLhs.g),
+			pLhs.b + pT * (pRhs.b - pLhs.b)
 		);
 	}
 

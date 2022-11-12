@@ -80,9 +80,33 @@ namespace CDR {
 
 			switch(e.type)
 			{
-				case EEventType::WindowClose: Quit(); break;
-				case EEventType::WindowMinimize: mGraphics->OnWindowMinimize(e); break;
-				case EEventType::WindowResize: mGraphics->OnWindowResize(e); break;
+				case EEventType::WindowClose:
+				{
+					Quit();
+					break;
+				}
+				case EEventType::WindowMinimize:
+				{
+					if(!e.windowMinimized)
+						Time::Recaliber();
+
+					mGraphics->OnWindowMinimize(e);
+
+					break;
+				}
+				case EEventType::WindowFocus:
+				{
+					if(e.windowFocused)
+						Time::Recaliber();
+
+					break;
+				}
+				case EEventType::WindowResize:
+				{
+					Time::Recaliber();
+					mGraphics->OnWindowResize(e);
+					break;
+				}
 
 				default: break;
 			}

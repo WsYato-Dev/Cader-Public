@@ -17,6 +17,7 @@ namespace CDR {
 
 		static void Init();
 		static void Update();
+		static void Recaliber();
 
 	public:
 		static inline Milliseconds Now() noexcept { return sNow; }

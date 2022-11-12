@@ -1,7 +1,6 @@
 #include "Cader/Core/Time.h"
 
 #include <chrono>
-#include <thread>
 
 namespace CDR {
 
@@ -29,4 +28,10 @@ namespace CDR {
 
 		sLastTickTimePoint = currentTimePoint;
 	}
+
+	void Time::Recaliber()
+	{
+		sLastTickTimePoint = Clock::now();
+	}
+
 }
