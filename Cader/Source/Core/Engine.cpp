@@ -8,13 +8,16 @@
 #include "Cader/Window/Input.h"
 #include "Cader/Window/Window.h"
 
+#include <assert.h>
+
 namespace CDR {
 
-	Engine* Engine::sEngine{nullptr};
+	Engine* Engine::sInstance{nullptr};
 
 	Engine::Engine()
 	{
-		sEngine = this;
+		assert(!sInstance);
+		sInstance = this;
 
 		StartupSettings startupSettings;
 		Project::Setup(mProjectSettings, startupSettings);
@@ -34,6 +37,8 @@ namespace CDR {
 	{
 		Project::PreCleanup();
 
+		mAssetsLibrary.Clear();
+		
 		delete mGraphics;
 
 		delete mInput;
