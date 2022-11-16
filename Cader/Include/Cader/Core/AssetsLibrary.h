@@ -1,21 +1,13 @@
 #pragma once
 
+#include "Cader/Core/Asset.h"
 #include "Cader/Core/AssetHandle.h"
 
 #include <unordered_map>
 
 namespace CDR {
 
-	class AssetsLibrary;
 	class Engine;
-
-	class Asset
-	{
-		friend AssetsLibrary;
-
-	protected:
-		virtual ~Asset() = default;
-	};
 
 	class AssetsLibrary
 	{
