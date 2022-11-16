@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Cader/Core/StartupSettings.h"
-#include "Cader/Types/Color.h"
+#include "Cader/Maths/Color.h"
 #include "Cader/Types/Common.h"
 #include "Cader/Window/Event.h"
 

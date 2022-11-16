@@ -37,8 +37,6 @@ namespace CDR {
 	{
 		Project::PreCleanup();
 
-		mAssetsLibrary.Clear();
-		
 		delete mGraphics;
 
 		delete mInput;
@@ -96,7 +94,6 @@ namespace CDR {
 						Time::Recaliber();
 
 					mGraphics->OnWindowMinimize(e);
-
 					break;
 				}
 				case EEventType::WindowFocus:

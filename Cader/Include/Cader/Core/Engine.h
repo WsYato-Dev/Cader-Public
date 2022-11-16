@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Cader/Core/AssetsLibrary.h"
 #include "Cader/Core/ProjectSettings.h"
 #include "Cader/Window/EventSystem.h"
 
@@ -21,7 +20,6 @@ namespace CDR {
 		ProjectSettings mProjectSettings{};
 
 		EventSystem mEventSystem{};
-		AssetsLibrary mAssetsLibrary{};
 
 		Window* mWindow{nullptr};
 		Input* mInput{nullptr};

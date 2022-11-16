@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Cader/Types/Color.h"
+#include "Cader/Maths/Color.h"
 #include "Cader/Window/WindowSettings.h"
 
 namespace CDR {
