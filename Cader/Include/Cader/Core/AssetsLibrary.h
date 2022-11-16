@@ -16,7 +16,7 @@ namespace CDR {
 		static AssetsLibrary* sInstance;
 
 	protected:
-		std::unordered_map<AssetHandle, Asset*> mAssets;
+		std::unordered_map<u32, Asset*> mAssets;
 
 	private:
 		AssetsLibrary();

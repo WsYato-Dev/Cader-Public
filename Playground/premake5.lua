@@ -16,7 +16,8 @@ project("Playground")
 	}
 
 	includedirs{
-		"%{wks.location}/Cader/Include/"
+		"%{wks.location}/Cader/Include/",
+		"%{Glm.Include}"
 	}
 
 	links{
