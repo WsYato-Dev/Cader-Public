@@ -14,7 +14,7 @@ namespace CDR {
 		friend AssetsLibrary;
 
 	protected:
-		virtual ~Asset() = 0;
+		virtual ~Asset() = default;
 	};
 
 	class AssetsLibrary
@@ -23,15 +23,17 @@ namespace CDR {
 
 		static AssetsLibrary* sInstance;
 
-		std::unordered_map<AssetID, Asset*> mAssets;
+	protected:
+		std::unordered_map<AssetHandle, Asset*> mAssets;
 
+	private:
 		AssetsLibrary();
 
 		void Clear();
 
 	protected:
-		static AssetID RegisterAsset(Asset* pAsset);
-		static void DestroyAsset(AssetID pID);
+		static AssetHandle RegisterAsset(Asset* pAsset);
+		static void DestroyAsset(AssetHandle pHandle);
 	};
 
 }

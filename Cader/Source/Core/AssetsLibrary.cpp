@@ -22,24 +22,24 @@ namespace CDR {
 		mAssets.clear();
 	}
 
-	AssetID AssetsLibrary::RegisterAsset(Asset* pAsset)
+	AssetHandle AssetsLibrary::RegisterAsset(Asset* pAsset)
 	{
-		AssetID id = Random::UInt32();
+		AssetHandle handle = Random::UInt32();
 
-		while(sInstance->mAssets.find(id) == sInstance->mAssets.end() || id == 0)
-			id = Random::UInt32();
+		while(sInstance->mAssets.find(handle) == sInstance->mAssets.end() || handle == 0)
+			handle = Random::UInt32();
 
-		sInstance->mAssets[id] = pAsset;
+		sInstance->mAssets[handle] = pAsset;
 
-		return id;
+		return handle;
 	}
 
-	void AssetsLibrary::DestroyAsset(AssetID pID)
+	void AssetsLibrary::DestroyAsset(AssetHandle pHandle)
 	{
-		assert(sInstance->mAssets.find(pID) != sInstance->mAssets.end());
+		assert(sInstance->mAssets.find(pHandle) != sInstance->mAssets.end());
 
-		delete sInstance->mAssets[pID];
-		sInstance->mAssets.erase(pID);
+		delete sInstance->mAssets[pHandle];
+		sInstance->mAssets.erase(pHandle);
 	}
 
 }
