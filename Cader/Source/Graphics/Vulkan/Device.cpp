@@ -81,6 +81,7 @@ namespace CDR::VK {
 		assert(physicalDeviceRating.score);
 
 		mPhysicalDevice = physicalDevices[physicalDeviceRating.index];
+		vkGetPhysicalDeviceMemoryProperties(mPhysicalDevice, &mMemoryProperties);
 		mQueueFamilyIndicies = physicalDeviceRating.queueFamilyIndicies;
 	}
 

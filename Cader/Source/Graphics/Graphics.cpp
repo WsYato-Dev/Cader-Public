@@ -11,6 +11,7 @@
 #include "Vulkan/SwapChain.h"
 #include "Vulkan/Sync.h"
 #include "Vulkan/Utility.h"
+#include "Vulkan/Objects/Objects.h"
 
 #include <stdint.h>
 
@@ -27,6 +28,8 @@ namespace CDR {
 		mRenderPass = new VK::RenderPass(*mDevice, *mSwapChain);
 		mSync = new VK::Sync(*mDevice, *mSwapChain);
 		mCommands = new VK::Commands(*mDevice, *mSwapChain);
+
+		VK::Objects::Init(mDevice, mCommands);
 	}
 
 	Graphics::~Graphics()

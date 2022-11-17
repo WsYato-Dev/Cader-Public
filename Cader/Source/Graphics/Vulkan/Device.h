@@ -29,6 +29,7 @@ namespace CDR {
 			const Instance& mInstance;
 
 			VkPhysicalDevice mPhysicalDevice;
+			VkPhysicalDeviceMemoryProperties mMemoryProperties;
 			QueueFamilyIndicies mQueueFamilyIndicies{};
 
 			VkDevice mDevice;
@@ -49,6 +50,7 @@ namespace CDR {
 			void WaitIdle();
 
 			inline const VkPhysicalDevice& GetPhysicalDevice() const noexcept { return mPhysicalDevice; }
+			inline const VkPhysicalDeviceMemoryProperties& GetMemoryProperties() const noexcept { return mMemoryProperties; }
 			inline QueueFamilyIndicies GetQueueFamilyIndicies() const noexcept { return mQueueFamilyIndicies; }
 
 			inline const VkDevice& GetDevice() const noexcept { return mDevice; }
