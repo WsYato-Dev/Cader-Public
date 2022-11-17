@@ -23,21 +23,18 @@ if "%Command:~0, 6%" == "-cdir " (
 ) else if "%Command:~0, 3%" == "-s " (
 	echo Compiling '%Command:~3%'
 	call "%%%VulkanPath%%%\Bin\glslc.exe" "%Command:~3%" -o "%CompileDir%/%Command:~3%.spv"
-	echo Compiled '%Command:~3%' To '%Command:~3%.spv'
 	echo.
 	goto COMMAND
 ) else if "%Command%" == "-all" (
 	for %%v in (*.vert) do (
 		echo Compiling '%%v'
 		call "%%%VulkanPath%%%\Bin\glslc.exe" "%%v" -o "%CompileDir%/%%v.spv"
-		echo Compiled '%%v' To '%%v.spv'
 		echo.
 	)
 
 	for %%f in (*.frag) do (
 		echo Compiling '%%f'
 		call "%%%VulkanPath%%%\Bin\glslc.exe" "%%f" -o "%CompileDir%/%%f.spv"
-		echo Compiled '%%f' To '%%f.spv'
 		echo.
 	)
 )else if "%Command%" == "-q" (

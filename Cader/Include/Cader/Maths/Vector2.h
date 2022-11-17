@@ -3,8 +3,6 @@
 #include "Cader/Types/Common.h"
 #include "Cader/Utility/Assert.h"
 
-#include <iostream>
-
 namespace CDR {
 
 	template<typename _T>
@@ -127,11 +125,6 @@ namespace CDR {
 		{
 			x = x + pT * (pOther.x - x);
 			y = y + pT * (pOther.y - y);
-		}
-
-		void Print()
-		{
-			printf("%f %f\n", x, y);
 		}
 	};
 
