@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Cader/Maths/Random.h"
+#include "Cader/Utility/Assert.h"
 #include "Cader/Types/Common.h"
 
 namespace CDR {
@@ -46,6 +47,30 @@ namespace CDR {
 		constexpr Color& operator=(const Color&) = default;
 		constexpr Color& operator=(Color&&) noexcept = default;
 
+		constexpr float operator[](u8 pIndex) const
+		{
+			switch(pIndex)
+			{
+				case 0: return r;
+				case 1: return g;
+				case 2: return b;
+				case 3: return a;
+				default: CDR_ASSERT(false);
+			}
+		}
+
+		constexpr float& operator[](u8 pIndex)
+		{
+			switch(pIndex)
+			{
+				case 0: return r;
+				case 1: return g;
+				case 2: return b;
+				case 3: return a;
+				default: CDR_ASSERT(false);
+			}
+		}
+
 		constexpr void operator*=(float pScaler)
 		{
 			r *= pScaler;
@@ -55,7 +80,11 @@ namespace CDR {
 
 		constexpr Color operator*(float pScaler)
 		{
-			return Color(r * pScaler, g * pScaler, b * pScaler);
+			return Color(
+				r * pScaler,
+				g * pScaler,
+				b * pScaler
+			);
 		}
 
 		constexpr void operator*=(const Color& pColor)
@@ -67,51 +96,55 @@ namespace CDR {
 
 		constexpr Color operator*(const Color& pColor)
 		{
-			return Color(r * pColor.r, g * pColor.g, b * pColor.b);
+			return Color(
+				r * pColor.r,
+				g * pColor.g,
+				b * pColor.b
+			);
 		}
 
-		constexpr void Lerp(const Color& pColor, float pT)
+		constexpr void Lerp(const Color& pOther, float pT)
 		{
-			r = r + pT * (pColor.r - r);
-			g = g + pT * (pColor.g - g);
-			b = b + pT * (pColor.b - b);
+			r = r + pT * (pOther.r - r);
+			g = g + pT * (pOther.g - g);
+			b = b + pT * (pOther.b - b);
+		}
+
+		static constexpr Color Random()
+		{
+			return Color(
+				Random::Float(0.0f, 1.0f),
+				Random::Float(0.0f, 1.0f),
+				Random::Float(0.0f, 1.0f)
+			);
+		}
+
+		static constexpr Color RGB(u8 pR, u8 pG, u8 pB)
+		{
+			return Color(
+				(float)pR / 255.0f,
+				(float)pG / 255.0f,
+				(float)pB / 255.0f
+			);
+		}
+
+		static constexpr Color RGBA(u8 pR, u8 pG, u8 pB, u8 pA)
+		{
+			return Color(
+				(float)pR / 255.0f,
+				(float)pG / 255.0f,
+				(float)pB / 255.0f,
+				(float)pA / 255.0f
+			);
 		}
 	};
 
-	static constexpr Color RGB2Color(u8 pR, u8 pG, u8 pB)
-	{
-		return Color(
-			(float)pR / 255.0f,
-			(float)pG / 255.0f,
-			(float)pB / 255.0f
-		);
-	}
-
-	static constexpr Color RGBA2Color(u8 pR, u8 pG, u8 pB, u8 pA)
-	{
-		return Color(
-			(float)pR / 255.0f,
-			(float)pG / 255.0f,
-			(float)pB / 255.0f,
-			(float)pA / 255.0f
-		);
-	}
-
-	static constexpr Color LerpColor(const Color& pLhs, const Color& pRhs, float pT)
+	static constexpr Color Lerp(const Color& pLhs, const Color& pRhs, float pT)
 	{
 		return Color(
 			pLhs.r + pT * (pRhs.r - pLhs.r),
 			pLhs.g + pT * (pRhs.g - pLhs.g),
 			pLhs.b + pT * (pRhs.b - pLhs.b)
-		);
-	}
-
-	static constexpr Color RandomColor()
-	{
-		return Color(
-			Random::Float(0.0f, 1.0f),
-			Random::Float(0.0f, 1.0f),
-			Random::Float(0.0f, 1.0f)
 		);
 	}
 

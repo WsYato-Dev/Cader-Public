@@ -1,6 +1,6 @@
 #include "Cader/Window/EventSystem.h"
 
-#include <assert.h>
+#include "Cader/Utility/Assert.h"
 
 namespace CDR {
 
@@ -22,7 +22,7 @@ namespace CDR {
 
 	Event EventSystem::GetEvent(u8 pIndex)
 	{
-		assert(pIndex < sCount);
+		CDR_ASSERT(pIndex < sCount);
 		return sEvents[pIndex];
 	}
 

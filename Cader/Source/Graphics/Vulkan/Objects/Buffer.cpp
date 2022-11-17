@@ -1,9 +1,9 @@
 #include "Buffer.h"
 
-#include "Objects.h"
+#include "Cader/Utility/Assert.h"
 #include "../Utility.h"
+#include "Objects.h"
 
-#include <assert.h>
 #include <cstring>
 
 namespace CDR::VK {
@@ -49,7 +49,7 @@ namespace CDR::VK {
 
 	void BufferHost::Update(u32 pSize, u32 pOffset, const void* pData)
 	{
-		assert(pSize + pOffset <= size);
+		CDR_ASSERT(pSize + pOffset <= size);
 
 		void* data;
 		VK_VERIFY(Objects::MapMemory(mMemory, pOffset, pSize, 0, &data));
@@ -58,7 +58,7 @@ namespace CDR::VK {
 	}
 
 	StagingBuffer::StagingBuffer(u32 pSize)
-		: BufferHost(pSize, VK_BUFFER_USAGE_TRANSFER_SRC_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT)
+		: BufferHost{pSize, VK_BUFFER_USAGE_TRANSFER_SRC_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT}
 	{}
 
 	void StagingBuffer::CopyToBuffer(const VkBuffer pDst, u32 pSize)
@@ -98,11 +98,11 @@ namespace CDR::VK {
 	{}
 
 	UniformBuffer::UniformBuffer(u32 pSize)
-		: BufferHost(pSize, VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT)
+		: BufferHost{pSize, VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT}
 	{}
 
 	StorageBuffer::StorageBuffer(u32 pSize)
-		: BufferHost(pSize, VK_BUFFER_USAGE_STORAGE_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT)
+		: BufferHost{pSize, VK_BUFFER_USAGE_STORAGE_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT}
 	{}
 
 }

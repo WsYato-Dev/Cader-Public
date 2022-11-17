@@ -1,10 +1,9 @@
 #include "SwapChain.h"
 
+#include "Cader/Utility/Assert.h"
 #include "Device.h"
 #include "Instance.h"
 #include "Utility.h"
-
-#include <assert.h>
 
 namespace CDR::VK {
 
@@ -32,7 +31,7 @@ namespace CDR::VK {
 
 		u32 surfaceFormatsCount;
 		VK_VERIFY(vkGetPhysicalDeviceSurfaceFormatsKHR(mDevice.GetPhysicalDevice(), mInstance.GetSurface(), &surfaceFormatsCount, nullptr));
-		assert(surfaceFormatsCount);
+		CDR_ASSERT(surfaceFormatsCount);
 
 		std::vector<VkSurfaceFormatKHR> surfaceFormats(surfaceFormatsCount);
 		VK_VERIFY(vkGetPhysicalDeviceSurfaceFormatsKHR(mDevice.GetPhysicalDevice(), mInstance.GetSurface(), &surfaceFormatsCount, &surfaceFormats[0]));

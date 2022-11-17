@@ -1,9 +1,9 @@
 #include "Device.h"
 
+#include "Cader/Utility/Assert.h"
 #include "Instance.h"
 #include "Utility.h"
 
-#include <assert.h>
 #include <string>
 #include <vector>
 
@@ -51,7 +51,7 @@ namespace CDR::VK {
 	{
 		u32 physicalDevicesCount;
 		VK_VERIFY(vkEnumeratePhysicalDevices(mInstance.GetInstance(), &physicalDevicesCount, nullptr));
-		assert(physicalDevicesCount);
+		CDR_ASSERT(physicalDevicesCount);
 
 		std::vector<VkPhysicalDevice> physicalDevices(physicalDevicesCount);
 		VK_VERIFY(vkEnumeratePhysicalDevices(mInstance.GetInstance(), &physicalDevicesCount, &physicalDevices[0]));
@@ -78,7 +78,7 @@ namespace CDR::VK {
 			}
 		}
 
-		assert(physicalDeviceRating.score);
+		CDR_ASSERT(physicalDeviceRating.score);
 
 		mPhysicalDevice = physicalDevices[physicalDeviceRating.index];
 		vkGetPhysicalDeviceMemoryProperties(mPhysicalDevice, &mMemoryProperties);

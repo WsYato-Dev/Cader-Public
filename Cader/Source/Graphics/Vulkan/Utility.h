@@ -2,14 +2,14 @@
 
 #if defined(CDR_DEBUG)
 
-#include <assert.h>
+#include "Cader/Utility/Assert.h"
 
 #include <vulkan/vulkan.h>
 
-#define VK_VERIFY(x) assert(x == VK_SUCCESS)
+#define VK_VERIFY(expr) CDR_ASSERT(expr == VK_SUCCESS)
 
 #else
 
-#define VK_VERIFY(x) x
+#define VK_VERIFY(expr) expr
 
 #endif

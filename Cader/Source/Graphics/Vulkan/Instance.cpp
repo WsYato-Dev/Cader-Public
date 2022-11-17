@@ -1,10 +1,10 @@
 #include "Instance.h"
 
 #include "Cader/Types/Common.h"
+#include "Cader/Utility/Assert.h"
 #include "Cader/Window/Window.h"
 #include "Utility.h"
 
-#include <assert.h>
 #include <string>
 #include <vector>
 
@@ -52,7 +52,7 @@ namespace CDR::VK {
 
 		u32 layersCount;
 		VK_VERIFY(vkEnumerateInstanceLayerProperties(&layersCount, nullptr));
-		assert(layersCount);
+		CDR_ASSERT(layersCount);
 
 		std::vector<VkLayerProperties> layers(layersCount);
 		VK_VERIFY(vkEnumerateInstanceLayerProperties(&layersCount, &layers[0]));
@@ -71,7 +71,7 @@ namespace CDR::VK {
 			}
 		}
 
-		assert(layersFound == requestedLayersCount);
+		CDR_ASSERT(layersFound == requestedLayersCount);
 
 		instanceInfo.enabledLayerCount = requestedLayersCount;
 		instanceInfo.ppEnabledLayerNames = &requestedLayers[0];

@@ -1,9 +1,8 @@
 #include "Cader/Window/Window.h"
 
+#include "Cader/Utility/Assert.h"
 #include "Cader/Window/Event.h"
 #include "Cader/Window/EventSystem.h"
-
-#include <assert.h>
 
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
@@ -49,7 +48,7 @@ namespace CDR {
 			}
 		}
 
-		assert(mWindow);
+		CDR_ASSERT(mWindow);
 
 		glfwSetWindowUserPointer(mWindow, this);
 

@@ -5,10 +5,9 @@
 #include "Cader/Core/Time.h"
 #include "Cader/Graphics/Graphics.h"
 #include "Cader/Types/Common.h"
+#include "Cader/Utility/Assert.h"
 #include "Cader/Window/Input.h"
 #include "Cader/Window/Window.h"
-
-#include <assert.h>
 
 namespace CDR {
 
@@ -16,7 +15,7 @@ namespace CDR {
 
 	Engine::Engine()
 	{
-		assert(!sInstance);
+		CDR_ASSERT(!sInstance);
 		sInstance = this;
 
 		StartupSettings startupSettings;
