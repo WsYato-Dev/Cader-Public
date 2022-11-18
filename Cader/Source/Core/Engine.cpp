@@ -11,7 +11,7 @@
 
 namespace CDR {
 
-	Engine* Engine::sInstance{nullptr};
+	Engine* Engine::sInstance;
 
 	Engine::Engine()
 	{

@@ -25,12 +25,12 @@ namespace CDR {
 	{
 		friend Engine;
 
-		VK::Instance* mInstance{nullptr};
-		VK::Device* mDevice{nullptr};
-		VK::SwapChain* mSwapChain{nullptr};
-		VK::RenderPass* mRenderPass{nullptr};
-		VK::Sync* mSync{nullptr};
-		VK::Commands* mCommands{nullptr};
+		VK::Instance* mInstance;
+		VK::Device* mDevice;
+		VK::SwapChain* mSwapChain;
+		VK::RenderPass* mRenderPass;
+		VK::Sync* mSync;
+		VK::Commands* mCommands;
 
 		u32 mSwapChainImageIndex{0};
 		u8 mInFlightFrameIndex{0};

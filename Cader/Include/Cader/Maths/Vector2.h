@@ -37,7 +37,7 @@ namespace CDR {
 
 		constexpr _T operator[](u8 pIndex) const
 		{
-			return switch(pIndex)
+			switch(pIndex)
 			{
 				case 0: return x;
 				case 1: return y;
@@ -102,8 +102,8 @@ namespace CDR {
 		constexpr Vector2 operator*(const Vector2& pOther) const noexcept
 		{
 			return Vector2(
-				x * pOhter.x,
-				y * pOhter.y
+				x * pOther.x,
+				y * pOther.y
 			);
 		}
 
@@ -113,7 +113,7 @@ namespace CDR {
 			y /= pOther.y;
 		}
 
-		constexpr Vector2 operator/=(const Vector2& pOther) const noexcept
+		constexpr Vector2 operator/(const Vector2& pOther) const noexcept
 		{
 			return Vector2(
 				x / pOther.x,

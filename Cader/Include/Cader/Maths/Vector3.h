@@ -126,7 +126,7 @@ namespace CDR {
 			z /= pOther.z;
 		}
 
-		constexpr Vector3 operator/=(const Vector3& pOther) const noexcept
+		constexpr Vector3 operator/(const Vector3& pOther) const noexcept
 		{
 			return Vector3(
 				x / pOther.x,

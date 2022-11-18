@@ -14,13 +14,13 @@ namespace CDR {
 	{
 		friend Engine;
 
-		GLFWwindow* mWindow{nullptr};
+		GLFWwindow* mWindow;
 
 		Text mTitle;
 		EWindowMode mMode;
 
-		WindowSize mSize{};
-		WindowSize mSizeBeforeFullscreen{};
+		WindowSize mSize;
+		WindowSize mSizeBeforeFullscreen;
 
 		bool mMinimized{false};
 		bool mFocused{true};

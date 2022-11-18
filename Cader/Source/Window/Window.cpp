@@ -22,7 +22,7 @@ namespace CDR {
 		if(pStartupSettings.windowDefaultSize.width > 0 && pStartupSettings.windowDefaultSize.height > 0)
 			mSize = pStartupSettings.windowDefaultSize;
 		else
-			mSize = {1280, 720};
+			mSize = WindowSize(1280, 720);
 
 		mSizeBeforeFullscreen = mSize;
 
@@ -118,8 +118,7 @@ namespace CDR {
 		int width, height;
 		glfwGetWindowSize(mWindow, &width, &height);
 
-		mSize.width = (u16)width;
-		mSize.height = (u16)height;
+		mSize = WindowSize((u16)width, (u16)height);
 
 		Event e(EEventType::WindowResize);
 		e.windowSize = {mSize.width, mSize.height};

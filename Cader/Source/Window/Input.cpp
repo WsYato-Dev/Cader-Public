@@ -140,11 +140,11 @@ namespace CDR {
 
 	EInputMode Input::sInputMode{EInputMode::Default};
 
-	EInputState Input::sKeyStates[(i8)EKeyCode::Count]{};
-	EInputState Input::sMouseButtonStates[(i8)EMouseButton::Count]{};
+	EInputState Input::sKeyStates[(i8)EKeyCode::Count]{EInputState::None};
+	EInputState Input::sMouseButtonStates[(i8)EMouseButton::Count]{EInputState::None};
 
-	MousePosition Input::sMousePosition{};
-	i8 Input::sMouseScroll{0};
+	MousePosition Input::sMousePosition;
+	i8 Input::sMouseScroll;
 
 	Input::Input(const Window& pWindow)
 	{
@@ -164,7 +164,7 @@ namespace CDR {
 				sKeyStates[(i8)keyCode] = state;
 
 				Event e(EEventType::Key);
-				e.key = {keyCode, state};
+				e.key = Key(keyCode, state);
 				EventSystem::FireEvent(e);
 			}
 		});
@@ -183,17 +183,17 @@ namespace CDR {
 				sMouseButtonStates[(i8)button] = state;
 
 				Event e(EEventType::MouseButton);
-				e.mouseButton = {button, state};
+				e.mouseButton = MouseButton(button, state);
 				EventSystem::FireEvent(e);
 			}
 		});
 
 		glfwSetCursorPosCallback(window, [](GLFWwindow* pWindow, double pX, double pY)
 		{
-			sMousePosition = {(u16)pX, (u16)pY};
+			sMousePosition = MousePosition((u16)pX, (u16)pY);
 
 			Event e(EEventType::MousePosition);
-			e.mousePosition = {(u16)pX, (u16)pY};
+			e.mousePosition = sMousePosition;
 			EventSystem::FireEvent(e);
 		});
 

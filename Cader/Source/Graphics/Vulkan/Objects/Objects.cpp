@@ -6,8 +6,8 @@
 
 namespace CDR::VK {
 
-	const Device* Objects::sDevice{nullptr};
-	const Commands* Objects::sCommands{nullptr};
+	const Device* Objects::sDevice;
+	const Commands* Objects::sCommands;
 
 	void Objects::Init(const Device* pDevice, const Commands* pCommands)
 	{

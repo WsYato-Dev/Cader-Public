@@ -30,7 +30,7 @@ namespace CDR {
 
 			VkPhysicalDevice mPhysicalDevice;
 			VkPhysicalDeviceMemoryProperties mMemoryProperties;
-			QueueFamilyIndicies mQueueFamilyIndicies{};
+			QueueFamilyIndicies mQueueFamilyIndicies;
 
 			VkDevice mDevice;
 

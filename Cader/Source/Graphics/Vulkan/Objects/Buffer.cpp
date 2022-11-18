@@ -63,7 +63,7 @@ namespace CDR::VK {
 
 	void StagingBuffer::CopyToBuffer(const VkBuffer pDst, u32 pSize)
 	{
-		VkBufferCopy copyRegion{};
+		VkBufferCopy copyRegion = {};
 		copyRegion.srcOffset = 0;
 		copyRegion.dstOffset = 0;
 		copyRegion.size = pSize;

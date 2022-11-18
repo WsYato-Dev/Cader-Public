@@ -9,8 +9,8 @@
 
 namespace CDR::VK {
 
-	constexpr u8 RequiredExtensionsCount = 1;
-	constexpr Text RequiredExtensions[RequiredExtensionsCount]
+	static constexpr u8 RequiredExtensionsCount{1};
+	static constexpr Text RequiredExtensions[RequiredExtensionsCount]
 	{
 		VK_KHR_SWAPCHAIN_EXTENSION_NAME
 	};
@@ -58,9 +58,9 @@ namespace CDR::VK {
 
 		struct PhysicalDeviceRating final
 		{
-			u8 index = 0;
-			u8 score = 0;
-			QueueFamilyIndicies queueFamilyIndicies = {};
+			u8 index{0};
+			u8 score{0};
+			QueueFamilyIndicies queueFamilyIndicies;
 		};
 
 		PhysicalDeviceRating physicalDeviceRating;

@@ -31,7 +31,7 @@ namespace CDR {
 			const Instance& mInstance;
 			const Device& mDevice;
 
-			SwapChainStaticInfo mStaticInfo{};
+			SwapChainStaticInfo mStaticInfo;
 
 			VkSwapchainKHR mSwapChain;
 			std::vector<VkImage> mImages;
