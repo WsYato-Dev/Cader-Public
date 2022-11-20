@@ -36,7 +36,7 @@ namespace CDR {
 			void DestroyFrameBuffers();
 
 		public:
-			inline const VkRenderPass& GetRenderPass() const noexcept { return mRenderPass; }
+			inline const VkRenderPass GetRenderPass() const noexcept { return mRenderPass; }
 			inline const std::vector<VkFramebuffer>& GetFrameBuffers() const noexcept { return mFrameBuffers; }
 		};
 

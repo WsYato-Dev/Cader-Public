@@ -18,8 +18,8 @@ namespace CDR::VK {
 		Buffer(u32 pSize, VkBufferUsageFlags pUsage, VkMemoryPropertyFlags pProperties);
 		~Buffer();
 
-		inline const VkBuffer& GetBuffer() const noexcept { return mBuffer; }
-		inline const VkDeviceMemory& GetMemory() const noexcept { return mMemory; }
+		inline const VkBuffer GetBuffer() const noexcept { return mBuffer; }
+		inline const VkDeviceMemory GetMemory() const noexcept { return mMemory; }
 	};
 
 	class BufferHost: public Buffer

@@ -85,7 +85,7 @@ namespace CDR::VK {
 		mQueueFamilyIndicies = physicalDeviceRating.queueFamilyIndicies;
 	}
 
-	u8 Device::RatePhysicalDevice(VkPhysicalDevice pPhysicalDevice, QueueFamilyIndicies* pQueueFamilyIndicies) const
+	u8 Device::RatePhysicalDevice(const VkPhysicalDevice pPhysicalDevice, QueueFamilyIndicies* pQueueFamilyIndicies) const
 	{
 		u32 score = 0;
 

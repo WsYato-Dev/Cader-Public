@@ -23,8 +23,8 @@ namespace CDR{
 			void InitSurface(const Window& pWindow);
 
 		public:
-			inline const VkInstance& GetInstance() const noexcept { return mInstance; }
-			inline const VkSurfaceKHR& GetSurface() const noexcept { return mSurface; }
+			inline const VkInstance GetInstance() const noexcept { return mInstance; }
+			inline const VkSurfaceKHR GetSurface() const noexcept { return mSurface; }
 		};
 
 	}

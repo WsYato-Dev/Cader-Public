@@ -29,7 +29,7 @@ namespace CDR {
 		mSync = new VK::Sync(*mDevice, *mSwapChain);
 		mCommands = new VK::Commands(*mDevice, *mSwapChain);
 
-		VK::Objects::Init(mDevice, mCommands);
+		VK::Objects::Init(mDevice, mCommands, mRenderPass);
 	}
 
 	Graphics::~Graphics()
@@ -65,6 +65,12 @@ namespace CDR {
 		const VkClearValue clearValue = {clearColor.r, clearColor.g, clearColor.b, 1.0f};
 		const VkRect2D rect = {{0, 0}, mSwapChain->GetExtent()};
 
+		VkViewport viewPort = {};
+		viewPort.width = (float)rect.extent.width;
+		viewPort.height = (float)rect.extent.height;
+		viewPort.minDepth = 0.0f;
+		viewPort.maxDepth = 1.0f;
+
 		VkRenderPassBeginInfo renderPassBeginInfo = {VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO};
 		renderPassBeginInfo.renderPass = mRenderPass->GetRenderPass();
 		renderPassBeginInfo.framebuffer = mRenderPass->GetFrameBuffers()[mSwapChainImageIndex];
@@ -75,6 +81,9 @@ namespace CDR {
 		renderPassBeginInfo.renderArea = rect;
 
 		vkCmdBeginRenderPass(commandBuffer, &renderPassBeginInfo, VK_SUBPASS_CONTENTS_INLINE);
+
+		vkCmdSetScissor(commandBuffer, 0, 1, &rect);
+		vkCmdSetViewport(commandBuffer, 0, 1, &viewPort);
 	}
 
 	void Graphics::RenderFrame()
@@ -83,6 +92,7 @@ namespace CDR {
 			return;
 
 		const VkCommandBuffer commandBuffer = mCommands->GetGraphicsCommandBuffers()[mInFlightFrameIndex];
+		const VkSwapchainKHR swapChain = mSwapChain->GetSwapChain();
 
 		vkCmdEndRenderPass(commandBuffer);
 		VK_VERIFY(vkEndCommandBuffer(commandBuffer));
@@ -108,7 +118,7 @@ namespace CDR {
 		presentInfo.pImageIndices = &mSwapChainImageIndex;
 
 		presentInfo.swapchainCount = 1;
-		presentInfo.pSwapchains = &mSwapChain->GetSwapChain();
+		presentInfo.pSwapchains = &swapChain;
 
 		presentInfo.waitSemaphoreCount = 1;
 		presentInfo.pWaitSemaphores = &signalSemaphore;

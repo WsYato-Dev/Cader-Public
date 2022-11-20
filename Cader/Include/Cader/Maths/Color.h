@@ -71,6 +71,16 @@ namespace CDR {
 			}
 		}
 
+		constexpr bool operator==(const Color& pOther) const noexcept
+		{
+			return r == pOther.r && g == pOther.g && b == pOther.b && a == pOther.a;
+		}
+
+		constexpr bool operator!=(const Color& pOther) const noexcept
+		{
+			return !operator==(pOther);
+		}
+
 		constexpr void operator*=(float pScaler)
 		{
 			r *= pScaler;

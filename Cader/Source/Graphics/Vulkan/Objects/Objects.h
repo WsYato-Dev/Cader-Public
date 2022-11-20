@@ -12,6 +12,7 @@ namespace CDR {
 
 		class Commands;
 		class Device;
+		class RenderPass;
 
 		class Objects final
 		{
@@ -19,8 +20,9 @@ namespace CDR {
 
 			static const Device* sDevice;
 			static const Commands* sCommands;
+			static const RenderPass* sRenderPass;
 
-			static void Init(const Device* pDevice, const Commands* pCommands);
+			static void Init(const Device* pDevice, const Commands* pCommands, const RenderPass* pRenderPass);
 
 		public:
 			// Buffer
@@ -46,6 +48,14 @@ namespace CDR {
 			// Shader Module
 			static VkResult CreateShaderModule(const VkShaderModuleCreateInfo& pCreateInfo, VkShaderModule* pModule);
 			static void DestroyShaderModule(const VkShaderModule pModule);
+
+			// Pipeline Layout
+			static VkResult CreatePipelineLayout(const VkPipelineLayoutCreateInfo& pCreateInfo, VkPipelineLayout* pLayout);
+			static void DestroyPipelineLayout(const VkPipelineLayout pLayout);
+
+			// Graphics Pipeline
+			static VkResult CreateGraphicsPipeline(VkGraphicsPipelineCreateInfo& pCreateInfo, VkPipeline* pPipeline);
+			static void DestroyPipeline(const VkPipeline pPipeline);
 		};
 
 	}

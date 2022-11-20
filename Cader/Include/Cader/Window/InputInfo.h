@@ -51,7 +51,6 @@ namespace CDR {
 	enum class EMouseButton: i8
 	{
 		None = -1,
-
 		Left, Right, Middle,
 
 		Count

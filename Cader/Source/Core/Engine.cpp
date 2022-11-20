@@ -1,5 +1,6 @@
 #include "Cader/Core/Engine.h"
 
+#include "Cader/Core/FileSystem.h"
 #include "Cader/Core/Project.h"
 #include "Cader/Core/StartupSettings.h"
 #include "Cader/Core/Time.h"
@@ -18,8 +19,10 @@ namespace CDR {
 		CDR_ASSERT(!sInstance);
 		sInstance = this;
 
+		FileSystem::Init();
+
 		StartupSettings startupSettings;
-		Project::Setup(mProjectSettings, startupSettings);
+		Project::Setup(&mProjectSettings, &startupSettings);
 
 		mWindow = new Window(mProjectSettings.title, startupSettings);
 		mInput = new Input(*mWindow);

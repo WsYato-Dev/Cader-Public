@@ -2,17 +2,20 @@
 
 #include "../Commands.h"
 #include "../Device.h"
+#include "../RenderPass.h"
 #include "../Utility.h"
 
 namespace CDR::VK {
 
 	const Device* Objects::sDevice;
 	const Commands* Objects::sCommands;
+	const RenderPass* Objects::sRenderPass;
 
-	void Objects::Init(const Device* pDevice, const Commands* pCommands)
+	void Objects::Init(const Device* pDevice, const Commands* pCommands, const RenderPass* pRenderPass)
 	{
 		sDevice = pDevice;
 		sCommands = pCommands;
+		sRenderPass = pRenderPass;
 	}
 
 	VkResult Objects::CreateBuffer(const VkBufferCreateInfo& pCreateInfo, VkBuffer* pBuffer)
@@ -96,6 +99,27 @@ namespace CDR::VK {
 	void Objects::DestroyShaderModule(const VkShaderModule pModule)
 	{
 		vkDestroyShaderModule(sDevice->GetDevice(), pModule, nullptr);
+	}
+
+	VkResult Objects::CreatePipelineLayout(const VkPipelineLayoutCreateInfo& pCreateInfo, VkPipelineLayout* pLayout)
+	{
+		return vkCreatePipelineLayout(sDevice->GetDevice(), &pCreateInfo, nullptr, pLayout);
+	}
+
+	void Objects::DestroyPipelineLayout(const VkPipelineLayout pLayout)
+	{
+		vkDestroyPipelineLayout(sDevice->GetDevice(), pLayout, nullptr);
+	}
+
+	VkResult Objects::CreateGraphicsPipeline(VkGraphicsPipelineCreateInfo& pCreateInfo, VkPipeline* pPipeline)
+	{
+		pCreateInfo.renderPass = sRenderPass->GetRenderPass();
+		return vkCreateGraphicsPipelines(sDevice->GetDevice(), nullptr, 1, &pCreateInfo, nullptr, pPipeline);
+	}
+
+	void Objects::DestroyPipeline(const VkPipeline pPipeline)
+	{
+		vkDestroyPipeline(sDevice->GetDevice(), pPipeline, nullptr);
 	}
 
 }

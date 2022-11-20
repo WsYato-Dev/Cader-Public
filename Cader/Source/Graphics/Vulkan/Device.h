@@ -42,22 +42,22 @@ namespace CDR {
 			~Device();
 
 			void InitPhysicalDevice();
-			u8 RatePhysicalDevice(VkPhysicalDevice pPhysicalDevice, QueueFamilyIndicies* pQueueFamilyIndicies) const;
+			u8 RatePhysicalDevice(const VkPhysicalDevice pPhysicalDevice, QueueFamilyIndicies* pQueueFamilyIndicies) const;
 
 			void InitDevice();
 
 		public:
 			void WaitIdle();
 
-			inline const VkPhysicalDevice& GetPhysicalDevice() const noexcept { return mPhysicalDevice; }
+			inline const VkPhysicalDevice GetPhysicalDevice() const noexcept { return mPhysicalDevice; }
 			inline const VkPhysicalDeviceMemoryProperties& GetMemoryProperties() const noexcept { return mMemoryProperties; }
 			inline QueueFamilyIndicies GetQueueFamilyIndicies() const noexcept { return mQueueFamilyIndicies; }
 
-			inline const VkDevice& GetDevice() const noexcept { return mDevice; }
+			inline const VkDevice GetDevice() const noexcept { return mDevice; }
 
-			inline const VkQueue& GetGraphicsQueue() const noexcept { return mGraphicsQueue; }
-			inline const VkQueue& GetPresentQueue() const noexcept { return mPresentQueue; }
-			inline const VkQueue& GetTransferQueue() const noexcept { return mTransferQueue; }
+			inline const VkQueue GetGraphicsQueue() const noexcept { return mGraphicsQueue; }
+			inline const VkQueue GetPresentQueue() const noexcept { return mPresentQueue; }
+			inline const VkQueue GetTransferQueue() const noexcept { return mTransferQueue; }
 		};
 
 	}

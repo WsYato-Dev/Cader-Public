@@ -5,7 +5,7 @@
 
 namespace CDR::Project {
 
-	extern void Setup(ProjectSettings& pProjectSettings, StartupSettings& pStartupSettings);
+	extern void Setup(ProjectSettings* pProjectSettings, StartupSettings* pStartupSettings);
 	extern void Init();
 	extern void Update();
 	extern void PreCleanup();

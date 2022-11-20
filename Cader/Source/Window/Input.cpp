@@ -207,7 +207,7 @@ namespace CDR {
 		});
 	}
 
-	// This might be very inefficient
+	// TODO: This might be very inefficient
 	void Input::Update()
 	{
 		for(i8 i = 0; i < (i8)EKeyCode::Count; i++)
