@@ -1,6 +1,7 @@
 #include "Cader/Core/Time.h"
 
 #include <chrono>
+#include <cstdio>
 
 namespace CDR {
 
@@ -33,5 +34,24 @@ namespace CDR {
 	{
 		sLastTickTimePoint = Clock::now();
 	}
+
+#if !defined(CDR_FINAL)
+
+	INTERNAL_FunctionBenchmarker::INTERNAL_FunctionBenchmarker(Text pFunction)
+		: mFunction{pFunction}
+	{
+		const TimePoint currentTimePoint = Clock::now();
+		mStart = (u64)std::chrono::duration_cast<std::chrono::microseconds>(currentTimePoint - sAppStartTimePoint).count();
+	}
+
+	INTERNAL_FunctionBenchmarker::~INTERNAL_FunctionBenchmarker()
+	{
+		const TimePoint currentTimePoint = Clock::now();
+		const u64 end = (u64)std::chrono::duration_cast<std::chrono::microseconds>(currentTimePoint - sAppStartTimePoint).count();
+
+		printf("%lluus:\t\t\t%s\n", end - mStart, mFunction);
+	}
+
+#endif
 
 }

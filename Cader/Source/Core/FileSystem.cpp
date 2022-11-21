@@ -42,7 +42,9 @@ namespace CDR {
 			pFile->clear();
 
 		std::ifstream file(pPath, std::ios::binary | std::ios::ate);
-		CDR_ASSERT(file.is_open());
+
+		if(!file.is_open())
+			return;
 
 		const u64 fileSize = file.tellg();
 		CDR_ASSERT(fileSize);
@@ -61,7 +63,9 @@ namespace CDR {
 		CDR_ASSERT(pPath && pText.size());
 
 		std::ofstream file(pPath);
-		CDR_ASSERT(file.is_open());
+
+		if(!file.is_open())
+			return;
 
 		file.write(pText.c_str(), pText.size());
 		file.flush();

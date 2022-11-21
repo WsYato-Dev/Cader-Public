@@ -58,4 +58,31 @@ namespace CDR {
 		}
 	};
 
+#if !defined(CDR_FINAL)
+
+	struct INTERNAL_FunctionBenchmarker final
+	{
+	private:
+		const Text mFunction;
+		u64 mStart;
+
+	public:
+		INTERNAL_FunctionBenchmarker(Text pFunction);
+		~INTERNAL_FunctionBenchmarker();
+	};
+
+#endif
+
 }
+
+#if !defined(CDR_FINAL)
+
+#define CDR_INTERNAL_PROFILE_FUNCTION(func, line) { CDR::INTERNAL_FunctionBenchmarker benchmarker##line(#func); func; }
+#define CDR_INTERNAL_PROFILE_FUNCTION_EXPANDED(func, line) CDR_INTERNAL_PROFILE_FUNCTION(func, line)
+#define CDR_PROFILE_FUNCTION(func) CDR_INTERNAL_PROFILE_FUNCTION_EXPANDED(func, __LINE__)
+
+#else
+
+#define CDR_PROFILE_FUNCTION(func)
+
+#endif
