@@ -19,7 +19,8 @@ namespace CDR {
 		CDR_ASSERT(!sInstance);
 		sInstance = this;
 
-		FileSystem::Init();
+		// TODO: Use a resource file instead of loading each resource individually
+		FileSystem::Init("../../../../Cader/Resources/");
 
 		StartupSettings startupSettings;
 		Project::Setup(&mProjectSettings, &startupSettings);

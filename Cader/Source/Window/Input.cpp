@@ -150,61 +150,64 @@ namespace CDR {
 	{
 		GLFWwindow* window = pWindow.GetNativeWindow();
 
-		glfwSetKeyCallback(window, [](GLFWwindow* pWindow, int pKey, int pScanCode, int pAction, int pMods)
-		{
-			if(pAction == GLFW_REPEAT)
-				return;
-
-			const EKeyCode keyCode = GLFW2KeyCode(pKey);
-
-			if((i8)keyCode < (i8)EKeyCode::Count && (i8)keyCode >= 0)
+		glfwSetKeyCallback(window, [](GLFWwindow* pWindow, int pKey, int pScanCode, int pAction, int pMods) -> void {
 			{
-				const EInputState state = GLFW2InputState(pAction);
+				if(pAction == GLFW_REPEAT)
+					return;
 
-				sKeyStates[(i8)keyCode] = state;
+				const EKeyCode keyCode = GLFW2KeyCode(pKey);
 
-				Event e(EEventType::Key);
-				e.key = Key(keyCode, state);
+				if((i8)keyCode < (i8)EKeyCode::Count && (i8)keyCode >= 0)
+				{
+					const EInputState state = GLFW2InputState(pAction);
+
+					sKeyStates[(i8)keyCode] = state;
+
+					Event e(EEventType::Key);
+					e.key = Key(keyCode, state);
+					EventSystem::FireEvent(e);
+				}
+			}
+		});
+
+		glfwSetMouseButtonCallback(window, [](GLFWwindow* pWindow, int pButton, int pAction, int pMods) -> void {
+			{
+				if(pAction == GLFW_REPEAT)
+					return;
+
+				const EMouseButton button = GLFW2MouseButton(pButton);
+
+				if((i8)button < (i8)EMouseButton::Count && (i8)button >= 0)
+				{
+					const EInputState state = GLFW2InputState(pAction);
+
+					sMouseButtonStates[(i8)button] = state;
+
+					Event e(EEventType::MouseButton);
+					e.mouseButton = MouseButton(button, state);
+					EventSystem::FireEvent(e);
+				}
+			}
+		});
+
+		glfwSetCursorPosCallback(window, [](GLFWwindow* pWindow, double pX, double pY) -> void {
+			{
+				sMousePosition = MousePosition((u16)pX, (u16)pY);
+
+				Event e(EEventType::MousePosition);
+				e.mousePosition = sMousePosition;
 				EventSystem::FireEvent(e);
 			}
 		});
 
-		glfwSetMouseButtonCallback(window, [](GLFWwindow* pWindow, int pButton, int pAction, int pMods)
-		{
-			if(pAction == GLFW_REPEAT)
-				return;
-
-			const EMouseButton button = GLFW2MouseButton(pButton);
-
-			if((i8)button < (i8)EMouseButton::Count && (i8)button >= 0)
+		glfwSetScrollCallback(window, [](GLFWwindow* pWindow, double pX, double pY) -> void {
 			{
-				const EInputState state = GLFW2InputState(pAction);
+				sMouseScroll = (i8)pY;
 
-				sMouseButtonStates[(i8)button] = state;
-
-				Event e(EEventType::MouseButton);
-				e.mouseButton = MouseButton(button, state);
+				Event e(EEventType::MouseScroll);
+				e.mouseScroll = (i8)pY;
 				EventSystem::FireEvent(e);
-			}
-		});
-
-		glfwSetCursorPosCallback(window, [](GLFWwindow* pWindow, double pX, double pY)
-		{
-			sMousePosition = MousePosition((u16)pX, (u16)pY);
-
-			Event e(EEventType::MousePosition);
-			e.mousePosition = sMousePosition;
-			EventSystem::FireEvent(e);
-		});
-
-		glfwSetScrollCallback(window, [](GLFWwindow* pWindow, double pX, double pY)
-		{
-			sMouseScroll = (i8)pY;
-
-			Event e(EEventType::MouseScroll);
-			e.mouseScroll = (i8)pY;
-			EventSystem::FireEvent(e);
-		});
+			}});
 	}
 
 	// TODO: This might be very inefficient

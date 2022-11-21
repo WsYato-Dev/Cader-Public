@@ -101,6 +101,16 @@ namespace CDR::VK {
 		vkDestroyShaderModule(sDevice->GetDevice(), pModule, nullptr);
 	}
 
+	VkResult Objects::CreateDescriptorSetLayout(const VkDescriptorSetLayoutCreateInfo& pCreateInfo, VkDescriptorSetLayout* pSetLayout)
+	{
+		return vkCreateDescriptorSetLayout(sDevice->GetDevice(), &pCreateInfo, nullptr, pSetLayout);
+	}
+
+	void Objects::DestroyDescriptorSetLayout(const VkDescriptorSetLayout pSetLayout)
+	{
+		vkDestroyDescriptorSetLayout(sDevice->GetDevice(), pSetLayout, nullptr);
+	}
+
 	VkResult Objects::CreatePipelineLayout(const VkPipelineLayoutCreateInfo& pCreateInfo, VkPipelineLayout* pLayout)
 	{
 		return vkCreatePipelineLayout(sDevice->GetDevice(), &pCreateInfo, nullptr, pLayout);
@@ -111,15 +121,35 @@ namespace CDR::VK {
 		vkDestroyPipelineLayout(sDevice->GetDevice(), pLayout, nullptr);
 	}
 
-	VkResult Objects::CreateGraphicsPipeline(VkGraphicsPipelineCreateInfo& pCreateInfo, VkPipeline* pPipeline)
+	VkResult Objects::CreateGraphicsPipeline(VkGraphicsPipelineCreateInfo* pCreateInfo, VkPipeline* pPipeline)
 	{
-		pCreateInfo.renderPass = sRenderPass->GetRenderPass();
-		return vkCreateGraphicsPipelines(sDevice->GetDevice(), nullptr, 1, &pCreateInfo, nullptr, pPipeline);
+		pCreateInfo->renderPass = sRenderPass->GetRenderPass();
+		return vkCreateGraphicsPipelines(sDevice->GetDevice(), nullptr, 1, pCreateInfo, nullptr, pPipeline);
 	}
 
 	void Objects::DestroyPipeline(const VkPipeline pPipeline)
 	{
 		vkDestroyPipeline(sDevice->GetDevice(), pPipeline, nullptr);
+	}
+
+	VkResult Objects::CreateDescriptorPool(const VkDescriptorPoolCreateInfo& pCreateInfo, VkDescriptorPool* pDescriptorPool)
+	{
+		return vkCreateDescriptorPool(sDevice->GetDevice(), &pCreateInfo, nullptr, pDescriptorPool);
+	}
+
+	void Objects::DestroyDescriptorPool(const VkDescriptorPool pDescriptorPool)
+	{
+		vkDestroyDescriptorPool(sDevice->GetDevice(), pDescriptorPool, nullptr);
+	}
+
+	VkResult Objects::AllocateDescriptorSet(const VkDescriptorSetAllocateInfo& pAllocateInfo, VkDescriptorSet* pDescriptorSets)
+	{
+		return vkAllocateDescriptorSets(sDevice->GetDevice(), &pAllocateInfo, pDescriptorSets);
+	}
+
+	void Objects::UpdateDescriptorSet(u8 pWritesCount, const VkWriteDescriptorSet* pWrites)
+	{
+		vkUpdateDescriptorSets(sDevice->GetDevice(), pWritesCount, pWrites, 0, nullptr);
 	}
 
 }

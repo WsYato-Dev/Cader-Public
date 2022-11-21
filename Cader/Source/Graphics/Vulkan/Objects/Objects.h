@@ -49,13 +49,25 @@ namespace CDR {
 			static VkResult CreateShaderModule(const VkShaderModuleCreateInfo& pCreateInfo, VkShaderModule* pModule);
 			static void DestroyShaderModule(const VkShaderModule pModule);
 
+			// Descriptor Set Layout
+			static VkResult CreateDescriptorSetLayout(const VkDescriptorSetLayoutCreateInfo& pCreateInfo, VkDescriptorSetLayout* pSetLayout);
+			static void DestroyDescriptorSetLayout(const VkDescriptorSetLayout pSetLayout);
+
 			// Pipeline Layout
 			static VkResult CreatePipelineLayout(const VkPipelineLayoutCreateInfo& pCreateInfo, VkPipelineLayout* pLayout);
 			static void DestroyPipelineLayout(const VkPipelineLayout pLayout);
 
 			// Graphics Pipeline
-			static VkResult CreateGraphicsPipeline(VkGraphicsPipelineCreateInfo& pCreateInfo, VkPipeline* pPipeline);
+			static VkResult CreateGraphicsPipeline(VkGraphicsPipelineCreateInfo* pCreateInfo, VkPipeline* pPipeline);
 			static void DestroyPipeline(const VkPipeline pPipeline);
+
+			// Descriptor Pool
+			static VkResult CreateDescriptorPool(const VkDescriptorPoolCreateInfo& pCreateInfo, VkDescriptorPool* pDescriptorPool);
+			static void DestroyDescriptorPool(const VkDescriptorPool pDescriptorPool);
+
+			// Descriptor Set
+			static VkResult AllocateDescriptorSet(const VkDescriptorSetAllocateInfo& pAllocateInfo, VkDescriptorSet* pDescriptorSets);
+			static void UpdateDescriptorSet(u8 pWritesCount, const VkWriteDescriptorSet* pWrites);
 		};
 
 	}

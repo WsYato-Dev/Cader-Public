@@ -20,23 +20,21 @@ namespace CDR {
 		glfwWindowHint(GLFW_RESIZABLE, pStartupSettings.windowResizable);
 
 		if(pStartupSettings.windowDefaultSize.width > 0 && pStartupSettings.windowDefaultSize.height > 0)
-			mSize = pStartupSettings.windowDefaultSize;
+			mLateSize = pStartupSettings.windowDefaultSize;
 		else
-			mSize = WindowSize(1280, 720);
-
-		mSizeBeforeFullscreen = mSize;
+			mLateSize = WindowSize(1280, 720);
 
 		switch(pStartupSettings.windowMode)
 		{
 			case EWindowMode::Windowed:
 			{
-				mWindow = glfwCreateWindow(mSize.width, mSize.height, pTitle, nullptr, nullptr);
+				mWindow = glfwCreateWindow(mLateSize.width, mLateSize.height, pTitle, nullptr, nullptr);
 				break;
 			}
 			case EWindowMode::Maximized:
 			{
 				glfwWindowHint(GLFW_MAXIMIZED, true);
-				mWindow = glfwCreateWindow(mSize.width, mSize.height, pTitle, nullptr, nullptr);
+				mWindow = glfwCreateWindow(mLateSize.width, mLateSize.height, pTitle, nullptr, nullptr);
 				break;
 			}
 			case EWindowMode::Fullscreen:
@@ -49,6 +47,10 @@ namespace CDR {
 		}
 
 		CDR_ASSERT(mWindow);
+
+		int width, height;
+		glfwGetWindowSize(mWindow, &width, &height);
+		mSize = WindowSize((u16)width, (u16)height);
 
 		glfwSetWindowUserPointer(mWindow, this);
 
@@ -69,47 +71,50 @@ namespace CDR {
 
 	void Window::SetCallbacks()
 	{
-		glfwSetWindowCloseCallback(mWindow, [](GLFWwindow* pWindow)
-		{
-			Event e(EEventType::WindowClose);
-			EventSystem::FireEvent(e, true);
-		});
-
-		glfwSetWindowSizeCallback(mWindow, [](GLFWwindow* pWindow, int pWidth, int pHeight)
-		{
-			Window& user = *(Window*)glfwGetWindowUserPointer(pWindow);
-
-			if(pWidth == 0 || pHeight == 0)
+		glfwSetWindowCloseCallback(mWindow, [](GLFWwindow* pWindow) -> void {
 			{
-				user.mMinimized = true;
-
-				Event e(EEventType::WindowMinimize);
-				e.windowMinimized = true;
-				EventSystem::FireEvent(e);
-			}
-			else if(user.mMinimized)
-			{
-				user.mMinimized = false;
-
-				Event e(EEventType::WindowMinimize);
-				e.windowMinimized = false;
-				EventSystem::FireEvent(e);
-			}
-			else
-			{
-				user.mResized = true;
+				Event e(EEventType::WindowClose);
+				EventSystem::FireEvent(e, true);
 			}
 		});
 
-		glfwSetWindowFocusCallback(mWindow, [](GLFWwindow* pWindow, int pFocused)
-		{
-			Window& user = *(Window*)glfwGetWindowUserPointer(pWindow);
+		glfwSetWindowSizeCallback(mWindow, [](GLFWwindow* pWindow, int pWidth, int pHeight) -> void {
+			{
+				Window& user = *(Window*)glfwGetWindowUserPointer(pWindow);
 
-			user.mFocused = pFocused;
+				if(pWidth == 0 || pHeight == 0)
+				{
+					user.mMinimized = true;
 
-			Event e(EEventType::WindowFocus);
-			e.windowFocused = pFocused;
-			EventSystem::FireEvent(e);
+					Event e(EEventType::WindowMinimize);
+					e.windowMinimized = true;
+					EventSystem::FireEvent(e);
+				}
+				else if(user.mMinimized)
+				{
+					user.mMinimized = false;
+
+					Event e(EEventType::WindowMinimize);
+					e.windowMinimized = false;
+					EventSystem::FireEvent(e);
+				}
+				else
+				{
+					user.mResized = true;
+				}
+			}
+		});
+
+		glfwSetWindowFocusCallback(mWindow, [](GLFWwindow* pWindow, int pFocused) -> void {
+			{
+				Window& user = *(Window*)glfwGetWindowUserPointer(pWindow);
+
+				user.mFocused = pFocused;
+
+				Event e(EEventType::WindowFocus);
+				e.windowFocused = pFocused;
+				EventSystem::FireEvent(e);
+			}
 		});
 	}
 
@@ -117,7 +122,6 @@ namespace CDR {
 	{
 		int width, height;
 		glfwGetWindowSize(mWindow, &width, &height);
-
 		mSize = WindowSize((u16)width, (u16)height);
 
 		Event e(EEventType::WindowResize);
@@ -172,7 +176,7 @@ namespace CDR {
 			return;
 
 		if(mMode == EWindowMode::Fullscreen)
-			glfwSetWindowMonitor(mWindow, nullptr, 100, 100, mSizeBeforeFullscreen.width, mSizeBeforeFullscreen.height, GLFW_DONT_CARE);
+			glfwSetWindowMonitor(mWindow, nullptr, 100, 100, mLateSize.width, mLateSize.height, GLFW_DONT_CARE);
 
 		switch(pMode)
 		{
@@ -188,7 +192,7 @@ namespace CDR {
 			}
 			case CDR::EWindowMode::Fullscreen:
 			{
-				mSizeBeforeFullscreen = mSize;
+				mLateSize = mSize;
 
 				GLFWmonitor* primaryMonitor = glfwGetPrimaryMonitor();
 				const GLFWvidmode* videoMode = glfwGetVideoMode(primaryMonitor);

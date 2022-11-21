@@ -7,9 +7,9 @@ namespace CDR {
 
 	struct StartupSettings final
 	{
-		Color windowClearColor{0.5f, 0.8f, 1.0f};
+		Color windowClearColor{0.1f, 0.1f, 0.1f};
 		WindowSize windowDefaultSize{1280, 720};
-		WindowSize windowMinimumSize{200, 200};
+		WindowSize windowMinimumSize{400, 400};
 		WindowAspectRatio windowAspectRatio{0, 0};
 		EWindowMode windowMode{EWindowMode::Windowed};
 		bool windowResizable{true};

@@ -65,11 +65,11 @@ namespace CDR {
 		const VkClearValue clearValue = {clearColor.r, clearColor.g, clearColor.b, 1.0f};
 		const VkRect2D rect = {{0, 0}, mSwapChain->GetExtent()};
 
-		VkViewport viewPort = {};
-		viewPort.width = (float)rect.extent.width;
-		viewPort.height = (float)rect.extent.height;
-		viewPort.minDepth = 0.0f;
-		viewPort.maxDepth = 1.0f;
+		VkViewport viewport = {};
+		viewport.width = (float)rect.extent.width;
+		viewport.height = (float)rect.extent.height;
+		viewport.minDepth = 0.0f;
+		viewport.maxDepth = 1.0f;
 
 		VkRenderPassBeginInfo renderPassBeginInfo = {VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO};
 		renderPassBeginInfo.renderPass = mRenderPass->GetRenderPass();
@@ -83,7 +83,7 @@ namespace CDR {
 		vkCmdBeginRenderPass(commandBuffer, &renderPassBeginInfo, VK_SUBPASS_CONTENTS_INLINE);
 
 		vkCmdSetScissor(commandBuffer, 0, 1, &rect);
-		vkCmdSetViewport(commandBuffer, 0, 1, &viewPort);
+		vkCmdSetViewport(commandBuffer, 0, 1, &viewport);
 	}
 
 	void Graphics::RenderFrame()

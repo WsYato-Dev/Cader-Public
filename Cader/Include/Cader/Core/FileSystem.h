@@ -17,18 +17,22 @@ namespace CDR {
 	{
 		friend Engine;
 
-		static constexpr u8 WorkingDirectoryMaxSize{128};
+		static constexpr u8 DirectoryMaxSize{128};
 
-		static char sWorkingDirectory[WorkingDirectoryMaxSize];
+		static char sProgramDirectory[DirectoryMaxSize];
+		static char sWorkingDirectory[DirectoryMaxSize];
 
-		static void Init();
+		static void Init(FilePath pPath = nullptr);
 
 	public:
+		static inline FilePath GetProgramDirectory() { return sProgramDirectory; }
 		static inline FilePath GetWorkingDirectory() { return sWorkingDirectory; }
+
 		static void SetWorkingDirectory(FilePath pPath);
 
-		static void ReadFile(FilePath pPath, File* pFile);
-		static void WriteFile(FilePath pPath, const std::string& pText);
+		static bool Exists(FilePath pPath);
+		static bool ReadFile(FilePath pPath, File* pFile);
+		static bool WriteFile(FilePath pPath, const std::string& pWrite);
 	};
 
 }

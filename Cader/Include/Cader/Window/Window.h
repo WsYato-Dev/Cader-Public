@@ -20,7 +20,7 @@ namespace CDR {
 		EWindowMode mMode;
 
 		WindowSize mSize;
-		WindowSize mSizeBeforeFullscreen;
+		WindowSize mLateSize;
 
 		bool mMinimized{false};
 		bool mFocused{true};

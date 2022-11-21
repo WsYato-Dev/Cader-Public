@@ -7,17 +7,22 @@
 
 namespace CDR {
 
-	char FileSystem::sWorkingDirectory[WorkingDirectoryMaxSize];
+	char FileSystem::sProgramDirectory[DirectoryMaxSize];
+	char FileSystem::sWorkingDirectory[DirectoryMaxSize];
 
-	void FileSystem::Init()
+	void FileSystem::Init(FilePath pPath)
 	{
+		if(pPath)
+			std::filesystem::current_path(pPath);
+
 		std::string currentPath = std::filesystem::current_path().string();
-		CDR_ASSERT(currentPath.size() <= WorkingDirectoryMaxSize - 1);
+		CDR_ASSERT(currentPath.size() <= DirectoryMaxSize);
 
 		for(u8 i = 0; i < (u8)currentPath.size(); i++)
-			sWorkingDirectory[i] = currentPath[i];
+			sProgramDirectory[i] = currentPath[i];
 
-		sWorkingDirectory[(u8)currentPath.size()] = 0;
+		for(u8 i = 0; i < (u8)currentPath.size(); i++)
+			sWorkingDirectory[i] = sProgramDirectory[i];
 	}
 
 	void FileSystem::SetWorkingDirectory(FilePath pPath)
@@ -26,7 +31,7 @@ namespace CDR {
 		std::filesystem::current_path(pPath);
 
 		std::string currentPath = std::filesystem::current_path().string();
-		CDR_ASSERT(currentPath.size() <= WorkingDirectoryMaxSize - 1);
+		CDR_ASSERT(currentPath.size() <= DirectoryMaxSize - 1);
 
 		for(u8 i = 0; i < (u8)currentPath.size(); i++)
 			sWorkingDirectory[i] = currentPath[i];
@@ -34,7 +39,12 @@ namespace CDR {
 		sWorkingDirectory[(u8)currentPath.size()] = 0;
 	}
 
-	void FileSystem::ReadFile(FilePath pPath, File* pFile)
+	bool FileSystem::Exists(FilePath pPath)
+	{
+		return std::filesystem::exists(pPath);
+	}
+
+	bool FileSystem::ReadFile(FilePath pPath, File* pFile)
 	{
 		CDR_ASSERT(pPath && pFile);
 
@@ -44,34 +54,38 @@ namespace CDR {
 		std::ifstream file(pPath, std::ios::binary | std::ios::ate);
 
 		if(!file.is_open())
-			return;
+			return false;
 
 		const u64 fileSize = file.tellg();
 		CDR_ASSERT(fileSize);
 
-		pFile->resize(fileSize + 1);
+		pFile->resize(fileSize);
 
 		file.seekg(0);
 		file.read(&(*pFile)[0], fileSize);
 
 		file.close();
 		CDR_ASSERT(!file.is_open());
+
+		return true;
 	}
 
-	void FileSystem::WriteFile(FilePath pPath, const std::string& pText)
+	bool FileSystem::WriteFile(FilePath pPath, const std::string& pWrite)
 	{
-		CDR_ASSERT(pPath && pText.size());
+		CDR_ASSERT(pPath && pWrite.size());
 
 		std::ofstream file(pPath);
 
 		if(!file.is_open())
-			return;
+			return false;
 
-		file.write(pText.c_str(), pText.size());
+		file.write(pWrite.c_str(), pWrite.size());
 		file.flush();
 
 		file.close();
 		CDR_ASSERT(!file.is_open());
+
+		return true;
 	}
 
 }
