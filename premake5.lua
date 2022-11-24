@@ -6,5 +6,7 @@ workspace("Cader")
 
 	startproject("Playground")
 
+include("external")
+
 include("Cader")
 include("Playground")

@@ -12,6 +12,7 @@ struct Target
 {
 	vec4 color;
 	vec2 position;
+	vec2 size;
 };
 
 layout(std430, set = 0, binding = 0) readonly buffer TargetsSBO
@@ -26,5 +27,5 @@ void main()
 	const Target target = targets[gl_InstanceIndex];
 
 	vColor = target.color;
-	gl_Position = vec4(vertexPosition[gl_VertexIndex] + target.position, 0.0f, 1.0f);
+	gl_Position = vec4(vertexPosition[gl_VertexIndex] * target.size + target.position, 0.0f, 1.0f);
 }

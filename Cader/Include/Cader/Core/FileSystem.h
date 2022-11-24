@@ -2,7 +2,6 @@
 
 #include "Cader/Types/Common.h"
 
-// TODO: Create own containers
 #include <vector>
 #include <string>
 

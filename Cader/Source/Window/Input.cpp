@@ -5,6 +5,7 @@
 #include "Cader/Window/EventSystem.h"
 #include "Cader/Window/Window.h"
 
+#define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
 
 namespace CDR {
@@ -210,7 +211,6 @@ namespace CDR {
 			}});
 	}
 
-	// TODO: This might be very inefficient
 	void Input::Update()
 	{
 		for(i8 i = 0; i < (i8)EKeyCode::Count; i++)
