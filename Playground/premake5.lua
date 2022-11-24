@@ -17,6 +17,7 @@ project("Playground")
 
 	includedirs{
 		"%{wks.location}/Cader/Include/",
+		"%{Glm.Include}",
 		"%{Entt.Include}"
 	}
 

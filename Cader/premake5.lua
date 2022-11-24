@@ -26,9 +26,10 @@ project("Cader")
 
 	includedirs{
 		"Include/",
+		"%{Glm.Include}",
+		"%{Entt.Include}",
 		"%{Glfw.Include}",
-		"%{Vulkan.Include}",
-		"%{Entt.Include}"
+		"%{Vulkan.Include}"
 	}
 
 	links{
