@@ -3,6 +3,7 @@
 #include "Cader/Types/Common.h"
 
 #include <map>
+#include <vector>
 
 namespace CDR {
 
@@ -14,16 +15,21 @@ namespace CDR {
 		friend Engine;
 
 		static std::map<u8, Scene*> sScenes;
-		static Scene* sActiveScene;
+		static u8 sActiveSceneIndex;
+
+		static Scene* SetActiveScene(u8 pSceneIndex);
+		static void DestroyAll();
 
 	public:
-		static u8 Create();
+		static u8 Create(Text pSceneName);
 		static void Destroy(u8 pSceneIndex);
 
-		static inline Scene* GetScene(u8 pSceneIndex) noexcept { return sScenes[pSceneIndex]; }
+		static bool Exists(u8 pSceneIndex);
+		static Scene* Get(u8 pSceneIndex);
+		static u8 Get(Text pSceneName);
 
-		static inline Scene* GetActive() noexcept { return sActiveScene; }
-		static Scene* SetActive(u8 pSceneIndex);
+		static std::vector<u8> GetAllSceneIndicies();
+		static std::vector<Text> GetAllSceneNames();
 
 		static inline u8 Count() { return (u8)sScenes.size(); }
 	};

@@ -34,14 +34,17 @@ namespace CDR {
 
 	Graphics::~Graphics()
 	{
-		mDevice->WaitIdle();
-
 		delete mCommands;
 		delete mSync;
 		delete mRenderPass;
 		delete mSwapChain;
 		delete mDevice;
 		delete mInstance;
+	}
+
+	void Graphics::PrepareCleanup()
+	{
+		mDevice->WaitIdle();
 	}
 
 	void Graphics::NewFrame()

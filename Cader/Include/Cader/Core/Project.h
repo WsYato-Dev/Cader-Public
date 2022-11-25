@@ -3,12 +3,17 @@
 #include "Cader/Core/ProjectSettings.h"
 #include "Cader/Core/StartupSettings.h"
 
-namespace CDR::Project {
+namespace CDR {
 
-	extern void Setup(ProjectSettings* pProjectSettings, StartupSettings* pStartupSettings);
-	extern void Init();
-	extern void Update();
-	extern void PreCleanup();
-	extern void Cleanup();
+	class Scene;
+
+	namespace Project {
+
+		extern void Setup(ProjectSettings* pProjectSettings, StartupSettings* pStartupSettings);
+		extern void Init(Scene& pScene);
+		extern void Update(Scene& pScene);
+		extern void Cleanup(Scene& pScene);
+
+	}
 
 }

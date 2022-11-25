@@ -17,10 +17,11 @@ namespace CDR {
 		entt::registry mRegistry;
 
 	public:
+		const Text sceneName;
 		const u8 sceneIndex;
 
 	private:
-		Scene(u8 pSceneIndex);
+		Scene(Text pSceneName, u8 pSceneIndex);
 		~Scene() = default;
 
 	public:

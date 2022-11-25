@@ -9,6 +9,7 @@ namespace CDR {
 
 	class Graphics;
 	class Input;
+	class Scene;
 	class Window;
 
 	class Engine final
@@ -25,6 +26,8 @@ namespace CDR {
 		Input* mInput;
 
 		Graphics* mGraphics;
+
+		Scene* mActiveScene;
 
 		bool mRunning{true};
 
@@ -43,6 +46,9 @@ namespace CDR {
 
 		inline Window& GetWindow() const noexcept { return *mWindow; }
 		inline Graphics& GetGraphics() const noexcept { return *mGraphics; }
+
+		void SetActiveScene(u8 pSceneIndex);
+		inline Scene& GetActiveScene() const noexcept { return *mActiveScene; }
 	};
 
 }

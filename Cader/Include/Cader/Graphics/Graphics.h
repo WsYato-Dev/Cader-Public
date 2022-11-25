@@ -43,6 +43,8 @@ namespace CDR {
 		Graphics(const Window& pWindow, const StartupSettings& pStartupSettings);
 		~Graphics();
 
+		void PrepareCleanup();
+
 		void NewFrame();
 		void RenderFrame();
 

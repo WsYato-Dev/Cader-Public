@@ -13,6 +13,7 @@ namespace CDR {
 		WindowAspectRatio windowAspectRatio{0, 0};
 		EWindowMode windowMode{EWindowMode::Windowed};
 		bool windowResizable{true};
+		u8 startSceneIndex{0};
 	};
 
 }

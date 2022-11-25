@@ -4,6 +4,8 @@
 #include "Cader/Core/Project.h"
 #include "Cader/Core/StartupSettings.h"
 #include "Cader/Core/Time.h"
+#include "Cader/ECS/Scene.h"
+#include "Cader/ECS/SceneManager.h"
 #include "Cader/Graphics/Graphics.h"
 #include "Cader/Types/Common.h"
 #include "Cader/Utility/Assert.h"
@@ -31,21 +33,34 @@ namespace CDR {
 		mGraphics = new Graphics(*mWindow, startupSettings);
 
 		Time::Init();
-		Project::Init();
+
+		if(!startupSettings.startSceneIndex)
+		{
+			u8 sceneIndex = SceneManager::Create("Default Scene");
+			SetActiveScene(sceneIndex);
+		}
+		else
+		{
+			SetActiveScene(startupSettings.startSceneIndex);
+		}
+
+		Project::Init(*mActiveScene);
 
 		mWindow->Show();
 	}
 
 	Engine::~Engine()
 	{
-		Project::PreCleanup();
+		mGraphics->PrepareCleanup();
+
+		Project::Cleanup(*mActiveScene);
+
+		SceneManager::DestroyAll();
 
 		delete mGraphics;
 
 		delete mInput;
 		delete mWindow;
-
-		Project::Cleanup();
 	}
 
 	void Engine::Loop()
@@ -66,7 +81,7 @@ namespace CDR {
 
 				mGraphics->NewFrame();
 
-				Project::Update();
+				Project::Update(*mActiveScene);
 
 				mGraphics->RenderFrame();
 
@@ -123,6 +138,11 @@ namespace CDR {
 	void Engine::Quit()
 	{
 		mRunning = false;
+	}
+
+	void Engine::SetActiveScene(u8 pSceneIndex)
+	{
+		mActiveScene = SceneManager::SetActiveScene(pSceneIndex);
 	}
 
 }

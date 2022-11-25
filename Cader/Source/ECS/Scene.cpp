@@ -2,8 +2,9 @@
 
 namespace CDR {
 
-	Scene::Scene(u8 pSceneIndex)
-		: sceneIndex{pSceneIndex}
+	Scene::Scene(Text pSceneName, u8 pSceneIndex)
+		: sceneName{pSceneName}
+		, sceneIndex{pSceneIndex}
 	{}
 
 	Entity Scene::NewEntity()
