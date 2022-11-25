@@ -1,6 +1,7 @@
 #include "Device.h"
 
 #include "Cader/Utility/Assert.h"
+
 #include "Instance.h"
 #include "Utility.h"
 
@@ -187,7 +188,7 @@ namespace CDR::VK {
 		std::array<i8, 3> uniqueQueueFamilies;
 		const u8 uniqueQueueFamiliesCount = mQueueFamilyIndicies.GetUniqueFamilyIndicies(uniqueQueueFamilies);
 
-		std::array<VkDeviceQueueCreateInfo, 3> queueCreateInfos = {};
+		std::array<VkDeviceQueueCreateInfo, 3> queueCreateInfos{};
 
 		constexpr float queuePriority = 1.0f;
 

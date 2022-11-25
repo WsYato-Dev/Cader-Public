@@ -19,7 +19,7 @@ namespace CDR {
 		operator entt::entity() const noexcept { return mHandle; }
 
 	private:
-		const entt::entity mHandle{entt::null};
+		entt::entity mHandle{entt::null};
 
 		friend Scene;
 	};

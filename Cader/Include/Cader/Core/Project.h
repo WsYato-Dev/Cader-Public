@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Cader/Core/ProjectSettings.h"
+#include "Cader/Core/PersistentSettings.h"
 #include "Cader/Core/StartupSettings.h"
 
 namespace CDR {
@@ -9,7 +9,7 @@ namespace CDR {
 
 	namespace Project {
 
-		extern void Setup(ProjectSettings* pProjectSettings, StartupSettings* pStartupSettings);
+		extern void Setup(PersistentSettings* pPersistentSettings, StartupSettings* pStartupSettings);
 		extern void Init(Scene& pScene);
 		extern void Update(Scene& pScene);
 		extern void Cleanup(Scene& pScene);

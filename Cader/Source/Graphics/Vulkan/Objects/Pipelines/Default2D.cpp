@@ -1,8 +1,10 @@
 #include "Default2D.h"
 
 #include "../../Utility.h"
+
 #include "../Buffers.h"
 #include "../Objects.h"
+
 #include "PipelineHelper.h"
 
 namespace CDR::VK {
@@ -60,7 +62,7 @@ namespace CDR::VK {
 		PipelineHelper::CreateShader("Shaders/Compiled/Default2D.vert.spv", &mShaderModules[0]);
 		PipelineHelper::CreateShader("Shaders/Compiled/Default2D.frag.spv", &mShaderModules[1]);
 
-		std::array<VkPipelineShaderStageCreateInfo, 2> shaderStages = {};
+		std::array<VkPipelineShaderStageCreateInfo, 2> shaderStages{};
 
 		for(u8 i = 0; i < (u8)mShaderModules.size(); i++)
 		{

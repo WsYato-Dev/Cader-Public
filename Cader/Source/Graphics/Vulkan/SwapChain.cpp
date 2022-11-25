@@ -1,6 +1,7 @@
 #include "SwapChain.h"
 
 #include "Cader/Utility/Assert.h"
+
 #include "Device.h"
 #include "Instance.h"
 #include "Utility.h"

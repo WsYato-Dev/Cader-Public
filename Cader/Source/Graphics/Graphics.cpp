@@ -4,6 +4,8 @@
 #include "Cader/Window/Window.h"
 #include "Cader/Window/WindowSettings.h"
 
+#include "Renderer2D.h"
+
 #include "Vulkan/Commands.h"
 #include "Vulkan/Device.h"
 #include "Vulkan/Instance.h"
@@ -19,7 +21,7 @@
 
 namespace CDR {
 
-	Graphics::Graphics(const Window& pWindow, const StartupSettings& pStartupSettings)
+	Graphics::Graphics(const Window& pWindow, const PersistentSettings& pPersistentSettings, const StartupSettings& pStartupSettings)
 		: clearColor{pStartupSettings.windowClearColor}
 	{
 		mInstance = new VK::Instance(pWindow);
@@ -30,10 +32,14 @@ namespace CDR {
 		mCommands = new VK::Commands(*mDevice, *mSwapChain);
 
 		VK::Objects::Init(mDevice, mCommands, mRenderPass);
+
+		mRenderer2D = new Renderer2D(pPersistentSettings.max2DQuads);
 	}
 
 	Graphics::~Graphics()
 	{
+		delete mRenderer2D;
+
 		delete mCommands;
 		delete mSync;
 		delete mRenderPass;
@@ -89,13 +95,15 @@ namespace CDR {
 		vkCmdSetViewport(commandBuffer, 0, 1, &viewport);
 	}
 
-	void Graphics::RenderFrame()
+	void Graphics::RenderFrame(Scene& pScene)
 	{
 		if(!mCanRender)
 			return;
 
 		const VkCommandBuffer commandBuffer = mCommands->GetGraphicsCommandBuffers()[mInFlightFrameIndex];
 		const VkSwapchainKHR swapChain = mSwapChain->GetSwapChain();
+
+		mRenderer2D->Render(pScene, commandBuffer);
 
 		vkCmdEndRenderPass(commandBuffer);
 		VK_VERIFY(vkEndCommandBuffer(commandBuffer));

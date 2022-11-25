@@ -1,7 +1,9 @@
 #include "Buffers.h"
 
 #include "Cader/Utility/Assert.h"
+
 #include "../Utility.h"
+
 #include "Objects.h"
 
 #include <cstring>

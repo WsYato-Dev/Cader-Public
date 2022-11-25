@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Cader/Core/PersistentSettings.h"
 #include "Cader/Core/StartupSettings.h"
 #include "Cader/Types/Common.h"
 #include "Cader/Window/WindowSettings.h"
@@ -12,7 +13,7 @@ namespace CDR {
 
 	class Window final
 	{
-		Window(const Text pTitle, const StartupSettings& pStartupSettings);
+		Window(const PersistentSettings& pPersistentSettings, const StartupSettings& pStartupSettings);
 		~Window();
 
 		void SetCallbacks();

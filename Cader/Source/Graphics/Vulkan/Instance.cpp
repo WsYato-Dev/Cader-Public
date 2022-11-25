@@ -3,6 +3,7 @@
 #include "Cader/Types/Common.h"
 #include "Cader/Utility/Assert.h"
 #include "Cader/Window/Window.h"
+
 #include "Utility.h"
 
 #include <array>

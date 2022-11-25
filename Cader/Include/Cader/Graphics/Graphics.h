@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Cader/Core/PersistentSettings.h"
 #include "Cader/Core/StartupSettings.h"
 #include "Cader/Maths/Color.h"
 #include "Cader/Types/Common.h"
@@ -8,6 +9,8 @@
 namespace CDR {
 
 	class Engine;
+	class Renderer2D;
+	class Scene;
 	class Window;
 
 	namespace VK {
@@ -23,13 +26,13 @@ namespace CDR {
 
 	class Graphics final
 	{
-		Graphics(const Window& pWindow, const StartupSettings& pStartupSettings);
+		Graphics(const Window& pWindow, const PersistentSettings& pPersistentSettings, const StartupSettings& pStartupSettings);
 		~Graphics();
 
 		void PrepareCleanup();
 
 		void NewFrame();
-		void RenderFrame();
+		void RenderFrame(Scene& pScene);
 
 		void OnWindowMinimize(const Event pEvent);
 		void OnWindowResize(const Event pEvent);
@@ -44,6 +47,8 @@ namespace CDR {
 		VK::RenderPass* mRenderPass;
 		VK::Sync* mSync;
 		VK::Commands* mCommands;
+
+		Renderer2D* mRenderer2D;
 
 		u32 mSwapChainImageIndex{0};
 		u8 mInFlightFrameIndex{0};

@@ -3,6 +3,7 @@
 #include "Cader/Types/Common.h"
 
 #include "../../Utility.h"
+
 #include "../Objects.h"
 
 namespace CDR::VK {

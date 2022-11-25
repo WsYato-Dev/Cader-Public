@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Cader/Core/ProjectSettings.h"
+#include "Cader/Core/PersistentSettings.h"
 
 namespace CDR {
 
@@ -29,7 +29,7 @@ namespace CDR {
 		Graphics& GetGraphics() const noexcept { return *mGraphics; }
 		Scene& GetActiveScene() const noexcept { return *mActiveScene; }
 
-		const ProjectSettings& GetProjectSettings() const noexcept { return mProjectSettings; }
+		const PersistentSettings& GetPersistentSettings() const noexcept { return mPersistentSettings; }
 
 	private:
 		static Engine* sInstance;
@@ -38,7 +38,7 @@ namespace CDR {
 		Graphics* mGraphics;
 		Scene* mActiveScene;
 
-		ProjectSettings mProjectSettings;
+		PersistentSettings mPersistentSettings;
 
 		bool mRunning{true};
 

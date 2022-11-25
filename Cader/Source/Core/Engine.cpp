@@ -27,10 +27,10 @@ namespace CDR {
 		FileSystem::Init("../../../../Cader/Resources/");
 
 		StartupSettings startupSettings;
-		Project::Setup(&mProjectSettings, &startupSettings);
+		Project::Setup(&mPersistentSettings, &startupSettings);
 
-		mWindow = new Window(mProjectSettings.title, startupSettings);
-		mGraphics = new Graphics(*mWindow, startupSettings);
+		mWindow = new Window(mPersistentSettings, startupSettings);
+		mGraphics = new Graphics(*mWindow, mPersistentSettings, startupSettings);
 
 		Input::Init(*mWindow);
 
@@ -77,7 +77,7 @@ namespace CDR {
 
 				Project::Update(*mActiveScene);
 
-				mGraphics->RenderFrame();
+				mGraphics->RenderFrame(*mActiveScene);
 
 				Time::Update();
 				Input::Update();

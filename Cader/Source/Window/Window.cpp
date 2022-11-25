@@ -9,14 +9,14 @@
 
 namespace CDR {
 
-	Window::Window(const Text pTitle, const StartupSettings& pStartupSettings)
-		: mTitle{pTitle}
+	Window::Window(const PersistentSettings& pPersistentSettings, const StartupSettings& pStartupSettings)
+		: mTitle{pPersistentSettings.projectTitle}
 		, mMode{pStartupSettings.windowMode}
 	{
 		glfwInit();
 
 		glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
-		glfwWindowHint(GLFW_RESIZABLE, pStartupSettings.windowResizable);
+		glfwWindowHint(GLFW_RESIZABLE, pPersistentSettings.windowResizable);
 
 		if(0 < pStartupSettings.windowDefaultSize.width && 0 < pStartupSettings.windowDefaultSize.height)
 			mLateSize = pStartupSettings.windowDefaultSize;
@@ -27,20 +27,20 @@ namespace CDR {
 		{
 			case EWindowMode::Windowed:
 			{
-				mWindow = glfwCreateWindow(mLateSize.width, mLateSize.height, pTitle, nullptr, nullptr);
+				mWindow = glfwCreateWindow(mLateSize.width, mLateSize.height, mTitle, nullptr, nullptr);
 				break;
 			}
 			case EWindowMode::Maximized:
 			{
 				glfwWindowHint(GLFW_MAXIMIZED, true);
-				mWindow = glfwCreateWindow(mLateSize.width, mLateSize.height, pTitle, nullptr, nullptr);
+				mWindow = glfwCreateWindow(mLateSize.width, mLateSize.height, mTitle, nullptr, nullptr);
 				break;
 			}
 			case EWindowMode::Fullscreen:
 			{
 				GLFWmonitor* primaryMonitor = glfwGetPrimaryMonitor();
 				const GLFWvidmode* videoMode = glfwGetVideoMode(primaryMonitor);
-				mWindow = glfwCreateWindow(videoMode->width, videoMode->height, pTitle, primaryMonitor, nullptr);
+				mWindow = glfwCreateWindow(videoMode->width, videoMode->height, mTitle, primaryMonitor, nullptr);
 				break;
 			}
 		}
@@ -53,11 +53,11 @@ namespace CDR {
 
 		glfwSetWindowUserPointer(mWindow, this);
 
-		if(0 < pStartupSettings.windowMinimumSize.width || 0 < pStartupSettings.windowMinimumSize.height)
-			glfwSetWindowSizeLimits(mWindow, pStartupSettings.windowMinimumSize.width, pStartupSettings.windowMinimumSize.height, GLFW_DONT_CARE, GLFW_DONT_CARE);
+		if(0 < pPersistentSettings.windowMinimumSize.width || 0 < pPersistentSettings.windowMinimumSize.height)
+			glfwSetWindowSizeLimits(mWindow, pPersistentSettings.windowMinimumSize.width, pPersistentSettings.windowMinimumSize.height, GLFW_DONT_CARE, GLFW_DONT_CARE);
 
-		if(0 < pStartupSettings.windowAspectRatio.numerator && 0 < pStartupSettings.windowAspectRatio.denominator)
-			glfwSetWindowAspectRatio(mWindow, pStartupSettings.windowAspectRatio.numerator, pStartupSettings.windowAspectRatio.denominator);
+		if(0 < pPersistentSettings.windowAspectRatio.numerator && 0 < pPersistentSettings.windowAspectRatio.denominator)
+			glfwSetWindowAspectRatio(mWindow, pPersistentSettings.windowAspectRatio.numerator, pPersistentSettings.windowAspectRatio.denominator);
 
 		SetCallbacks();
 	}
