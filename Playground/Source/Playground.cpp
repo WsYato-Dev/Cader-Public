@@ -6,6 +6,7 @@
 #include <Cader/ECS/Components.h>
 #include <Cader/ECS/Entity.h>
 #include <Cader/ECS/Scene.h>
+#include <Cader/ECS/SceneManager.h>
 #include <Cader/Window/Input.h>
 
 #include <glm/vec2.hpp>
@@ -19,6 +20,7 @@ constexpr float QuadsStartPoint{-1.0f + QuadStep / 2.0f};
 constexpr Milliseconds QuadsRandomColorInterval{100};
 
 Timer quadsRandomColorTimer;
+bool isInDefaultScene{true};
 
 void Project::Setup(PersistentSettings* pPersistentSettings, StartupSettings* pStartupSettings)
 {
@@ -40,6 +42,8 @@ void Project::Init(Scene& pScene)
 	}
 
 	quadsRandomColorTimer.Start(QuadsRandomColorInterval);
+
+	SceneManager::Create("Other Scene");
 }
 
 void Project::Update(Scene& pScene)
@@ -55,6 +59,22 @@ void Project::Update(Scene& pScene)
 			view.get<ColorComponent>(entity).color = Color::Random();
 
 		quadsRandomColorTimer.Start(QuadsRandomColorInterval);
+	}
+
+	if(Input::GetKeyDown(EKeyCode::Space))
+	{
+		if(isInDefaultScene)
+		{
+			u8 otherSceneIndex = SceneManager::Get("Other Scene");
+			Engine::Get().SetActiveScene(otherSceneIndex);
+		}
+		else
+		{
+			u8 defaultSceneIndex = SceneManager::Get("Default Scene");
+			Engine::Get().SetActiveScene(defaultSceneIndex);
+		}
+
+		isInDefaultScene = !isInDefaultScene;
 	}
 }
 

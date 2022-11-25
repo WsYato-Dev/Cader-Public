@@ -52,6 +52,9 @@ namespace CDR {
 			targetCount++;
 		}
 
+		if(0 >= targetCount)
+			return;
+
 		mDefault2D->Bind(pCommandBuffer);
 		mDefault2D->GetStorageBuffer().Update((sizeof(RenderTarget) * targetCount), 0, &mRenderTargets[0]);
 
