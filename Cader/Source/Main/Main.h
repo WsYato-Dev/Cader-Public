@@ -4,7 +4,7 @@
 
 namespace CDR {
 
-	static int Main()
+	int Main()
 	{
 		{
 			Engine engine;

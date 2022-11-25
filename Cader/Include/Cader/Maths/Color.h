@@ -8,33 +8,28 @@ namespace CDR {
 
 	struct Color final
 	{
-		float r{1.0f};
-		float g{1.0f};
-		float b{1.0f};
-		float a{1.0f};
-
 		constexpr Color() = default;
 
-		explicit constexpr Color(float pValue)
+		explicit constexpr Color(const float pValue)
 			: r{pValue}
 			, g{pValue}
 			, b{pValue}
 		{}
 
-		explicit constexpr Color(u32 pHex)
+		explicit constexpr Color(const u32 pHex)
 			: r(((pHex >> 24) & 0xFF) / 255.0f)
 			, g(((pHex >> 16) & 0xFF) / 255.0f)
 			, b(((pHex >> 8) & 0xFF) / 255.0f)
 			, a(((pHex) & 0xFF) / 255.0f)
 		{}
 
-		constexpr Color(float pR, float pG, float pB)
+		constexpr Color(const float pR, const float pG, const float pB)
 			: r{pR}
 			, g{pG}
 			, b{pB}
 		{}
 
-		constexpr Color(float pR, float pG, float pB, float pA)
+		constexpr Color(const float pR, const float pG, const float pB, const float pA)
 			: r{pR}
 			, g{pG}
 			, b{pB}
@@ -47,7 +42,7 @@ namespace CDR {
 		constexpr Color& operator=(const Color&) = default;
 		constexpr Color& operator=(Color&&) noexcept = default;
 
-		constexpr float operator[](u8 pIndex) const
+		constexpr float operator[](const u8 pIndex) const
 		{
 			switch(pIndex)
 			{
@@ -59,7 +54,7 @@ namespace CDR {
 			}
 		}
 
-		constexpr float& operator[](u8 pIndex)
+		constexpr float& operator[](const u8 pIndex)
 		{
 			switch(pIndex)
 			{
@@ -73,7 +68,7 @@ namespace CDR {
 
 		constexpr bool operator==(const Color& pOther) const noexcept
 		{
-			return r == pOther.r && g == pOther.g && b == pOther.b && a == pOther.a;
+			return pOther.r == r && pOther.g == g && pOther.b == b && pOther.a == a;
 		}
 
 		constexpr bool operator!=(const Color& pOther) const noexcept
@@ -81,14 +76,14 @@ namespace CDR {
 			return !operator==(pOther);
 		}
 
-		constexpr void operator*=(float pScaler)
+		constexpr void operator*=(const float pScaler)
 		{
 			r *= pScaler;
 			g *= pScaler;
 			b *= pScaler;
 		}
 
-		constexpr Color operator*(float pScaler)
+		constexpr Color operator*(const float pScaler)
 		{
 			return Color(
 				r * pScaler,
@@ -113,7 +108,7 @@ namespace CDR {
 			);
 		}
 
-		constexpr void Lerp(const Color& pOther, float pT)
+		constexpr void Lerp(const Color& pOther, const float pT)
 		{
 			r = r + pT * (pOther.r - r);
 			g = g + pT * (pOther.g - g);
@@ -129,7 +124,7 @@ namespace CDR {
 			);
 		}
 
-		static constexpr Color RGB(u8 pR, u8 pG, u8 pB)
+		static constexpr Color RGB(const u8 pR, const u8 pG, const u8 pB)
 		{
 			return Color(
 				(float)pR / 255.0f,
@@ -138,7 +133,7 @@ namespace CDR {
 			);
 		}
 
-		static constexpr Color RGBA(u8 pR, u8 pG, u8 pB, u8 pA)
+		static constexpr Color RGBA(const u8 pR, const u8 pG, const u8 pB, const u8 pA)
 		{
 			return Color(
 				(float)pR / 255.0f,
@@ -147,9 +142,14 @@ namespace CDR {
 				(float)pA / 255.0f
 			);
 		}
+
+		float r{1.0f};
+		float g{1.0f};
+		float b{1.0f};
+		float a{1.0f};
 	};
 
-	static constexpr Color Lerp(const Color& pLhs, const Color& pRhs, float pT)
+	static constexpr Color Lerp(const Color& pLhs, const Color& pRhs, const float pT)
 	{
 		return Color(
 			pLhs.r + pT * (pRhs.r - pLhs.r),

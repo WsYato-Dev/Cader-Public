@@ -17,8 +17,19 @@ namespace CDR {
 
 		class Sync final
 		{
-			friend Graphics;
+			Sync(const Device& pDevice, const SwapChain& pSwapChain);
+			~Sync();
 
+			void InitSemaphores(const u8 pFramesInFlightCount);
+			void InitFences(const u8 pFramesInFlightCount);
+
+		public:
+			const std::vector<VkSemaphore>& GetImageAcquired() const noexcept { return mImageAcquired; }
+			const std::vector<VkSemaphore>& GetRenderingDone() const noexcept { return mRenderingDone; }
+
+			const std::vector<VkFence>& GetInFlightFrames() const noexcept { return mInFlightFrames; }
+
+		private:
 			const Device& mDevice;
 
 			std::vector<VkSemaphore> mImageAcquired;
@@ -26,17 +37,7 @@ namespace CDR {
 
 			std::vector<VkFence> mInFlightFrames;
 
-			Sync(const Device& pDevice, const SwapChain& pSwapChain);
-			~Sync();
-
-			void InitSemaphores(u8 pFramesInFlightCount);
-			void InitFences(u8 pFramesInFlightCount);
-
-		public:
-			inline const std::vector<VkSemaphore>& GetImageAcquired() const noexcept { return mImageAcquired; }
-			inline const std::vector<VkSemaphore>& GetRenderingDone() const noexcept { return mRenderingDone; }
-
-			inline const std::vector<VkFence>& GetInFlightFrames() const noexcept { return mInFlightFrames; }
+			friend Graphics;
 		};
 
 	}

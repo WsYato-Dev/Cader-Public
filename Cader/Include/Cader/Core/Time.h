@@ -10,65 +10,49 @@ namespace CDR {
 
 	class Time final
 	{
-		friend Engine;
-
-		static Milliseconds sNow;
-		static float sDelta;
-
 		static void Init();
 		static void Update();
 		static void Recaliber();
 
 	public:
-		static inline Milliseconds Now() noexcept { return sNow; }
-		static inline float Delta() noexcept { return sDelta; }
+		static Milliseconds Now() noexcept { return sNow; }
+		static float Delta() noexcept { return sDelta; }
+
+	private:
+		static Milliseconds sNow;
+		static float sDelta;
+
+		friend Engine;
 	};
 
 	struct Timer final
 	{
+		void Start(const Milliseconds pMilliseconds) { mEnd = pMilliseconds + Time::Now(); }
+		bool Check() const noexcept { return mEnd <= Time::Now(); }
+
 	private:
 		Milliseconds mEnd{0};
-
-	public:
-		inline void Start(Milliseconds pMilliseconds)
-		{
-			mEnd = pMilliseconds + Time::Now();
-		}
-
-		inline bool Check() const noexcept
-		{
-			return mEnd <= Time::Now();
-		}
 	};
 
 	struct StopWatch final
 	{
+		void Start() { mStart = Time::Now(); }
+		Milliseconds Elapsed() const noexcept { return Time::Now() - mStart; }
+
 	private:
 		Milliseconds mStart{0};
-
-	public:
-		inline void Start()
-		{
-			mStart = Time::Now();
-		}
-
-		inline Milliseconds Elapsed() const noexcept
-		{
-			return Time::Now() - mStart;
-		}
 	};
 
 #if !defined(CDR_FINAL)
 
 	struct INTERNAL_FunctionBenchmarker final
 	{
+		INTERNAL_FunctionBenchmarker(const Text pFunction);
+		~INTERNAL_FunctionBenchmarker();
+
 	private:
 		const Text mFunction;
 		u64 mStart;
-
-	public:
-		INTERNAL_FunctionBenchmarker(Text pFunction);
-		~INTERNAL_FunctionBenchmarker();
 	};
 
 #endif
@@ -77,12 +61,12 @@ namespace CDR {
 
 #if !defined(CDR_FINAL)
 
-#define CDR_INTERNAL_PROFILE_FUNCTION(func, line) { CDR::INTERNAL_FunctionBenchmarker benchmarker##line(#func); func; }
-#define CDR_INTERNAL_PROFILE_FUNCTION_EXPANDED(func, line) CDR_INTERNAL_PROFILE_FUNCTION(func, line)
-#define CDR_PROFILE_FUNCTION(func) CDR_INTERNAL_PROFILE_FUNCTION_EXPANDED(func, __LINE__)
+#define CDR_INTERNAL_PROFILE(func, line) { CDR::INTERNAL_FunctionBenchmarker benchmarker##line(#func); func; }
+#define CDR_INTERNAL_PROFILE_EXPANDED(func, line) CDR_INTERNAL_PROFILE(func, line)
+#define CDR_PROFILE(func) CDR_INTERNAL_PROFILE_EXPANDED(func, __LINE__)
 
 #else
 
-#define CDR_PROFILE_FUNCTION(func)
+#define CDR_PROFILE(func)
 
 #endif

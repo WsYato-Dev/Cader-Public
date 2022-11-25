@@ -14,6 +14,14 @@ namespace CDR {
 
 	struct Event final
 	{
+		Event()
+			: type{EEventType::None}
+		{}
+
+		explicit Event(const EEventType pType)
+			: type{pType}
+		{}
+
 		EEventType type;
 
 		union
@@ -34,14 +42,6 @@ namespace CDR {
 			MousePosition mousePosition;
 			i8 mouseScroll;
 		};
-
-		constexpr Event()
-			: type{EEventType::None}
-		{}
-
-		explicit constexpr Event(EEventType pType)
-			: type{pType}
-		{}
 	};
 
 }

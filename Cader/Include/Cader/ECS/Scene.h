@@ -12,54 +12,53 @@ namespace CDR {
 
 	class Scene final
 	{
-		friend SceneManager;
-
-		entt::registry mRegistry;
-
-	public:
-		const Text sceneName;
-		const u8 sceneIndex;
-
-	private:
-		Scene(Text pSceneName, u8 pSceneIndex);
+		Scene(const Text pSceneName, const u8 pSceneIndex);
 		~Scene() = default;
 
 	public:
 		Entity NewEntity();
-		void DestroyEntity(Entity pEntity);
+		void DestroyEntity(const Entity pEntity);
 
 		template<typename _T>
-		inline bool HasComponent(Entity pEntity)
+		bool HasComponent(const Entity pEntity)
 		{
 			return mRegistry.try_get<_T>(pEntity) != nullptr;
 		}
 
 		template<typename _T, typename ..._Args>
-		inline _T& AddComponent(Entity pEntity, _Args&& ...pArgs)
+		_T& AddComponent(const Entity pEntity, const _Args&& ...pArgs)
 		{
 			CDR_ASSERT(!HasComponent<_T>(pEntity));
 			return mRegistry.emplace<_T>(pEntity, std::forward<_Args>(pArgs)...);
 		}
 
 		template<typename _T>
-		inline void RemoveComponent(Entity pEntity)
+		void RemoveComponent(const Entity pEntity)
 		{
 			CDR_ASSERT(HasComponent<_T>(pEntity));
 			mRegistry.remove<_T>(pEntity);
 		}
 
 		template<typename _T>
-		inline _T& GetComponent(Entity pEntity)
+		_T& GetComponent(const Entity pEntity)
 		{
 			CDR_ASSERT(HasComponent<_T>(pEntity));
 			return mRegistry.get<_T>(pEntity);
 		}
 
 		template<typename ..._Components>
-		inline auto GetAllEntitiesWith()
+		auto GetAllEntitiesWith()
 		{
 			return mRegistry.view<_Components...>();
 		}
+
+		const Text sceneName;
+		const u8 sceneIndex;
+
+	private:
+		entt::registry mRegistry;
+
+		friend SceneManager;
 	};
 
 }

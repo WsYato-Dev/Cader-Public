@@ -10,30 +10,21 @@ namespace CDR {
 
 	class EventSystem final
 	{
-		friend Engine;
-
-	public:
-		static constexpr u8 MaxEvents{5};
-
-	private:
-		static inline Event sEvents[MaxEvents];
-		static inline u8 sCount{0};
-
-		inline Event GetEvent(u8 pIndex)
+		static Event GetEvent(const u8 pIndex)
 		{
-			CDR_ASSERT(pIndex < sCount);
+			CDR_ASSERT(sCount >= pIndex);
 			return sEvents[pIndex];
 		}
 
-		inline void Release()
+		static void Release()
 		{
 			sCount = 0;
 		}
 
 	public:
-		static inline void FireEvent(Event pEvent, bool pPriority = false)
+		static void FireEvent(const Event pEvent, const bool pPriority = false)
 		{
-			if(sCount >= MaxEvents)
+			if(MaxEvents <= sCount)
 			{
 				if(pPriority)
 					sEvents[0] = pEvent;
@@ -44,8 +35,16 @@ namespace CDR {
 			sEvents[sCount++] = pEvent;
 		}
 
-		static inline u8 Count() noexcept { return sCount; }
-		static inline bool IsEmpty() noexcept { return sCount <= 0; }
+		static u8 Count() noexcept { return sCount; }
+		static bool IsEmpty() noexcept { return 0 >= sCount; }
+
+		static constexpr u8 MaxEvents{5};
+
+	private:
+		static inline Event sEvents[MaxEvents];
+		static inline u8 sCount{0};
+
+		friend Engine;
 	};
 
 }

@@ -5,6 +5,7 @@
 #include "Cader/Window/Window.h"
 #include "Utility.h"
 
+#include <array>
 #include <string>
 #include <vector>
 
@@ -32,9 +33,9 @@ namespace CDR::VK {
 		appInfo.engineVersion = VK_MAKE_VERSION(1, 0, 0);
 		appInfo.applicationVersion = VK_MAKE_VERSION(1, 0, 0);
 		appInfo.pApplicationName = "Cader Application";
-		appInfo.pEngineName = "Cader";
+		appInfo.pEngineName = "Cader Engine";
 
-		u32 extensionsCount = 0;
+		u32 extensionsCount;
 		const Text* extensions = glfwGetRequiredInstanceExtensions(&extensionsCount);
 
 		VkInstanceCreateInfo instanceInfo = {VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO};
@@ -44,8 +45,7 @@ namespace CDR::VK {
 
 	#if !defined(CDR_FINAL)
 
-		constexpr u8 requestedLayersCount = 1;
-		constexpr Text requestedLayers[requestedLayersCount]
+		constexpr std::array<Text, 1> requestedLayers
 		{
 			"VK_LAYER_KHRONOS_validation"
 		};
@@ -59,11 +59,11 @@ namespace CDR::VK {
 
 		u8 layersFound = 0;
 
-		for(u8 i = 0; i < (u8)requestedLayersCount; i++)
+		for(u8 i = 0; i < (u8)requestedLayers.size(); i++)
 		{
 			for(const auto& layer : layers)
 			{
-				if(strcmp(requestedLayers[i], layer.layerName) == 0)
+				if(0 == strcmp(requestedLayers[i], layer.layerName))
 				{
 					layersFound++;
 					break;
@@ -71,17 +71,16 @@ namespace CDR::VK {
 			}
 		}
 
-		CDR_ASSERT(layersFound == requestedLayersCount);
+		CDR_ASSERT(requestedLayers.size() == layersFound);
 
-		instanceInfo.enabledLayerCount = requestedLayersCount;
+		instanceInfo.enabledLayerCount = (u32)requestedLayers.size();
 		instanceInfo.ppEnabledLayerNames = &requestedLayers[0];
 
-	#else
+	#else // !defined(CDR_FINAL)
 
 		instanceInfo.enabledLayerCount = 0;
-		instanceInfo.ppEnabledLayerNames = nullptr;
 
-	#endif
+	#endif // !defined(CDR_FINAL)
 
 		VK_VERIFY(vkCreateInstance(&instanceInfo, nullptr, &mInstance));
 	}

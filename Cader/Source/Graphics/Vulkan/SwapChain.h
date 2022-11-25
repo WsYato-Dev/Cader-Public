@@ -26,8 +26,28 @@ namespace CDR {
 
 		class SwapChain final
 		{
-			friend Graphics;
+			SwapChain(const Instance& pInstance, const Device& pDevice);
+			~SwapChain();
 
+			void InitStaticInfo();
+
+			void CreateSwapChain(const u16 pWidth, const u16 pHeight);
+			void DestroySwapChain();
+
+			void InitSwapChain(const u16 pWidth, const u16 pHeight);
+			void InitSwapChainImageViews();
+
+		public:
+			const SwapChainStaticInfo& GetStaticInfo() const noexcept { return mStaticInfo; }
+
+			const VkSwapchainKHR GetSwapChain() const noexcept { return mSwapChain; }
+			const std::vector<VkImage>& GetImages() const noexcept { return mImages; }
+			const std::vector<VkImageView>& GetImagesViews() const noexcept { return mImageViews; }
+			VkExtent2D GetExtent() const noexcept { return mExtent; }
+
+			u8 GetMaxFramesInFlight() const noexcept { return mMaxFramesInFlight; }
+
+		private:
 			const Instance& mInstance;
 			const Device& mDevice;
 
@@ -42,26 +62,7 @@ namespace CDR {
 
 			bool mSwapChainDestroyed{true};
 
-			SwapChain(const Instance& pInstance, const Device& pDevice);
-			~SwapChain();
-
-			void InitStaticInfo();
-
-			void CreateSwapChain(u16 pWidth, u16 pHeight);
-			void DestroySwapChain();
-
-			void InitSwapChain(u16 pWidth, u16 pHeight);
-			void InitSwapChainImageViews();
-
-		public:
-			inline const SwapChainStaticInfo& GetStaticInfo() const noexcept { return mStaticInfo; }
-
-			inline const VkSwapchainKHR GetSwapChain() const noexcept { return mSwapChain; }
-			inline const std::vector<VkImage>& GetImages() const noexcept { return mImages; }
-			inline const std::vector<VkImageView>& GetImagesViews() const noexcept { return mImageViews; }
-			inline VkExtent2D GetExtent() const noexcept { return mExtent; }
-
-			inline u8 GetMaxFramesInFlight() const noexcept { return mMaxFramesInFlight; }
+			friend Graphics;
 		};
 
 	}

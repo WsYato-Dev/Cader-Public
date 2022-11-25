@@ -15,15 +15,6 @@ namespace CDR {
 
 		class Commands final
 		{
-			friend Graphics;
-
-			const Device& mDevice;
-
-			VkCommandPool mGraphicsCommandPool;
-			VkCommandPool mTransferCommandPool;
-
-			std::vector<VkCommandBuffer> mGraphicsCommandBuffers;
-
 			Commands(const Device& pDevice, const SwapChain& pSwapChain);
 			~Commands();
 
@@ -31,10 +22,20 @@ namespace CDR {
 			void InitGraphicsCommandBuffers(const SwapChain& pSwapChain);
 
 		public:
-			inline const VkCommandPool GetGraphicsCommandPool() const noexcept { return mGraphicsCommandPool; }
-			inline const VkCommandPool GetTransferCommandPool() const noexcept { return mTransferCommandPool; }
+			const VkCommandPool GetGraphicsCommandPool() const noexcept { return mGraphicsCommandPool; }
+			const VkCommandPool GetTransferCommandPool() const noexcept { return mTransferCommandPool; }
 
-			inline const std::vector<VkCommandBuffer>& GetGraphicsCommandBuffers() const noexcept { return mGraphicsCommandBuffers; }
+			const std::vector<VkCommandBuffer>& GetGraphicsCommandBuffers() const noexcept { return mGraphicsCommandBuffers; }
+
+		private:
+			const Device& mDevice;
+
+			VkCommandPool mGraphicsCommandPool;
+			VkCommandPool mTransferCommandPool;
+
+			std::vector<VkCommandBuffer> mGraphicsCommandBuffers;
+
+			friend Graphics;
 		};
 
 	}

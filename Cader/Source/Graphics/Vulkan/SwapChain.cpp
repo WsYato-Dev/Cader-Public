@@ -26,7 +26,7 @@ namespace CDR::VK {
 
 		mStaticInfo.imageCount = mStaticInfo.surfaceCapabilities.minImageCount + 1;
 
-		if(mStaticInfo.surfaceCapabilities.maxImageCount > 0 && mStaticInfo.imageCount > mStaticInfo.surfaceCapabilities.maxImageCount)
+		if(0 < mStaticInfo.surfaceCapabilities.maxImageCount && mStaticInfo.surfaceCapabilities.maxImageCount < mStaticInfo.imageCount)
 			mStaticInfo.imageCount = mStaticInfo.surfaceCapabilities.maxImageCount;
 
 		u32 surfaceFormatsCount;
@@ -40,7 +40,7 @@ namespace CDR::VK {
 
 		for(u32 i = 0; i < surfaceFormatsCount; i++)
 		{
-			if(surfaceFormats[i].format == VK_FORMAT_B8G8R8A8_UNORM && surfaceFormats[i].colorSpace == VK_COLOR_SPACE_SRGB_NONLINEAR_KHR)
+			if(VK_FORMAT_B8G8R8A8_UNORM == surfaceFormats[i].format && VK_COLOR_SPACE_SRGB_NONLINEAR_KHR == surfaceFormats[i].colorSpace)
 			{
 				mStaticInfo.surfaceFormat = surfaceFormats[i];
 				desiredFormatFount = true;
@@ -54,10 +54,10 @@ namespace CDR::VK {
 		mImages.resize(mStaticInfo.imageCount);
 		mImageViews.resize(mStaticInfo.imageCount);
 
-		mMaxFramesInFlight = mStaticInfo.imageCount > DesiredFramesInFlight ? mStaticInfo.imageCount : DesiredFramesInFlight;
+		mMaxFramesInFlight = DesiredFramesInFlight < mStaticInfo.imageCount ? DesiredFramesInFlight : mStaticInfo.imageCount;
 	}
 
-	void SwapChain::CreateSwapChain(u16 pWidth, u16 pHeight)
+	void SwapChain::CreateSwapChain(const u16 pWidth, const u16 pHeight)
 	{
 		if(!mSwapChainDestroyed)
 			return;
@@ -81,7 +81,7 @@ namespace CDR::VK {
 		mSwapChainDestroyed = true;
 	}
 
-	void SwapChain::InitSwapChain(u16 pWidth, u16 pHeight)
+	void SwapChain::InitSwapChain(const u16 pWidth, const u16 pHeight)
 	{
 		mExtent = {pWidth, pHeight};
 

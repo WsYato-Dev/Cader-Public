@@ -38,12 +38,12 @@ namespace CDR::VK {
 		return vkBindBufferMemory(sDevice->GetDevice(), pBuffer, pMemory, 0);
 	}
 
-	u32 Objects::FindMemoryType(u32 pFilter, VkMemoryPropertyFlags pMemoryProperties)
+	u32 Objects::FindMemoryType(const u32 pFilter, const VkMemoryPropertyFlags pMemoryProperties)
 	{
 		const VkPhysicalDeviceMemoryProperties& memoryProperties = sDevice->GetMemoryProperties();
 
 		for(u32 i = 0; i < memoryProperties.memoryTypeCount; i++)
-			if((pFilter & (1 << i)) && (memoryProperties.memoryTypes[i].propertyFlags & pMemoryProperties) == pMemoryProperties)
+			if((pFilter & (1 << i)) && (pMemoryProperties & memoryProperties.memoryTypes[i].propertyFlags) == pMemoryProperties)
 				return i;
 
 		return 0;
@@ -59,7 +59,7 @@ namespace CDR::VK {
 		vkFreeMemory(sDevice->GetDevice(), pMemory, nullptr);
 	}
 
-	VkResult Objects::MapMemory(const VkDeviceMemory pMemory, u32 pOffset, u32 pSize, VkMemoryMapFlags pMapFlags, void** pData)
+	VkResult Objects::MapMemory(const VkDeviceMemory pMemory, const u32 pOffset, const u32 pSize, VkMemoryMapFlags pMapFlags, void** pData)
 	{
 		return vkMapMemory(sDevice->GetDevice(), pMemory, pOffset, pSize, pMapFlags, pData);
 	}
@@ -147,7 +147,7 @@ namespace CDR::VK {
 		return vkAllocateDescriptorSets(sDevice->GetDevice(), &pAllocateInfo, pDescriptorSets);
 	}
 
-	void Objects::UpdateDescriptorSet(u8 pWritesCount, const VkWriteDescriptorSet* pWrites)
+	void Objects::UpdateDescriptorSet(const u8 pWritesCount, const VkWriteDescriptorSet* pWrites)
 	{
 		vkUpdateDescriptorSets(sDevice->GetDevice(), pWritesCount, pWrites, 0, nullptr);
 	}

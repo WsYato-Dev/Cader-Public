@@ -9,17 +9,16 @@
 
 namespace CDR {
 
-	Window::Window(Text pTitle, const StartupSettings& pStartupSettings)
+	Window::Window(const Text pTitle, const StartupSettings& pStartupSettings)
 		: mTitle{pTitle}
 		, mMode{pStartupSettings.windowMode}
 	{
 		glfwInit();
 
 		glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
-		glfwWindowHint(GLFW_VISIBLE, false);
 		glfwWindowHint(GLFW_RESIZABLE, pStartupSettings.windowResizable);
 
-		if(pStartupSettings.windowDefaultSize.width > 0 && pStartupSettings.windowDefaultSize.height > 0)
+		if(0 < pStartupSettings.windowDefaultSize.width && 0 < pStartupSettings.windowDefaultSize.height)
 			mLateSize = pStartupSettings.windowDefaultSize;
 		else
 			mLateSize = WindowSize(1280, 720);
@@ -54,10 +53,10 @@ namespace CDR {
 
 		glfwSetWindowUserPointer(mWindow, this);
 
-		if(pStartupSettings.windowMinimumSize.width > 0 || pStartupSettings.windowMinimumSize.height > 0)
+		if(0 < pStartupSettings.windowMinimumSize.width || 0 < pStartupSettings.windowMinimumSize.height)
 			glfwSetWindowSizeLimits(mWindow, pStartupSettings.windowMinimumSize.width, pStartupSettings.windowMinimumSize.height, GLFW_DONT_CARE, GLFW_DONT_CARE);
 
-		if(pStartupSettings.windowAspectRatio.numerator > 0 && pStartupSettings.windowAspectRatio.denominator > 0)
+		if(0 < pStartupSettings.windowAspectRatio.numerator && 0 < pStartupSettings.windowAspectRatio.denominator)
 			glfwSetWindowAspectRatio(mWindow, pStartupSettings.windowAspectRatio.numerator, pStartupSettings.windowAspectRatio.denominator);
 
 		SetCallbacks();
@@ -82,7 +81,7 @@ namespace CDR {
 			{
 				Window& user = *(Window*)glfwGetWindowUserPointer(pWindow);
 
-				if(pWidth == 0 || pHeight == 0)
+				if(0 == pWidth || 0 == pHeight)
 				{
 					user.mMinimized = true;
 
@@ -131,11 +130,6 @@ namespace CDR {
 		mResized = false;
 	}
 
-	void Window::Show()
-	{
-		glfwShowWindow(mWindow);
-	}
-
 	void Window::PollEvents()
 	{
 		glfwPollEvents();
@@ -152,30 +146,30 @@ namespace CDR {
 			OnResize();
 	}
 
-	void Window::SetTitle(Text pTitle)
+	void Window::SetTitle(const Text pTitle)
 	{
-		if(mTitle == pTitle)
+		if(pTitle == mTitle)
 			return;
 
 		glfwSetWindowTitle(mWindow, pTitle);
 		mTitle = pTitle;
 	}
 
-	void Window::SetSize(WindowSize pSize)
+	void Window::SetSize(const WindowSize pSize)
 	{
-		if(mSize == pSize || mMode != EWindowMode::Windowed)
+		if(pSize == mSize || EWindowMode::Windowed != mMode)
 			return;
 
 		glfwSetWindowSize(mWindow, pSize.width, pSize.height);
 		mSize = pSize;
 	}
 
-	void Window::SetMode(EWindowMode pMode)
+	void Window::SetMode(const EWindowMode pMode)
 	{
-		if(mMode == pMode)
+		if(pMode == mMode)
 			return;
 
-		if(mMode == EWindowMode::Fullscreen)
+		if(EWindowMode::Fullscreen == mMode)
 			glfwSetWindowMonitor(mWindow, nullptr, 100, 100, mLateSize.width, mLateSize.height, GLFW_DONT_CARE);
 
 		switch(pMode)

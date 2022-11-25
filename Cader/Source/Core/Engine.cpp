@@ -9,6 +9,7 @@
 #include "Cader/Graphics/Graphics.h"
 #include "Cader/Types/Common.h"
 #include "Cader/Utility/Assert.h"
+#include "Cader/Window/EventSystem.h"
 #include "Cader/Window/Input.h"
 #include "Cader/Window/Window.h"
 
@@ -22,31 +23,28 @@ namespace CDR {
 		sInstance = this;
 
 		// TODO: Use a resource file instead of loading each resource individually
+		Time::Init();
 		FileSystem::Init("../../../../Cader/Resources/");
 
 		StartupSettings startupSettings;
 		Project::Setup(&mProjectSettings, &startupSettings);
 
 		mWindow = new Window(mProjectSettings.title, startupSettings);
-		mInput = new Input(*mWindow);
-
 		mGraphics = new Graphics(*mWindow, startupSettings);
 
-		Time::Init();
+		Input::Init(*mWindow);
 
-		if(!startupSettings.startSceneIndex)
-		{
-			u8 sceneIndex = SceneManager::Create("Default Scene");
-			SetActiveScene(sceneIndex);
-		}
-		else
+		if(startupSettings.startSceneIndex)
 		{
 			SetActiveScene(startupSettings.startSceneIndex);
 		}
+		else
+		{
+			const u8 sceneIndex = SceneManager::Create("Default Scene");
+			SetActiveScene(sceneIndex);
+		}
 
 		Project::Init(*mActiveScene);
-
-		mWindow->Show();
 	}
 
 	Engine::~Engine()
@@ -58,8 +56,6 @@ namespace CDR {
 		SceneManager::DestroyAll();
 
 		delete mGraphics;
-
-		delete mInput;
 		delete mWindow;
 	}
 
@@ -77,27 +73,26 @@ namespace CDR {
 				mWindow->PollEvents();
 				HandleEvents();
 
-				Time::Update();
-
 				mGraphics->NewFrame();
 
 				Project::Update(*mActiveScene);
 
 				mGraphics->RenderFrame();
 
-				mInput->Update();
+				Time::Update();
+				Input::Update();
 			}
 		}
 	}
 
 	void Engine::HandleEvents()
 	{
-		if(mEventSystem.IsEmpty())
+		if(EventSystem::IsEmpty())
 			return;
 
-		for(u8 i = 0; i < mEventSystem.Count(); i++)
+		for(u8 i = 0; i < EventSystem::Count(); i++)
 		{
-			const Event e = mEventSystem.GetEvent(i);
+			const Event e = EventSystem::GetEvent(i);
 
 			switch(e.type)
 			{
@@ -132,7 +127,7 @@ namespace CDR {
 			}
 		}
 
-		mEventSystem.Release();
+		EventSystem::Release();
 	}
 
 	void Engine::Quit()
@@ -140,7 +135,7 @@ namespace CDR {
 		mRunning = false;
 	}
 
-	void Engine::SetActiveScene(u8 pSceneIndex)
+	void Engine::SetActiveScene(const u8 pSceneIndex)
 	{
 		mActiveScene = SceneManager::SetActiveScene(pSceneIndex);
 	}

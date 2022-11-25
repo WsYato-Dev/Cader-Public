@@ -2,7 +2,7 @@
 
 #include <vulkan/vulkan.h>
 
-namespace CDR{
+namespace CDR {
 
 	class Graphics;
 	class Window;
@@ -11,11 +11,6 @@ namespace CDR{
 
 		class Instance final
 		{
-			friend Graphics;
-
-			VkInstance mInstance;
-			VkSurfaceKHR mSurface;
-
 			Instance(const Window& pWindow);
 			~Instance();
 
@@ -23,8 +18,14 @@ namespace CDR{
 			void InitSurface(const Window& pWindow);
 
 		public:
-			inline const VkInstance GetInstance() const noexcept { return mInstance; }
-			inline const VkSurfaceKHR GetSurface() const noexcept { return mSurface; }
+			const VkInstance GetInstance() const noexcept { return mInstance; }
+			const VkSurfaceKHR GetSurface() const noexcept { return mSurface; }
+
+		private:
+			VkInstance mInstance;
+			VkSurfaceKHR mSurface;
+
+			friend Graphics;
 		};
 
 	}

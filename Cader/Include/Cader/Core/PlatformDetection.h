@@ -6,14 +6,14 @@
 
 #define CDR_PLATFORM_WINDOWS
 
-#else
+#else // defined(_WIN64)
 
 #error "x86 is not supported"
 
-#endif
+#endif // defined(_WIN64)
 
-#else
+#else // defined(_WIN32)
 
 #error "Platform not supported"
 
-#endif
+#endif // defined(_WIN32)

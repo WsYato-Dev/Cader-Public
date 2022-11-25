@@ -2,6 +2,8 @@
 
 #include "Cader/Types/Common.h"
 
+#include <array>
+
 #include <vulkan/vulkan.h>
 
 namespace CDR {
@@ -14,18 +16,38 @@ namespace CDR {
 
 		struct QueueFamilyIndicies final
 		{
+			bool IsComplete() const noexcept;
+			u8 GetUniqueFamilyIndicies(std::array<i8, 3>& pIndicies) const;
+
 			i8 graphicsFamilyIndex{-1};
 			i8 presentFamilyIndex{-1};
 			i8 transferFamilyIndex{-1};
-
-			bool IsComplete() const noexcept;
-			u8 GetUniqueFamilyIndicies(i8 pIndicies[3]) const;
 		};
 
 		class Device final
 		{
-			friend Graphics;
+			Device(const Instance& pInstance);
+			~Device();
 
+			void InitPhysicalDevice();
+			u8 RatePhysicalDevice(const VkPhysicalDevice pPhysicalDevice, QueueFamilyIndicies* pQueueFamilyIndicies) const;
+
+			void InitDevice();
+
+		public:
+			void WaitIdle();
+
+			const VkPhysicalDevice GetPhysicalDevice() const noexcept { return mPhysicalDevice; }
+			const VkPhysicalDeviceMemoryProperties& GetMemoryProperties() const noexcept { return mMemoryProperties; }
+			QueueFamilyIndicies GetQueueFamilyIndicies() const noexcept { return mQueueFamilyIndicies; }
+
+			const VkDevice GetDevice() const noexcept { return mDevice; }
+
+			const VkQueue GetGraphicsQueue() const noexcept { return mGraphicsQueue; }
+			const VkQueue GetPresentQueue() const noexcept { return mPresentQueue; }
+			const VkQueue GetTransferQueue() const noexcept { return mTransferQueue; }
+
+		private:
 			const Instance& mInstance;
 
 			VkPhysicalDevice mPhysicalDevice;
@@ -38,26 +60,7 @@ namespace CDR {
 			VkQueue mPresentQueue;
 			VkQueue mTransferQueue;
 
-			Device(const Instance& pInstance);
-			~Device();
-
-			void InitPhysicalDevice();
-			u8 RatePhysicalDevice(const VkPhysicalDevice pPhysicalDevice, QueueFamilyIndicies* pQueueFamilyIndicies) const;
-
-			void InitDevice();
-
-		public:
-			void WaitIdle();
-
-			inline const VkPhysicalDevice GetPhysicalDevice() const noexcept { return mPhysicalDevice; }
-			inline const VkPhysicalDeviceMemoryProperties& GetMemoryProperties() const noexcept { return mMemoryProperties; }
-			inline QueueFamilyIndicies GetQueueFamilyIndicies() const noexcept { return mQueueFamilyIndicies; }
-
-			inline const VkDevice GetDevice() const noexcept { return mDevice; }
-
-			inline const VkQueue GetGraphicsQueue() const noexcept { return mGraphicsQueue; }
-			inline const VkQueue GetPresentQueue() const noexcept { return mPresentQueue; }
-			inline const VkQueue GetTransferQueue() const noexcept { return mTransferQueue; }
+			friend Graphics;
 		};
 
 	}

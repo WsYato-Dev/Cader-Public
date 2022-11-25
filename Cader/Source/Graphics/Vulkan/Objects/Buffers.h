@@ -8,27 +8,27 @@ namespace CDR::VK {
 
 	class Buffer
 	{
+	public:
+		Buffer(const u32 pSize, const VkBufferUsageFlags pUsage, const VkMemoryPropertyFlags pProperties);
+		~Buffer();
+
+		const VkBuffer GetBuffer() const noexcept { return mBuffer; }
+		const VkDeviceMemory GetMemory() const noexcept { return mMemory; }
+
+		const u32 size;
+
 	protected:
 		VkBuffer mBuffer;
 		VkDeviceMemory mMemory;
-
-	public:
-		const u32 size;
-
-		Buffer(u32 pSize, VkBufferUsageFlags pUsage, VkMemoryPropertyFlags pProperties);
-		~Buffer();
-
-		inline const VkBuffer GetBuffer() const noexcept { return mBuffer; }
-		inline const VkDeviceMemory GetMemory() const noexcept { return mMemory; }
 	};
 
 	class BufferHost: public Buffer
 	{
 	public:
-		BufferHost(u32 pSize, VkBufferUsageFlags pUsage, VkMemoryPropertyFlags pProperties);
+		BufferHost(const u32 pSize, const VkBufferUsageFlags pUsage, const VkMemoryPropertyFlags pProperties);
 
 		void Update(const void* pData);
-		void Update(u32 pSize, u32 pOffset, const void* pData);
+		void Update(const u32 pSize, const u32 pOffset, const void* pData);
 	};
 
 	// Staging Buffer
@@ -37,47 +37,47 @@ namespace CDR::VK {
 	public:
 		StagingBuffer(u32 pSize);
 
-		void CopyToBuffer(const VkBuffer pDst, u32 pSize);
+		void CopyToBuffer(const VkBuffer pDst, const u32 pSize);
 	};
 
 	// Vertex Buffer
 	class VertexBuffer final: public Buffer
 	{
 	public:
-		VertexBuffer(u32 pSize);
+		VertexBuffer(const u32 pSize);
 	};
 
 	class VertexBufferHost final: public BufferHost
 	{
 	public:
-		VertexBufferHost(u32 pSize);
+		VertexBufferHost(const u32 pSize);
 	};
 
 	// Index Buffer
 	class IndexBuffer final: public Buffer
 	{
 	public:
-		IndexBuffer(u32 pSize);
+		IndexBuffer(const u32 pSize);
 	};
 
 	class IndexBufferHost final: public BufferHost
 	{
 	public:
-		IndexBufferHost(u32 pSize);
+		IndexBufferHost(const u32 pSize);
 	};
 
 	// Uniform Buffer
 	class UniformBuffer final: public BufferHost
 	{
 	public:
-		UniformBuffer(u32 pSize);
+		UniformBuffer(const u32 pSize);
 	};
 
 	// Storage Buffer
 	class StorageBuffer final: public BufferHost
 	{
 	public:
-		StorageBuffer(u32 pSize);
+		StorageBuffer(const u32 pSize);
 	};
 
 }

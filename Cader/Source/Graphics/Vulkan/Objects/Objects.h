@@ -16,12 +16,6 @@ namespace CDR {
 
 		class Objects final
 		{
-			friend Graphics;
-
-			static const Device* sDevice;
-			static const Commands* sCommands;
-			static const RenderPass* sRenderPass;
-
 			static void Init(const Device* pDevice, const Commands* pCommands, const RenderPass* pRenderPass);
 
 		public:
@@ -33,12 +27,12 @@ namespace CDR {
 			static VkResult BindBufferMemory(const VkBuffer pBuffer, const VkDeviceMemory pMemory);
 
 			// Memory
-			static u32 FindMemoryType(u32 pFilter, VkMemoryPropertyFlags pMemoryProperties);
+			static u32 FindMemoryType(const u32 pFilter, const VkMemoryPropertyFlags pMemoryProperties);
 
 			static VkResult AllocateMemory(const VkMemoryAllocateInfo& pAllocateInfo, VkDeviceMemory* pMemory);
 			static void FreeMemory(const VkDeviceMemory pMemory);
 
-			static VkResult MapMemory(const VkDeviceMemory pMemory, u32 pOffset, u32 pSize, VkMemoryMapFlags pMapFlags, void** pData);
+			static VkResult MapMemory(const VkDeviceMemory pMemory, const u32 pOffset, const u32 pSize, const VkMemoryMapFlags pMapFlags, void** pData);
 			static void UnMapMemory(const VkDeviceMemory pMemory);
 
 			// Direct Transfer Command
@@ -67,7 +61,14 @@ namespace CDR {
 
 			// Descriptor Set
 			static VkResult AllocateDescriptorSet(const VkDescriptorSetAllocateInfo& pAllocateInfo, VkDescriptorSet* pDescriptorSets);
-			static void UpdateDescriptorSet(u8 pWritesCount, const VkWriteDescriptorSet* pWrites);
+			static void UpdateDescriptorSet(const u8 pWritesCount, const VkWriteDescriptorSet* pWrites);
+
+		private:
+			static const Device* sDevice;
+			static const Commands* sCommands;
+			static const RenderPass* sRenderPass;
+
+			friend Graphics;
 		};
 
 	}

@@ -4,8 +4,8 @@
 
 #include "Platform/Win/Entry.h"
 
-#else
+#else // defined(CDR_PLATFORM_WINDOWS)
 
 #error "Main not implemented for the current platform"
 
-#endif
+#endif // defined(CDR_PLATFORM_WINDOWS)

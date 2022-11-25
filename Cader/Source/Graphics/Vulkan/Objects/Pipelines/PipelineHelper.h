@@ -8,7 +8,7 @@ namespace CDR::VK {
 
 	namespace PipelineHelper {
 
-		void CreateShader(FilePath pPath, VkShaderModule* pModule);
+		void CreateShader(const FilePath pPath, VkShaderModule* pModule);
 
 	}
 

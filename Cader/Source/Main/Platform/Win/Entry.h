@@ -9,7 +9,7 @@ int main(int, const char**)
 	return CDR::Main();
 }
 
-#else
+#else // !defined(CDR_FINAL)
 
 #include <Windows.h>
 
@@ -18,4 +18,4 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int)
 	return CDR::Main();
 }
 
-#endif
+#endif // !defined(CDR_FINAL)

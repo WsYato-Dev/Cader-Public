@@ -133,11 +133,11 @@ namespace CDR {
 
 		VK_VERIFY(result);
 
-		if(++mInFlightFrameIndex >= mSwapChain->GetMaxFramesInFlight())
+		if(mSwapChain->GetMaxFramesInFlight() <= ++mInFlightFrameIndex)
 			mInFlightFrameIndex = 0;
 	}
 
-	void Graphics::OnWindowMinimize(Event pEvent)
+	void Graphics::OnWindowMinimize(const Event pEvent)
 	{
 		if(pEvent.windowMinimized)
 		{
@@ -159,7 +159,7 @@ namespace CDR {
 		}
 	}
 
-	void Graphics::OnWindowResize(Event pEvent)
+	void Graphics::OnWindowResize(const Event pEvent)
 	{
 		mDevice->WaitIdle();
 

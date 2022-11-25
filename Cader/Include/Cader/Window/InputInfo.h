@@ -71,41 +71,41 @@ namespace CDR {
 
 	struct Key final
 	{
-		EKeyCode keyCode{EKeyCode::None};
-		EInputState state{EInputState::None};
-
 		constexpr Key() = default;
 
-		constexpr Key(EKeyCode pKeyCode, EInputState pState)
+		constexpr Key(const EKeyCode pKeyCode, const EInputState pState)
 			: keyCode{pKeyCode}
 			, state{pState}
 		{}
+
+		EKeyCode keyCode{EKeyCode::None};
+		EInputState state{EInputState::None};
 	};
 
 	struct MouseButton final
 	{
-		EMouseButton button{EMouseButton::None};
-		EInputState state{EInputState::None};
-
 		constexpr MouseButton() = default;
 
-		constexpr MouseButton(EMouseButton pButton, EInputState pState)
+		constexpr MouseButton(const EMouseButton pButton, const EInputState pState)
 			: button{pButton}
 			, state{pState}
 		{}
+
+		EMouseButton button{EMouseButton::None};
+		EInputState state{EInputState::None};
 	};
 
 	struct MousePosition final
 	{
-		u16 x{0};
-		u16 y{0};
-
 		constexpr MousePosition() = default;
 
-		constexpr  MousePosition(u16 pX, u16 pY)
+		constexpr  MousePosition(const u16 pX, const u16 pY)
 			: x{pX}
 			, y{pY}
 		{}
+
+		u16 x{0};
+		u16 y{0};
 	};
 
 }

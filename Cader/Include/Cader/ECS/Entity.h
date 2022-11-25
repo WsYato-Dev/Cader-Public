@@ -10,21 +10,18 @@ namespace CDR {
 
 	struct Entity final
 	{
-		friend Scene;
+		Entity() = default;
+
+		explicit Entity(const entt::entity pHandle)
+			: mHandle{pHandle}
+		{}
+
+		operator entt::entity() const noexcept { return mHandle; }
 
 	private:
 		const entt::entity mHandle{entt::null};
 
-	public:
-		constexpr Entity() = default;
-
-		constexpr Entity(entt::entity pHandle)
-			: mHandle{pHandle}
-		{}
-
-	public:
-		constexpr operator u32() const noexcept { return (u32)mHandle; }
-		constexpr operator entt::entity() const noexcept { return mHandle; }
+		friend Scene;
 	};
 
 }

@@ -7,7 +7,7 @@
 
 namespace CDR::VK {
 
-	Default2D::Default2D(u32 pSize)
+	Default2D::Default2D(const u32 pSize)
 	{
 		InitPipelineLayout();
 		InitPipeline();
@@ -60,9 +60,9 @@ namespace CDR::VK {
 		PipelineHelper::CreateShader("Shaders/Compiled/Default2D.vert.spv", &mShaderModules[0]);
 		PipelineHelper::CreateShader("Shaders/Compiled/Default2D.frag.spv", &mShaderModules[1]);
 
-		VkPipelineShaderStageCreateInfo shaderStages[2] = {};
+		std::array<VkPipelineShaderStageCreateInfo, 2> shaderStages = {};
 
-		for(u8 i = 0; i < 2; i++)
+		for(u8 i = 0; i < (u8)mShaderModules.size(); i++)
 		{
 			shaderStages[i].sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
 			shaderStages[i].pName = "main";
@@ -72,7 +72,7 @@ namespace CDR::VK {
 		shaderStages[0].stage = VK_SHADER_STAGE_VERTEX_BIT;
 		shaderStages[1].stage = VK_SHADER_STAGE_FRAGMENT_BIT;
 
-		constexpr VkDynamicState dynamicStates[2] =
+		constexpr std::array<VkDynamicState, 2> dynamicStates
 		{
 			VK_DYNAMIC_STATE_SCISSOR,
 			VK_DYNAMIC_STATE_VIEWPORT
@@ -83,8 +83,8 @@ namespace CDR::VK {
 		viewportState.viewportCount = 0;
 
 		VkPipelineDynamicStateCreateInfo dynamicState = {VK_STRUCTURE_TYPE_PIPELINE_DYNAMIC_STATE_CREATE_INFO};
-		dynamicState.dynamicStateCount = 2;
-		dynamicState.pDynamicStates = dynamicStates;
+		dynamicState.dynamicStateCount = (u32)dynamicStates.size();
+		dynamicState.pDynamicStates = &dynamicStates[0];
 
 		VkPipelineInputAssemblyStateCreateInfo inputAssemblyState = {VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO};
 		inputAssemblyState.topology = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST;
@@ -113,7 +113,7 @@ namespace CDR::VK {
 
 		VkGraphicsPipelineCreateInfo pipelineInfo = {VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO};
 		pipelineInfo.stageCount = 2;
-		pipelineInfo.pStages = shaderStages;
+		pipelineInfo.pStages = &shaderStages[0];
 		pipelineInfo.pDynamicState = &dynamicState;
 		pipelineInfo.pViewportState = &viewportState;
 		pipelineInfo.pVertexInputState = &vertexInputState;
@@ -125,7 +125,7 @@ namespace CDR::VK {
 		VK_VERIFY(Objects::CreateGraphicsPipeline(&pipelineInfo, &mPipeline));
 	}
 
-	void Default2D::InitDescriptorInfo(u32 pSize)
+	void Default2D::InitDescriptorInfo(const u32 pSize)
 	{
 		VkDescriptorPoolSize poolSize = {};
 		poolSize.descriptorCount = 1;

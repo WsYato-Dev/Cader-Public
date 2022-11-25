@@ -9,27 +9,26 @@
 
 namespace CDR::VK {
 
-	static constexpr u8 RequiredExtensionsCount{1};
-	static constexpr Text RequiredExtensions[RequiredExtensionsCount]
+	static constexpr std::array<Text, 1> RequiredExtensions
 	{
 		VK_KHR_SWAPCHAIN_EXTENSION_NAME
 	};
 
 	bool QueueFamilyIndicies::IsComplete() const noexcept
 	{
-		return graphicsFamilyIndex >= 0 && presentFamilyIndex >= 0 && transferFamilyIndex >= 0;
+		return 0 <= graphicsFamilyIndex && 0 <= presentFamilyIndex && 0 <= transferFamilyIndex;
 	}
 
-	u8 QueueFamilyIndicies::GetUniqueFamilyIndicies(i8 pIndicies[3]) const
+	u8 QueueFamilyIndicies::GetUniqueFamilyIndicies(std::array<i8, 3>& pIndicies) const
 	{
 		u8 count = 0;
 
 		pIndicies[count++] = graphicsFamilyIndex;
 
-		if(presentFamilyIndex != graphicsFamilyIndex)
+		if(graphicsFamilyIndex != presentFamilyIndex)
 			pIndicies[count++] = presentFamilyIndex;
 
-		if(transferFamilyIndex != graphicsFamilyIndex)
+		if(graphicsFamilyIndex != transferFamilyIndex)
 			pIndicies[count++] = transferFamilyIndex;
 
 		return count;
@@ -58,9 +57,9 @@ namespace CDR::VK {
 
 		struct PhysicalDeviceRating final
 		{
+			QueueFamilyIndicies queueFamilyIndicies;
 			u8 index{0};
 			u8 score{0};
-			QueueFamilyIndicies queueFamilyIndicies;
 		};
 
 		PhysicalDeviceRating physicalDeviceRating;
@@ -92,7 +91,7 @@ namespace CDR::VK {
 		u32 extensionsCount;
 		VK_VERIFY(vkEnumerateDeviceExtensionProperties(pPhysicalDevice, nullptr, &extensionsCount, nullptr));
 
-		if(extensionsCount <= 0)
+		if(0 >= extensionsCount)
 			return 0;
 
 		std::vector<VkExtensionProperties> extensions(extensionsCount);
@@ -100,7 +99,7 @@ namespace CDR::VK {
 
 		u8 extensionsFound = 0;
 
-		for(u8 i = 0; i < RequiredExtensionsCount; i++)
+		for(u8 i = 0; i < (u8)RequiredExtensions.size(); i++)
 		{
 			for(const auto& extension : extensions)
 			{
@@ -112,13 +111,13 @@ namespace CDR::VK {
 			}
 		}
 
-		if(extensionsFound != RequiredExtensionsCount)
+		if((u8)RequiredExtensions.size() != extensionsFound)
 			return 0;
 
 		u32 queueFamilyPropertiesCount;
 		vkGetPhysicalDeviceQueueFamilyProperties(pPhysicalDevice, &queueFamilyPropertiesCount, nullptr);
 
-		if(queueFamilyPropertiesCount <= 0)
+		if(0 >= queueFamilyPropertiesCount)
 			return 0;
 
 		std::vector<VkQueueFamilyProperties> queueFamilyProperties(queueFamilyPropertiesCount);
@@ -126,13 +125,13 @@ namespace CDR::VK {
 
 		for(u8 i = 0; i < (u8)queueFamilyPropertiesCount; i++)
 		{
-			if(pQueueFamilyIndicies->graphicsFamilyIndex < 0 && queueFamilyProperties[i].queueFlags & VK_QUEUE_GRAPHICS_BIT)
+			if(0 > pQueueFamilyIndicies->graphicsFamilyIndex && VK_QUEUE_GRAPHICS_BIT & queueFamilyProperties[i].queueFlags)
 			{
 				pQueueFamilyIndicies->graphicsFamilyIndex = i;
 				goto ASSIGNED;
 			}
 
-			if(pQueueFamilyIndicies->presentFamilyIndex < 0)
+			if(0 > pQueueFamilyIndicies->presentFamilyIndex)
 			{
 				u32 surfaceSupported;
 				VK_VERIFY(vkGetPhysicalDeviceSurfaceSupportKHR(pPhysicalDevice, i, mInstance.GetSurface(), &surfaceSupported));
@@ -144,7 +143,7 @@ namespace CDR::VK {
 				}
 			}
 
-			if(pQueueFamilyIndicies->transferFamilyIndex < 0 && queueFamilyProperties[i].queueFlags & VK_QUEUE_TRANSFER_BIT)
+			if(0 > pQueueFamilyIndicies->transferFamilyIndex && VK_QUEUE_TRANSFER_BIT & queueFamilyProperties[i].queueFlags)
 			{
 				pQueueFamilyIndicies->transferFamilyIndex = i;
 				goto ASSIGNED;
@@ -155,15 +154,15 @@ namespace CDR::VK {
 				break;
 		}
 
-		if(pQueueFamilyIndicies->graphicsFamilyIndex < 0)
+		if(0 > pQueueFamilyIndicies->graphicsFamilyIndex)
 			return 0;
 
-		if(pQueueFamilyIndicies->presentFamilyIndex < 0)
+		if(0 > pQueueFamilyIndicies->presentFamilyIndex)
 			pQueueFamilyIndicies->presentFamilyIndex = pQueueFamilyIndicies->graphicsFamilyIndex;
 		else
 			score++;
 
-		if(pQueueFamilyIndicies->transferFamilyIndex < 0)
+		if(0 > pQueueFamilyIndicies->transferFamilyIndex)
 			pQueueFamilyIndicies->transferFamilyIndex = pQueueFamilyIndicies->graphicsFamilyIndex;
 		else
 			score++;
@@ -185,10 +184,10 @@ namespace CDR::VK {
 
 	void Device::InitDevice()
 	{
-		i8 uniqueQueueFamilies[3];
+		std::array<i8, 3> uniqueQueueFamilies;
 		const u8 uniqueQueueFamiliesCount = mQueueFamilyIndicies.GetUniqueFamilyIndicies(uniqueQueueFamilies);
 
-		VkDeviceQueueCreateInfo queueCreateInfos[3] = {};
+		std::array<VkDeviceQueueCreateInfo, 3> queueCreateInfos = {};
 
 		constexpr float queuePriority = 1.0f;
 
@@ -203,11 +202,11 @@ namespace CDR::VK {
 		VkPhysicalDeviceFeatures deviceFeatures = {};
 
 		VkDeviceCreateInfo deviceInfo = {VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO};
-		deviceInfo.enabledExtensionCount = RequiredExtensionsCount;
-		deviceInfo.ppEnabledExtensionNames = RequiredExtensions;
+		deviceInfo.enabledExtensionCount = (u8)RequiredExtensions.size();
+		deviceInfo.ppEnabledExtensionNames = &RequiredExtensions[0];
 
 		deviceInfo.queueCreateInfoCount = uniqueQueueFamiliesCount;
-		deviceInfo.pQueueCreateInfos = queueCreateInfos;
+		deviceInfo.pQueueCreateInfos = &queueCreateInfos[0];
 
 		deviceInfo.pEnabledFeatures = &deviceFeatures;
 

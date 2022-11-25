@@ -12,43 +12,43 @@ namespace CDR {
 
 	class Window final
 	{
-		friend Engine;
-
-		GLFWwindow* mWindow;
-
-		Text mTitle;
-		EWindowMode mMode;
-
-		WindowSize mSize;
-		WindowSize mLateSize;
-
-		bool mMinimized{false};
-		bool mFocused{true};
-		bool mResized{false};
-
-		Window(Text pTitle, const StartupSettings& pStartupSettings);
+		Window(const Text pTitle, const StartupSettings& pStartupSettings);
 		~Window();
 
 		void SetCallbacks();
 		void OnResize();
 
-		void Show();
-
 		void PollEvents();
 		void WaitEvents();
 
 	public:
-		void SetTitle(Text pTitle);
-		void SetSize(WindowSize pSize);
-		void SetMode(EWindowMode pMode);
+		void SetTitle(const Text pTitle);
+		void SetSize(const WindowSize pSize);
+		void SetMode(const EWindowMode pMode);
 
-		inline Text GetTitle() const noexcept { return mTitle; }
-		inline WindowSize GetSize() const noexcept { return mSize; }
-		inline EWindowMode GetMode() const noexcept { return mMode; }
+		Text GetTitle() const noexcept { return mTitle; }
+		WindowSize GetSize() const noexcept { return mSize; }
+		EWindowMode GetMode() const noexcept { return mMode; }
 
-		inline GLFWwindow* GetNativeWindow() const noexcept { return mWindow; }
+		GLFWwindow* GetNativeWindow() const noexcept { return mWindow; }
 
-		inline bool IsFocused() const noexcept { return mFocused; }
+		bool IsFocused() const noexcept { return mFocused; }
+
+	private:
+		GLFWwindow* mWindow;
+
+		Text mTitle;
+
+		WindowSize mSize;
+		WindowSize mLateSize;
+
+		EWindowMode mMode;
+
+		bool mMinimized{false};
+		bool mFocused{true};
+		bool mResized{false};
+
+		friend Engine;
 	};
 
 }

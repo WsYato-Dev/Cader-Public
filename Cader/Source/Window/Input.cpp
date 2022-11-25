@@ -10,7 +10,7 @@
 
 namespace CDR {
 
-	constexpr EKeyCode GLFW2KeyCode(int pKey) noexcept
+	static constexpr EKeyCode GLFW2KeyCode(const int pKey) noexcept
 	{
 		switch(pKey)
 		{
@@ -116,7 +116,7 @@ namespace CDR {
 		}
 	}
 
-	constexpr EMouseButton GLFW2MouseButton(int pButton)
+	static constexpr EMouseButton GLFW2MouseButton(const int pButton)
 	{
 		switch(pButton)
 		{
@@ -128,7 +128,7 @@ namespace CDR {
 		}
 	}
 
-	constexpr EInputState GLFW2InputState(int pAction)
+	static constexpr EInputState GLFW2InputState(const int pAction)
 	{
 		switch(pAction)
 		{
@@ -147,18 +147,18 @@ namespace CDR {
 	MousePosition Input::sMousePosition;
 	i8 Input::sMouseScroll;
 
-	Input::Input(const Window& pWindow)
+	void Input::Init(const Window& pWindow)
 	{
 		GLFWwindow* window = pWindow.GetNativeWindow();
 
 		glfwSetKeyCallback(window, [](GLFWwindow* pWindow, int pKey, int pScanCode, int pAction, int pMods) -> void {
 			{
-				if(pAction == GLFW_REPEAT)
+				if(GLFW_REPEAT == pAction)
 					return;
 
 				const EKeyCode keyCode = GLFW2KeyCode(pKey);
 
-				if((i8)keyCode < (i8)EKeyCode::Count && (i8)keyCode >= 0)
+				if((i8)EKeyCode::Count > (i8)keyCode && 0 <= (i8)keyCode)
 				{
 					const EInputState state = GLFW2InputState(pAction);
 
@@ -173,12 +173,12 @@ namespace CDR {
 
 		glfwSetMouseButtonCallback(window, [](GLFWwindow* pWindow, int pButton, int pAction, int pMods) -> void {
 			{
-				if(pAction == GLFW_REPEAT)
+				if(GLFW_REPEAT == pAction)
 					return;
 
 				const EMouseButton button = GLFW2MouseButton(pButton);
 
-				if((i8)button < (i8)EMouseButton::Count && (i8)button >= 0)
+				if((i8)EMouseButton::Count > (i8)button && 0 <= (i8)button)
 				{
 					const EInputState state = GLFW2InputState(pAction);
 
@@ -254,9 +254,9 @@ namespace CDR {
 		sMouseScroll = 0;
 	}
 
-	void Input::SetInputMode(EInputMode pInputMode)
+	void Input::SetInputMode(const EInputMode pInputMode)
 	{
-		if(sInputMode == pInputMode)
+		if(pInputMode == sInputMode)
 			return;
 
 		GLFWwindow* window = Engine::Get().GetWindow().GetNativeWindow();

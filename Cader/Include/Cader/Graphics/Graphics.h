@@ -23,8 +23,21 @@ namespace CDR {
 
 	class Graphics final
 	{
-		friend Engine;
+		Graphics(const Window& pWindow, const StartupSettings& pStartupSettings);
+		~Graphics();
 
+		void PrepareCleanup();
+
+		void NewFrame();
+		void RenderFrame();
+
+		void OnWindowMinimize(const Event pEvent);
+		void OnWindowResize(const Event pEvent);
+
+	public:
+		Color clearColor;
+
+	private:
 		VK::Instance* mInstance;
 		VK::Device* mDevice;
 		VK::SwapChain* mSwapChain;
@@ -36,20 +49,7 @@ namespace CDR {
 		u8 mInFlightFrameIndex{0};
 		bool mCanRender{true};
 
-	public:
-		Color clearColor;
-
-	private:
-		Graphics(const Window& pWindow, const StartupSettings& pStartupSettings);
-		~Graphics();
-
-		void PrepareCleanup();
-
-		void NewFrame();
-		void RenderFrame();
-
-		void OnWindowMinimize(Event pEvent);
-		void OnWindowResize(Event pEvent);
+		friend Engine;
 	};
 
 }

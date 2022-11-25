@@ -10,12 +10,12 @@ namespace CDR {
 	char FileSystem::sProgramDirectory[DirectoryMaxSize];
 	char FileSystem::sWorkingDirectory[DirectoryMaxSize];
 
-	void FileSystem::Init(FilePath pPath)
+	void FileSystem::Init(const FilePath pPath)
 	{
 		if(pPath)
 			std::filesystem::current_path(pPath);
 
-		std::string currentPath = std::filesystem::current_path().string();
+		const std::string currentPath = std::filesystem::current_path().string();
 		CDR_ASSERT(currentPath.size() <= DirectoryMaxSize);
 
 		for(u8 i = 0; i < (u8)currentPath.size(); i++)
@@ -25,12 +25,12 @@ namespace CDR {
 			sWorkingDirectory[i] = sProgramDirectory[i];
 	}
 
-	void FileSystem::SetWorkingDirectory(FilePath pPath)
+	void FileSystem::SetWorkingDirectory(const FilePath pPath)
 	{
 		CDR_ASSERT(pPath);
 		std::filesystem::current_path(pPath);
 
-		std::string currentPath = std::filesystem::current_path().string();
+		const std::string currentPath = std::filesystem::current_path().string();
 		CDR_ASSERT(currentPath.size() <= DirectoryMaxSize - 1);
 
 		for(u8 i = 0; i < (u8)currentPath.size(); i++)
@@ -39,12 +39,12 @@ namespace CDR {
 		sWorkingDirectory[(u8)currentPath.size()] = 0;
 	}
 
-	bool FileSystem::Exists(FilePath pPath)
+	bool FileSystem::Exists(const FilePath pPath)
 	{
 		return std::filesystem::exists(pPath);
 	}
 
-	bool FileSystem::ReadFile(FilePath pPath, File* pFile)
+	bool FileSystem::ReadFile(const FilePath pPath, File* pFile)
 	{
 		CDR_ASSERT(pPath && pFile);
 
@@ -70,7 +70,7 @@ namespace CDR {
 		return true;
 	}
 
-	bool FileSystem::WriteFile(FilePath pPath, const std::string& pWrite)
+	bool FileSystem::WriteFile(const FilePath pPath, const std::string& pWrite)
 	{
 		CDR_ASSERT(pPath && pWrite.size());
 

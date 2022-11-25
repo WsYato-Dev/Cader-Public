@@ -7,10 +7,10 @@
 
 namespace CDR::VK {
 
-	void PipelineHelper::CreateShader(FilePath pPath, VkShaderModule* pModule)
+	void PipelineHelper::CreateShader(const FilePath pPath, VkShaderModule* pModule)
 	{
 		File shaderFile;
-		bool success = FileSystem::ReadFile(pPath, &shaderFile);
+		const bool success = FileSystem::ReadFile(pPath, &shaderFile);
 
 		if(!success)
 			return;
