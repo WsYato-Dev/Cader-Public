@@ -58,7 +58,7 @@ namespace CDR::VK {
 		mMaxFramesInFlight = DesiredFramesInFlight < mStaticInfo.imageCount ? DesiredFramesInFlight : mStaticInfo.imageCount;
 	}
 
-	void SwapChain::CreateSwapChain(const u16 pWidth, const u16 pHeight)
+	void SwapChain::CreateSwapChain(u16 pWidth, u16 pHeight)
 	{
 		if(!mSwapChainDestroyed)
 			return;
@@ -82,7 +82,7 @@ namespace CDR::VK {
 		mSwapChainDestroyed = true;
 	}
 
-	void SwapChain::InitSwapChain(const u16 pWidth, const u16 pHeight)
+	void SwapChain::InitSwapChain(u16 pWidth, u16 pHeight)
 	{
 		mExtent = {pWidth, pHeight};
 

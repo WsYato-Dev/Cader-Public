@@ -23,9 +23,9 @@ namespace CDR {
 		void WaitEvents();
 
 	public:
-		void SetTitle(const Text pTitle);
-		void SetSize(const WindowSize pSize);
-		void SetMode(const EWindowMode pMode);
+		void SetTitle(Text pTitle);
+		void SetSize(WindowSize pSize);
+		void SetMode(EWindowMode pMode);
 
 		Text GetTitle() const noexcept { return mTitle; }
 		WindowSize GetSize() const noexcept { return mSize; }

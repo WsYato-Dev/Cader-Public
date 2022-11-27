@@ -21,7 +21,7 @@ namespace CDR {
 	public:
 		void Quit();
 
-		void SetActiveScene(const u8 pSceneIndex);
+		void SetActiveScene(u8 pSceneIndex);
 
 		static Engine& Get() noexcept { return *sInstance; }
 

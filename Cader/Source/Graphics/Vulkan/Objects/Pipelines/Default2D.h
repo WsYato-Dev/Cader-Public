@@ -13,7 +13,7 @@ namespace CDR::VK {
 	class Default2D final
 	{
 	public:
-		Default2D(const u32 pSize);
+		Default2D(u32 pSize);
 		~Default2D();
 
 		void Bind(const VkCommandBuffer pCommandBuffer);
@@ -23,7 +23,7 @@ namespace CDR::VK {
 	private:
 		void InitPipelineLayout();
 		void InitPipeline();
-		void InitDescriptorInfo(const u32 pSize);
+		void InitDescriptorInfo(u32 pSize);
 
 	private:
 		VkDescriptorSetLayout mDescriptorSetLayout;

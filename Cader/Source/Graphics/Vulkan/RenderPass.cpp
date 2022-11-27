@@ -59,7 +59,7 @@ namespace CDR::VK {
 		VK_VERIFY(vkCreateRenderPass(mDevice.GetDevice(), &renderPassInfo, nullptr, &mRenderPass));
 	}
 
-	void RenderPass::CreateFrameBuffers(const u16 pWidth, const u16 pHeight)
+	void RenderPass::CreateFrameBuffers(u16 pWidth, u16 pHeight)
 	{
 		if(!mFrameBuffersDestroyed)
 			return;

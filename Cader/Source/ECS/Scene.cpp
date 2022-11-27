@@ -2,7 +2,7 @@
 
 namespace CDR {
 
-	Scene::Scene(const Text pSceneName, const u8 pSceneIndex)
+	Scene::Scene(Text pSceneName, u8 pSceneIndex)
 		: sceneName{pSceneName}
 		, sceneIndex{pSceneIndex}
 	{}
@@ -12,7 +12,7 @@ namespace CDR {
 		return Entity(mRegistry.create());
 	}
 
-	void Scene::DestroyEntity(const Entity pEntity)
+	void Scene::DestroyEntity(Entity pEntity)
 	{
 		mRegistry.destroy(pEntity);
 	}

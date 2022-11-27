@@ -14,17 +14,17 @@ namespace CDR {
 
 	class FileSystem final
 	{
-		static void Init(const FilePath pPath = nullptr);
+		static void Init(FilePath pPath = nullptr);
 
 	public:
 		static FilePath GetProgramDirectory() { return sProgramDirectory; }
 		static FilePath GetWorkingDirectory() { return sWorkingDirectory; }
 
-		static void SetWorkingDirectory(const FilePath pPath);
+		static void SetWorkingDirectory(FilePath pPath);
 
-		static bool Exists(const FilePath pPath);
-		static bool ReadFile(const FilePath pPath, File* pFile);
-		static bool WriteFile(const FilePath pPath, const std::string& pWrite);
+		static bool Exists(FilePath pPath);
+		static bool ReadFile(FilePath pPath, File* pFile);
+		static bool WriteFile(FilePath pPath, const std::string& pWrite);
 
 	private:
 		static constexpr u8 DirectoryMaxSize{128};

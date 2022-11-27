@@ -7,7 +7,7 @@
 
 namespace CDR {
 
-	Renderer2D::Renderer2D(const u32 pMaxQuads)
+	Renderer2D::Renderer2D(u32 pMaxQuads)
 	{
 		mRenderTargets.resize(pMaxQuads);
 

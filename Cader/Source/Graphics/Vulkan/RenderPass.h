@@ -22,7 +22,7 @@ namespace CDR {
 
 			void InitRenderPass();
 
-			void CreateFrameBuffers(const u16 pWidth, const u16 pHeight);
+			void CreateFrameBuffers(u16 pWidth, u16 pHeight);
 			void DestroyFrameBuffers();
 
 		public:

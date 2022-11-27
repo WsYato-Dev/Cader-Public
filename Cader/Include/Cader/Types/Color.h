@@ -10,19 +10,19 @@ namespace CDR {
 	{
 		constexpr Color() = default;
 
-		explicit constexpr Color(const float pValue)
+		explicit constexpr Color(float pValue)
 			: r{pValue}
 			, g{pValue}
 			, b{pValue}
 		{}
 
-		constexpr Color(const float pR, const float pG, const float pB)
+		constexpr Color(float pR, float pG, float pB)
 			: r{pR}
 			, g{pG}
 			, b{pB}
 		{}
 
-		constexpr Color(const float pR, const float pG, const float pB, const float pA)
+		constexpr Color(float pR, float pG, float pB, float pA)
 			: r{pR}
 			, g{pG}
 			, b{pB}
@@ -35,7 +35,7 @@ namespace CDR {
 		constexpr Color& operator=(const Color&) = default;
 		constexpr Color& operator=(Color&&) noexcept = default;
 
-		constexpr float operator[](const u8 pIndex) const
+		constexpr float operator[](u8 pIndex) const
 		{
 			switch(pIndex)
 			{
@@ -47,7 +47,7 @@ namespace CDR {
 			}
 		}
 
-		constexpr float& operator[](const u8 pIndex)
+		constexpr float& operator[](u8 pIndex)
 		{
 			switch(pIndex)
 			{
@@ -59,7 +59,7 @@ namespace CDR {
 			}
 		}
 
-		static constexpr Color Lerp(const Color& pLhs, const Color& pRhs, const float pT)
+		static constexpr Color Lerp(const Color& pLhs, const Color& pRhs, float pT)
 		{
 			return Color(
 				pLhs.r + pT * (pRhs.r - pLhs.r),
@@ -68,7 +68,7 @@ namespace CDR {
 			);
 		}
 
-		static constexpr Color Hex(const u32 pHex)
+		static constexpr Color Hex(u32 pHex)
 		{
 			return Color(
 				((pHex >> 24) & 0xFF) / 255.0f,

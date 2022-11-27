@@ -10,7 +10,7 @@
 
 namespace CDR {
 
-	static constexpr EKeyCode GLFW2KeyCode(const int pKey) noexcept
+	static constexpr EKeyCode GLFW2KeyCode(int pKey) noexcept
 	{
 		switch(pKey)
 		{
@@ -116,7 +116,7 @@ namespace CDR {
 		}
 	}
 
-	static constexpr EMouseButton GLFW2MouseButton(const int pButton)
+	static constexpr EMouseButton GLFW2MouseButton(int pButton)
 	{
 		switch(pButton)
 		{
@@ -128,7 +128,7 @@ namespace CDR {
 		}
 	}
 
-	static constexpr EInputState GLFW2InputState(const int pAction)
+	static constexpr EInputState GLFW2InputState(int pAction)
 	{
 		switch(pAction)
 		{
@@ -254,7 +254,7 @@ namespace CDR {
 		sMouseScroll = 0;
 	}
 
-	void Input::SetInputMode(const EInputMode pInputMode)
+	void Input::SetInputMode(EInputMode pInputMode)
 	{
 		if(pInputMode == sInputMode)
 			return;

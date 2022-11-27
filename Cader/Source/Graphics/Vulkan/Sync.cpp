@@ -27,7 +27,7 @@ namespace CDR::VK {
 			vkDestroySemaphore(mDevice.GetDevice(), semaphore, nullptr);
 	}
 
-	void Sync::InitSemaphores(const u8 pFramesInFlightCount)
+	void Sync::InitSemaphores(u8 pFramesInFlightCount)
 	{
 		mImageAcquired.resize(pFramesInFlightCount);
 		mRenderingDone.resize(pFramesInFlightCount);
@@ -41,7 +41,7 @@ namespace CDR::VK {
 		}
 	}
 
-	void Sync::InitFences(const u8 pFramesInFlightCount)
+	void Sync::InitFences(u8 pFramesInFlightCount)
 	{
 		mInFlightFrames.resize(pFramesInFlightCount);
 

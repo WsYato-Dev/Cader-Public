@@ -10,7 +10,7 @@
 
 namespace CDR::VK {
 
-	Buffer::Buffer(const u32 pSize, const VkBufferUsageFlags pUsage, const VkMemoryPropertyFlags pProperties)
+	Buffer::Buffer(u32 pSize, VkBufferUsageFlags pUsage, VkMemoryPropertyFlags pProperties)
 		: size{pSize}
 	{
 		VkBufferCreateInfo bufferInfo = {VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO};
@@ -37,7 +37,7 @@ namespace CDR::VK {
 		Objects::DestroyBuffer(mBuffer);
 	}
 
-	BufferHost::BufferHost(const u32 pSize, const VkBufferUsageFlags pUsage, const VkMemoryPropertyFlags pProperties)
+	BufferHost::BufferHost(u32 pSize, VkBufferUsageFlags pUsage, VkMemoryPropertyFlags pProperties)
 		: Buffer{pSize, pUsage, pProperties}
 	{}
 
@@ -49,7 +49,7 @@ namespace CDR::VK {
 		Objects::UnMapMemory(mMemory);
 	}
 
-	void BufferHost::Update(const u32 pSize, const u32 pOffset, const void* pData)
+	void BufferHost::Update(u32 pSize, u32 pOffset, const void* pData)
 	{
 		CDR_ASSERT(size >= pSize + pOffset);
 
@@ -59,11 +59,11 @@ namespace CDR::VK {
 		Objects::UnMapMemory(mMemory);
 	}
 
-	StagingBuffer::StagingBuffer(const u32 pSize)
+	StagingBuffer::StagingBuffer(u32 pSize)
 		: BufferHost{pSize, VK_BUFFER_USAGE_TRANSFER_SRC_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT}
 	{}
 
-	void StagingBuffer::CopyToBuffer(const VkBuffer pDst, const u32 pSize)
+	void StagingBuffer::CopyToBuffer(const VkBuffer pDst, u32 pSize)
 	{
 		VkBufferCopy copyRegion = {};
 		copyRegion.srcOffset = 0;
@@ -83,27 +83,27 @@ namespace CDR::VK {
 		Objects::SubmitAndFreeDirectTransferCommand(commandBuffer);
 	}
 
-	VertexBuffer::VertexBuffer(const u32 pSize)
+	VertexBuffer::VertexBuffer(u32 pSize)
 		: Buffer{pSize, VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT}
 	{}
 
-	VertexBufferHost::VertexBufferHost(const u32 pSize)
+	VertexBufferHost::VertexBufferHost(u32 pSize)
 		: BufferHost{pSize, VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT}
 	{}
 
-	IndexBuffer::IndexBuffer(const u32 pSize)
+	IndexBuffer::IndexBuffer(u32 pSize)
 		: Buffer{pSize, VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_INDEX_BUFFER_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT}
 	{}
 
-	IndexBufferHost::IndexBufferHost(const u32 pSize)
+	IndexBufferHost::IndexBufferHost(u32 pSize)
 		: BufferHost{pSize, VK_BUFFER_USAGE_INDEX_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT}
 	{}
 
-	UniformBuffer::UniformBuffer(const u32 pSize)
+	UniformBuffer::UniformBuffer(u32 pSize)
 		: BufferHost{pSize, VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT}
 	{}
 
-	StorageBuffer::StorageBuffer(const u32 pSize)
+	StorageBuffer::StorageBuffer(u32 pSize)
 		: BufferHost{pSize, VK_BUFFER_USAGE_STORAGE_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT}
 	{}
 

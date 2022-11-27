@@ -25,7 +25,7 @@ namespace CDR {
 
 	class Renderer2D final
 	{
-		Renderer2D(const u32 pMaxQuads);
+		Renderer2D(u32 pMaxQuads);
 		~Renderer2D();
 
 		void Render(Scene& pScene, const VkCommandBuffer pCommandBuffer);

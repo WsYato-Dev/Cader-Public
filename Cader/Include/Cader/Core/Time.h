@@ -27,7 +27,7 @@ namespace CDR {
 
 	struct Timer final
 	{
-		void Start(const Milliseconds pMilliseconds) { mEnd = pMilliseconds + Time::Now(); }
+		void Start(Milliseconds pMilliseconds) { mEnd = pMilliseconds + Time::Now(); }
 		bool Check() const noexcept { return mEnd <= Time::Now(); }
 
 	private:
@@ -47,7 +47,7 @@ namespace CDR {
 
 	struct INTERNAL_FunctionBenchmarker final
 	{
-		INTERNAL_FunctionBenchmarker(const Text pFunction);
+		INTERNAL_FunctionBenchmarker(Text pFunction);
 		~INTERNAL_FunctionBenchmarker();
 
 	private:

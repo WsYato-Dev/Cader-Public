@@ -73,7 +73,7 @@ namespace CDR {
 	{
 		constexpr Key() = default;
 
-		constexpr Key(const EKeyCode pKeyCode, const EInputState pState)
+		constexpr Key(EKeyCode pKeyCode, EInputState pState)
 			: keyCode{pKeyCode}
 			, state{pState}
 		{}
@@ -86,7 +86,7 @@ namespace CDR {
 	{
 		constexpr MouseButton() = default;
 
-		constexpr MouseButton(const EMouseButton pButton, const EInputState pState)
+		constexpr MouseButton(EMouseButton pButton, EInputState pState)
 			: button{pButton}
 			, state{pState}
 		{}
@@ -99,7 +99,7 @@ namespace CDR {
 	{
 		constexpr MousePosition() = default;
 
-		constexpr  MousePosition(const u16 pX, const u16 pY)
+		constexpr  MousePosition(u16 pX, u16 pY)
 			: x{pX}
 			, y{pY}
 		{}

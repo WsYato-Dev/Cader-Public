@@ -31,10 +31,10 @@ namespace CDR {
 
 			void InitStaticInfo();
 
-			void CreateSwapChain(const u16 pWidth, const u16 pHeight);
+			void CreateSwapChain(u16 pWidth, u16 pHeight);
 			void DestroySwapChain();
 
-			void InitSwapChain(const u16 pWidth, const u16 pHeight);
+			void InitSwapChain(u16 pWidth, u16 pHeight);
 			void InitSwapChainImageViews();
 
 		public:

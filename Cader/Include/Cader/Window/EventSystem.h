@@ -10,7 +10,7 @@ namespace CDR {
 
 	class EventSystem final
 	{
-		static Event GetEvent(const u8 pIndex)
+		static Event GetEvent(u8 pIndex)
 		{
 			CDR_ASSERT(pIndex < sCount);
 			return sEvents[pIndex];
@@ -22,7 +22,7 @@ namespace CDR {
 		}
 
 	public:
-		static void FireEvent(const Event pEvent, const bool pPriority = false)
+		static void FireEvent(Event pEvent, bool pPriority = false)
 		{
 			if(sCount >= MaxEvents)
 			{

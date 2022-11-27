@@ -34,8 +34,8 @@ namespace CDR {
 		void NewFrame();
 		void RenderFrame(Scene& pScene);
 
-		void OnWindowMinimize(const Event pEvent);
-		void OnWindowResize(const Event pEvent);
+		void OnWindowMinimize(Event pEvent);
+		void OnWindowResize(Event pEvent);
 
 	public:
 		Color clearColor;

@@ -12,7 +12,7 @@ namespace CDR {
 	{
 		Entity() = default;
 
-		explicit Entity(const entt::entity pHandle)
+		explicit Entity(entt::entity pHandle)
 			: mHandle{pHandle}
 		{}
 

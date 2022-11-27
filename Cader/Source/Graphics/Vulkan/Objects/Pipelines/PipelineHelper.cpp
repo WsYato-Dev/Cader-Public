@@ -8,7 +8,7 @@
 
 namespace CDR::VK {
 
-	void PipelineHelper::CreateShader(const FilePath pPath, VkShaderModule* pModule)
+	void PipelineHelper::CreateShader(FilePath pPath, VkShaderModule* pModule)
 	{
 		File shaderFile;
 		const bool success = FileSystem::ReadFile(pPath, &shaderFile);
@@ -18,7 +18,7 @@ namespace CDR::VK {
 
 		VkShaderModuleCreateInfo moduleInfo = {VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO};
 		moduleInfo.codeSize = shaderFile.size();
-		moduleInfo.pCode = (const u32*)&shaderFile[0];
+		moduleInfo.pCode = (u32*)&shaderFile[0];
 
 		VK_VERIFY(Objects::CreateShaderModule(moduleInfo, pModule));
 	}

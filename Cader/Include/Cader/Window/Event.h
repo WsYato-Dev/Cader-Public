@@ -18,7 +18,7 @@ namespace CDR {
 			: type{EEventType::None}
 		{}
 
-		explicit constexpr Event(const EEventType pType)
+		explicit constexpr Event(EEventType pType)
 			: type{pType}
 		{}
 

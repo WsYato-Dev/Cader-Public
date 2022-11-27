@@ -145,7 +145,7 @@ namespace CDR {
 			mInFlightFrameIndex = 0;
 	}
 
-	void Graphics::OnWindowMinimize(const Event pEvent)
+	void Graphics::OnWindowMinimize(Event pEvent)
 	{
 		if(pEvent.windowMinimized)
 		{
@@ -167,7 +167,7 @@ namespace CDR {
 		}
 	}
 
-	void Graphics::OnWindowResize(const Event pEvent)
+	void Graphics::OnWindowResize(Event pEvent)
 	{
 		mDevice->WaitIdle();
 

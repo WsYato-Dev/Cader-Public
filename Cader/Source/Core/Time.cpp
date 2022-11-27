@@ -37,7 +37,7 @@ namespace CDR {
 
 #if !defined(CDR_FINAL)
 
-	INTERNAL_FunctionBenchmarker::INTERNAL_FunctionBenchmarker(const Text pFunction)
+	INTERNAL_FunctionBenchmarker::INTERNAL_FunctionBenchmarker(Text pFunction)
 		: mFunction{pFunction}
 	{
 		const TimePoint currentTimePoint = Clock::now();

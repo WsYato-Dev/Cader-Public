@@ -9,7 +9,7 @@ namespace CDR::VK {
 	class Buffer
 	{
 	public:
-		Buffer(const u32 pSize, const VkBufferUsageFlags pUsage, const VkMemoryPropertyFlags pProperties);
+		Buffer(u32 pSize, VkBufferUsageFlags pUsage, VkMemoryPropertyFlags pProperties);
 		~Buffer();
 
 		const VkBuffer GetBuffer() const noexcept { return mBuffer; }
@@ -25,10 +25,10 @@ namespace CDR::VK {
 	class BufferHost: public Buffer
 	{
 	public:
-		BufferHost(const u32 pSize, const VkBufferUsageFlags pUsage, const VkMemoryPropertyFlags pProperties);
+		BufferHost(u32 pSize, VkBufferUsageFlags pUsage, VkMemoryPropertyFlags pProperties);
 
 		void Update(const void* pData);
-		void Update(const u32 pSize, const u32 pOffset, const void* pData);
+		void Update(u32 pSize, u32 pOffset, const void* pData);
 	};
 
 	// Staging Buffer
@@ -37,47 +37,47 @@ namespace CDR::VK {
 	public:
 		StagingBuffer(u32 pSize);
 
-		void CopyToBuffer(const VkBuffer pDst, const u32 pSize);
+		void CopyToBuffer(const VkBuffer pDst, u32 pSize);
 	};
 
 	// Vertex Buffer
 	class VertexBuffer final: public Buffer
 	{
 	public:
-		VertexBuffer(const u32 pSize);
+		VertexBuffer(u32 pSize);
 	};
 
 	class VertexBufferHost final: public BufferHost
 	{
 	public:
-		VertexBufferHost(const u32 pSize);
+		VertexBufferHost(u32 pSize);
 	};
 
 	// Index Buffer
 	class IndexBuffer final: public Buffer
 	{
 	public:
-		IndexBuffer(const u32 pSize);
+		IndexBuffer(u32 pSize);
 	};
 
 	class IndexBufferHost final: public BufferHost
 	{
 	public:
-		IndexBufferHost(const u32 pSize);
+		IndexBufferHost(u32 pSize);
 	};
 
 	// Uniform Buffer
 	class UniformBuffer final: public BufferHost
 	{
 	public:
-		UniformBuffer(const u32 pSize);
+		UniformBuffer(u32 pSize);
 	};
 
 	// Storage Buffer
 	class StorageBuffer final: public BufferHost
 	{
 	public:
-		StorageBuffer(const u32 pSize);
+		StorageBuffer(u32 pSize);
 	};
 
 }

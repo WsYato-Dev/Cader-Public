@@ -15,12 +15,12 @@ namespace CDR {
 	{
 		constexpr WindowSize() = default;
 
-		constexpr WindowSize(const u16 pWidth, const u16 pHeight)
+		constexpr WindowSize(u16 pWidth, u16 pHeight)
 			: width{pWidth}
 			, height{pHeight}
 		{}
 
-		constexpr bool operator==(const WindowSize pOther) const noexcept
+		constexpr bool operator==(WindowSize pOther) const noexcept
 		{
 			return width == pOther.width && height == pOther.height;
 		}
@@ -33,7 +33,7 @@ namespace CDR {
 	{
 		constexpr WindowAspectRatio() = default;
 
-		constexpr WindowAspectRatio(const u8 pNumerator, const u8 pDenominator)
+		constexpr WindowAspectRatio(u8 pNumerator, u8 pDenominator)
 			: numerator{pNumerator}
 			, denominator{pDenominator}
 		{}

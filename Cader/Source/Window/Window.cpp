@@ -146,7 +146,7 @@ namespace CDR {
 			OnResize();
 	}
 
-	void Window::SetTitle(const Text pTitle)
+	void Window::SetTitle(Text pTitle)
 	{
 		if(pTitle == mTitle)
 			return;
@@ -155,7 +155,7 @@ namespace CDR {
 		mTitle = pTitle;
 	}
 
-	void Window::SetSize(const WindowSize pSize)
+	void Window::SetSize(WindowSize pSize)
 	{
 		if(pSize == mSize || mMode != EWindowMode::Windowed)
 			return;
@@ -164,7 +164,7 @@ namespace CDR {
 		mSize = pSize;
 	}
 
-	void Window::SetMode(const EWindowMode pMode)
+	void Window::SetMode(EWindowMode pMode)
 	{
 		if(pMode == mMode)
 			return;

@@ -20,8 +20,8 @@ namespace CDR {
 			Sync(const Device& pDevice, const SwapChain& pSwapChain);
 			~Sync();
 
-			void InitSemaphores(const u8 pFramesInFlightCount);
-			void InitFences(const u8 pFramesInFlightCount);
+			void InitSemaphores(u8 pFramesInFlightCount);
+			void InitFences(u8 pFramesInFlightCount);
 
 		public:
 			const std::vector<VkSemaphore>& GetImageAcquired() const noexcept { return mImageAcquired; }

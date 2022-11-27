@@ -15,7 +15,7 @@ namespace CDR {
 			delete scene.second;
 	}
 
-	Scene* SceneManager::SetActiveScene(const u8 pSceneIndex)
+	Scene* SceneManager::SetActiveScene(u8 pSceneIndex)
 	{
 		CDR_ASSERT(Exists(pSceneIndex));
 
@@ -23,7 +23,7 @@ namespace CDR {
 		return sScenes[pSceneIndex];
 	}
 
-	u8 SceneManager::Create(const Text pSceneName)
+	u8 SceneManager::Create(Text pSceneName)
 	{
 		u8 sceneIndex = Get(pSceneName);
 
@@ -39,7 +39,7 @@ namespace CDR {
 		return sceneIndex;
 	}
 
-	void SceneManager::Destroy(const u8 pSceneIndex)
+	void SceneManager::Destroy(u8 pSceneIndex)
 	{
 		CDR_ASSERT(pSceneIndex != sActiveSceneIndex && Exists(pSceneIndex));
 
@@ -47,18 +47,18 @@ namespace CDR {
 		sScenes.erase(pSceneIndex);
 	}
 
-	bool SceneManager::Exists(const u8 pSceneIndex)
+	bool SceneManager::Exists(u8 pSceneIndex)
 	{
 		return sScenes.find(pSceneIndex) != sScenes.end();
 	}
 
-	Scene* SceneManager::Get(const u8 pSceneIndex)
+	Scene* SceneManager::Get(u8 pSceneIndex)
 	{
 		CDR_ASSERT(Exists(pSceneIndex));
 		return sScenes[pSceneIndex];
 	}
 
-	u8 SceneManager::Get(const Text pSceneName)
+	u8 SceneManager::Get(Text pSceneName)
 	{
 		for(const auto& scene : sScenes)
 			if(scene.second->sceneName == pSceneName)

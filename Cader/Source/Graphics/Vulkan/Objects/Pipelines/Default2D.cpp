@@ -9,7 +9,7 @@
 
 namespace CDR::VK {
 
-	Default2D::Default2D(const u32 pSize)
+	Default2D::Default2D(u32 pSize)
 	{
 		InitPipelineLayout();
 		InitPipeline();
@@ -127,7 +127,7 @@ namespace CDR::VK {
 		VK_VERIFY(Objects::CreateGraphicsPipeline(&pipelineInfo, &mPipeline));
 	}
 
-	void Default2D::InitDescriptorInfo(const u32 pSize)
+	void Default2D::InitDescriptorInfo(u32 pSize)
 	{
 		VkDescriptorPoolSize poolSize = {};
 		poolSize.descriptorCount = 1;

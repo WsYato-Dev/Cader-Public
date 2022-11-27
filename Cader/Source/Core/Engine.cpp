@@ -135,7 +135,7 @@ namespace CDR {
 		mRunning = false;
 	}
 
-	void Engine::SetActiveScene(const u8 pSceneIndex)
+	void Engine::SetActiveScene(u8 pSceneIndex)
 	{
 		mActiveScene = SceneManager::SetActiveScene(pSceneIndex);
 	}

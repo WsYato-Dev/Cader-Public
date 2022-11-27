@@ -12,35 +12,35 @@ namespace CDR {
 
 	class Scene final
 	{
-		Scene(const Text pSceneName, const u8 pSceneIndex);
+		Scene(Text pSceneName, u8 pSceneIndex);
 		~Scene() = default;
 
 	public:
 		Entity NewEntity();
-		void DestroyEntity(const Entity pEntity);
+		void DestroyEntity(Entity pEntity);
 
 		template<typename _T>
-		bool HasComponent(const Entity pEntity)
+		bool HasComponent(Entity pEntity)
 		{
 			return mRegistry.try_get<_T>(pEntity) != nullptr;
 		}
 
 		template<typename _T, typename ..._Args>
-		_T& AddComponent(const Entity pEntity, const _Args&& ...pArgs)
+		_T& AddComponent(Entity pEntity, _Args&& ...pArgs)
 		{
 			CDR_ASSERT(!HasComponent<_T>(pEntity));
 			return mRegistry.emplace<_T>(pEntity, std::forward<_Args>(pArgs)...);
 		}
 
 		template<typename _T>
-		void RemoveComponent(const Entity pEntity)
+		void RemoveComponent(Entity pEntity)
 		{
 			CDR_ASSERT(HasComponent<_T>(pEntity));
 			mRegistry.remove<_T>(pEntity);
 		}
 
 		template<typename _T>
-		_T& GetComponent(const Entity pEntity)
+		_T& GetComponent(Entity pEntity)
 		{
 			CDR_ASSERT(HasComponent<_T>(pEntity));
 			return mRegistry.get<_T>(pEntity);
