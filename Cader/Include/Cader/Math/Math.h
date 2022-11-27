@@ -8,7 +8,7 @@ namespace CDR::Math {
 	constexpr _T Abs(_T pValue)
 	{
 		static_assert(std::is_integral_v<_T> || std::is_floating_point_v<_T>);
-		return 0 < pValue ? pValue : -pValue;
+		return pValue > (_T)0 ? pValue : -pValue;
 	}
 
 	template<typename _T>
@@ -29,7 +29,7 @@ namespace CDR::Math {
 	constexpr _T Lerp(const _T pA, const _T pB, float pT)
 	{
 		static_assert(std::is_integral_v<_T> || std::is_floating_point_v<_T>);
-		return pA + pT * (pB - pA);
+		return (_T)(pA + pT * (pB - pA));
 	}
 
 }

@@ -141,7 +141,7 @@ namespace CDR {
 
 		VK_VERIFY(result);
 
-		if(mSwapChain->GetMaxFramesInFlight() <= ++mInFlightFrameIndex)
+		if(++mInFlightFrameIndex >= mSwapChain->GetMaxFramesInFlight())
 			mInFlightFrameIndex = 0;
 	}
 

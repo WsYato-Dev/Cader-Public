@@ -32,7 +32,7 @@ namespace CDR {
 
 		sceneIndex = (u8)Random::UInt16();
 
-		while(Exists(sceneIndex) || 0 == sceneIndex)
+		while(Exists(sceneIndex) || sceneIndex == 0)
 			sceneIndex = (u8)Random::UInt16();
 
 		sScenes[sceneIndex] = new Scene(pSceneName, sceneIndex);
@@ -61,7 +61,7 @@ namespace CDR {
 	u8 SceneManager::Get(const Text pSceneName)
 	{
 		for(const auto& scene : sScenes)
-			if(pSceneName == scene.second->sceneName)
+			if(scene.second->sceneName == pSceneName)
 				return scene.first;
 
 		return 0;

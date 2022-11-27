@@ -64,7 +64,7 @@ namespace CDR::VK {
 		{
 			for(const auto& layer : layers)
 			{
-				if(0 == strcmp(requestedLayers[i], layer.layerName))
+				if(strcmp(requestedLayers[i], layer.layerName) == 0)
 				{
 					layersFound++;
 					break;
@@ -72,7 +72,7 @@ namespace CDR::VK {
 			}
 		}
 
-		CDR_ASSERT(requestedLayers.size() == layersFound);
+		CDR_ASSERT(layersFound == requestedLayers.size());
 
 		instanceInfo.enabledLayerCount = (u32)requestedLayers.size();
 		instanceInfo.ppEnabledLayerNames = &requestedLayers[0];

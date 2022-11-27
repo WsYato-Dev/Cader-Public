@@ -51,7 +51,7 @@ namespace CDR::VK {
 
 	void BufferHost::Update(const u32 pSize, const u32 pOffset, const void* pData)
 	{
-		CDR_ASSERT(pSize + pOffset <= size);
+		CDR_ASSERT(size >= pSize + pOffset);
 
 		void* data;
 		VK_VERIFY(Objects::MapMemory(mMemory, pOffset, pSize, 0, &data));

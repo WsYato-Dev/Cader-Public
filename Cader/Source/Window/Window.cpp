@@ -18,7 +18,7 @@ namespace CDR {
 		glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
 		glfwWindowHint(GLFW_RESIZABLE, pPersistentSettings.windowResizable);
 
-		if(0 < pStartupSettings.windowDefaultSize.width && 0 < pStartupSettings.windowDefaultSize.height)
+		if(pStartupSettings.windowDefaultSize.width > 0 && pStartupSettings.windowDefaultSize.height > 0)
 			mLateSize = pStartupSettings.windowDefaultSize;
 		else
 			mLateSize = WindowSize(1280, 720);
@@ -53,10 +53,10 @@ namespace CDR {
 
 		glfwSetWindowUserPointer(mWindow, this);
 
-		if(0 < pPersistentSettings.windowMinimumSize.width || 0 < pPersistentSettings.windowMinimumSize.height)
+		if(pPersistentSettings.windowMinimumSize.width > 0 || pPersistentSettings.windowMinimumSize.height > 0)
 			glfwSetWindowSizeLimits(mWindow, pPersistentSettings.windowMinimumSize.width, pPersistentSettings.windowMinimumSize.height, GLFW_DONT_CARE, GLFW_DONT_CARE);
 
-		if(0 < pPersistentSettings.windowAspectRatio.numerator && 0 < pPersistentSettings.windowAspectRatio.denominator)
+		if(pPersistentSettings.windowAspectRatio.numerator > 0 && pPersistentSettings.windowAspectRatio.denominator > 0)
 			glfwSetWindowAspectRatio(mWindow, pPersistentSettings.windowAspectRatio.numerator, pPersistentSettings.windowAspectRatio.denominator);
 
 		SetCallbacks();
@@ -81,7 +81,7 @@ namespace CDR {
 			{
 				Window& user = *(Window*)glfwGetWindowUserPointer(pWindow);
 
-				if(0 == pWidth || 0 == pHeight)
+				if(pWidth == 0 || pHeight == 0)
 				{
 					user.mMinimized = true;
 
@@ -157,7 +157,7 @@ namespace CDR {
 
 	void Window::SetSize(const WindowSize pSize)
 	{
-		if(pSize == mSize || EWindowMode::Windowed != mMode)
+		if(pSize == mSize || mMode != EWindowMode::Windowed)
 			return;
 
 		glfwSetWindowSize(mWindow, pSize.width, pSize.height);
@@ -169,7 +169,7 @@ namespace CDR {
 		if(pMode == mMode)
 			return;
 
-		if(EWindowMode::Fullscreen == mMode)
+		if(mMode == EWindowMode::Fullscreen)
 			glfwSetWindowMonitor(mWindow, nullptr, 100, 100, mLateSize.width, mLateSize.height, GLFW_DONT_CARE);
 
 		switch(pMode)

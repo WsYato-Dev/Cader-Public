@@ -34,16 +34,16 @@ namespace CDR {
 
 	void Renderer2D::Render(Scene& pScene, const VkCommandBuffer pCommandBuffer)
 	{
-		const auto& view = pScene.GetAllEntitiesWith<ColorComponent, Position2DComponent, Size2DComponent>();
+		const auto& view = pScene.GetAllEntitiesWith<Components::RenderTarget2D, Components::Position2D, Components::Size2D>();
 
 		u32 targetCount = 0;
 
-		for(entt::entity entity : view)
+		for(const entt::entity entity : view)
 		{
-			if(mRenderTargets.size() <= targetCount)
+			if(targetCount >= mRenderTargets.size())
 				break;
 
-			const auto& [color, position, size] = view.get<ColorComponent, Position2DComponent, Size2DComponent>(entity);
+			const auto& [color, position, size] = view.get<Components::RenderTarget2D, Components::Position2D, Components::Size2D>(entity);
 
 			mRenderTargets[targetCount].color = color.color;
 			mRenderTargets[targetCount].position = position.position;
@@ -52,7 +52,7 @@ namespace CDR {
 			targetCount++;
 		}
 
-		if(0 >= targetCount)
+		if(targetCount <= 0)
 			return;
 
 		mDefault2D->Bind(pCommandBuffer);

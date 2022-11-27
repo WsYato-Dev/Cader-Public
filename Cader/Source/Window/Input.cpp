@@ -153,12 +153,12 @@ namespace CDR {
 
 		glfwSetKeyCallback(window, [](GLFWwindow* pWindow, int pKey, int pScanCode, int pAction, int pMods) -> void {
 			{
-				if(GLFW_REPEAT == pAction)
+				if(pAction == GLFW_REPEAT)
 					return;
 
 				const EKeyCode keyCode = GLFW2KeyCode(pKey);
 
-				if((i8)EKeyCode::Count > (i8)keyCode && 0 <= (i8)keyCode)
+				if((i8)keyCode < (i8)EKeyCode::Count && (i8)keyCode >= 0)
 				{
 					const EInputState state = GLFW2InputState(pAction);
 
@@ -173,12 +173,12 @@ namespace CDR {
 
 		glfwSetMouseButtonCallback(window, [](GLFWwindow* pWindow, int pButton, int pAction, int pMods) -> void {
 			{
-				if(GLFW_REPEAT == pAction)
+				if(pAction == GLFW_REPEAT)
 					return;
 
 				const EMouseButton button = GLFW2MouseButton(pButton);
 
-				if((i8)EMouseButton::Count > (i8)button && 0 <= (i8)button)
+				if((i8)button < (i8)EMouseButton::Count && (i8)button >= 0)
 				{
 					const EInputState state = GLFW2InputState(pAction);
 

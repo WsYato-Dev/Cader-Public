@@ -35,9 +35,9 @@ void Project::Init(Scene& pScene)
 		{
 			Entity entity = pScene.NewEntity();
 
-			pScene.AddComponent<ColorComponent>(entity).color = Color::Random();
-			pScene.AddComponent<Position2DComponent>(entity).position = glm::vec2(QuadsStartPoint + x * QuadStep, QuadsStartPoint + y * QuadStep);
-			pScene.AddComponent<Size2DComponent>(entity).size = QuadSize;
+			pScene.AddComponent<Components::RenderTarget2D>(entity).color = Color::Random();
+			pScene.AddComponent<Components::Position2D>(entity).position = glm::vec2(QuadsStartPoint + x * QuadStep, QuadsStartPoint + y * QuadStep);
+			pScene.AddComponent<Components::Size2D>(entity).size = QuadSize;
 		}
 	}
 
@@ -53,10 +53,10 @@ void Project::Update(Scene& pScene)
 
 	if(quadsRandomColorTimer.Check())
 	{
-		const auto& view = pScene.GetAllEntitiesWith<ColorComponent>();
+		const auto& view = pScene.GetAllEntitiesWith<Components::RenderTarget2D>();
 
 		for(entt::entity entity : view)
-			view.get<ColorComponent>(entity).color = Color::Random();
+			view.get<Components::RenderTarget2D>(entity).color = Color::Random();
 
 		quadsRandomColorTimer.Start(QuadsRandomColorInterval);
 	}

@@ -22,7 +22,7 @@ namespace CDR {
 
 		constexpr bool operator==(const WindowSize pOther) const noexcept
 		{
-			return pOther.width == width && pOther.height == height;
+			return width == pOther.width && height == pOther.height;
 		}
 
 		u16 width{0};

@@ -12,7 +12,7 @@ namespace CDR {
 	{
 		static Event GetEvent(const u8 pIndex)
 		{
-			CDR_ASSERT(sCount >= pIndex);
+			CDR_ASSERT(pIndex < sCount);
 			return sEvents[pIndex];
 		}
 
@@ -24,7 +24,7 @@ namespace CDR {
 	public:
 		static void FireEvent(const Event pEvent, const bool pPriority = false)
 		{
-			if(MaxEvents <= sCount)
+			if(sCount >= MaxEvents)
 			{
 				if(pPriority)
 					sEvents[0] = pEvent;
@@ -36,7 +36,7 @@ namespace CDR {
 		}
 
 		static u8 Count() noexcept { return sCount; }
-		static bool IsEmpty() noexcept { return 0 >= sCount; }
+		static bool IsEmpty() noexcept { return sCount <= 0; }
 
 		static constexpr u8 MaxEvents{5};
 

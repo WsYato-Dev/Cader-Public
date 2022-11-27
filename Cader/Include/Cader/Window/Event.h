@@ -14,11 +14,11 @@ namespace CDR {
 
 	struct Event final
 	{
-		Event()
+		constexpr Event()
 			: type{EEventType::None}
 		{}
 
-		explicit Event(const EEventType pType)
+		explicit constexpr Event(const EEventType pType)
 			: type{pType}
 		{}
 

@@ -4,21 +4,39 @@
 
 #include <glm/vec2.hpp>
 
-namespace CDR {
+namespace CDR::Components {
 
-	struct Position2DComponent final
+	struct Position2D final
 	{
-		glm::vec2 position;
+		constexpr Position2D() = default;
+
+		constexpr Position2D(const glm::vec2& pPosition)
+			: position{pPosition}
+		{}
+
+		glm::vec2 position{0.0f};
 	};
 
-	struct Size2DComponent final
+	struct Size2D final
 	{
-		glm::vec2 size;
+		constexpr Size2D() = default;
+
+		constexpr Size2D(const glm::vec2& pSize)
+			: size{pSize}
+		{}
+
+		glm::vec2 size{1.0f};
 	};
 
-	struct ColorComponent final
+	struct RenderTarget2D final
 	{
-		Color color;
+		constexpr RenderTarget2D() = default;
+
+		constexpr RenderTarget2D(const Color& pColor)
+			: color{pColor}
+		{}
+
+		Color color{1.0f};
 	};
 
 }

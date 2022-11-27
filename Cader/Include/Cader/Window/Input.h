@@ -17,13 +17,13 @@ namespace CDR {
 		static void SetInputMode(const EInputMode pInputMode);
 		static EInputMode GetInputMode() noexcept { return sInputMode; }
 
-		static bool GetKey(const EKeyCode pKeyCode) noexcept { return (u8)EInputState::Released < (u8)sKeyStates[(i8)pKeyCode]; }
-		static bool GetKeyDown(const EKeyCode pKeyCode) noexcept { return EInputState::Pressed == sKeyStates[(i8)pKeyCode]; }
-		static bool GetKeyUp(const EKeyCode pKeyCode) noexcept { return EInputState::Released == sKeyStates[(i8)pKeyCode]; }
+		static bool GetKey(const EKeyCode pKeyCode) noexcept { return  (u8)sKeyStates[(i8)pKeyCode] > (u8)EInputState::Released; }
+		static bool GetKeyDown(const EKeyCode pKeyCode) noexcept { return sKeyStates[(i8)pKeyCode] == EInputState::Pressed; }
+		static bool GetKeyUp(const EKeyCode pKeyCode) noexcept { return sKeyStates[(i8)pKeyCode] == EInputState::Released; }
 
-		static bool GetMouseButton(const EMouseButton pButton) noexcept { return (u8)EInputState::Released < (u8)sMouseButtonStates[(i8)pButton]; }
-		static bool GetMouseButtonDown(const EMouseButton pButton) noexcept { return EInputState::Pressed == sMouseButtonStates[(i8)pButton]; }
-		static bool GetMouseButtonUp(const EMouseButton pButton) noexcept { return EInputState::Released == sMouseButtonStates[(i8)pButton]; }
+		static bool GetMouseButton(const EMouseButton pButton) noexcept { return (u8)sMouseButtonStates[(i8)pButton] > (u8)EInputState::Released; }
+		static bool GetMouseButtonDown(const EMouseButton pButton) noexcept { return sMouseButtonStates[(i8)pButton] == EInputState::Pressed; }
+		static bool GetMouseButtonUp(const EMouseButton pButton) noexcept { return sMouseButtonStates[(i8)pButton] == EInputState::Released; }
 
 		static MousePosition GetMousePosition() noexcept { return sMousePosition; }
 		static i8 GetMouseScroll() noexcept { return sMouseScroll; }

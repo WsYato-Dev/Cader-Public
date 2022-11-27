@@ -17,7 +17,7 @@ namespace CDR::VK {
 
 	bool QueueFamilyIndicies::IsComplete() const noexcept
 	{
-		return 0 <= graphicsFamilyIndex && 0 <= presentFamilyIndex && 0 <= transferFamilyIndex;
+		return graphicsFamilyIndex >= 0 && presentFamilyIndex >= 0 && transferFamilyIndex >= 0;
 	}
 
 	u8 QueueFamilyIndicies::GetUniqueFamilyIndicies(std::array<i8, 3>& pIndicies) const
@@ -26,10 +26,10 @@ namespace CDR::VK {
 
 		pIndicies[count++] = graphicsFamilyIndex;
 
-		if(graphicsFamilyIndex != presentFamilyIndex)
+		if(presentFamilyIndex != graphicsFamilyIndex)
 			pIndicies[count++] = presentFamilyIndex;
 
-		if(graphicsFamilyIndex != transferFamilyIndex)
+		if(transferFamilyIndex != graphicsFamilyIndex)
 			pIndicies[count++] = transferFamilyIndex;
 
 		return count;
@@ -92,7 +92,7 @@ namespace CDR::VK {
 		u32 extensionsCount;
 		VK_VERIFY(vkEnumerateDeviceExtensionProperties(pPhysicalDevice, nullptr, &extensionsCount, nullptr));
 
-		if(0 >= extensionsCount)
+		if(extensionsCount <= 0)
 			return 0;
 
 		std::vector<VkExtensionProperties> extensions(extensionsCount);
@@ -112,13 +112,13 @@ namespace CDR::VK {
 			}
 		}
 
-		if((u8)RequiredExtensions.size() != extensionsFound)
+		if(extensionsFound != (u8)RequiredExtensions.size())
 			return 0;
 
 		u32 queueFamilyPropertiesCount;
 		vkGetPhysicalDeviceQueueFamilyProperties(pPhysicalDevice, &queueFamilyPropertiesCount, nullptr);
 
-		if(0 >= queueFamilyPropertiesCount)
+		if(queueFamilyPropertiesCount <= 0)
 			return 0;
 
 		std::vector<VkQueueFamilyProperties> queueFamilyProperties(queueFamilyPropertiesCount);
@@ -126,13 +126,13 @@ namespace CDR::VK {
 
 		for(u8 i = 0; i < (u8)queueFamilyPropertiesCount; i++)
 		{
-			if(0 > pQueueFamilyIndicies->graphicsFamilyIndex && VK_QUEUE_GRAPHICS_BIT & queueFamilyProperties[i].queueFlags)
+			if(pQueueFamilyIndicies->graphicsFamilyIndex < 0 && queueFamilyProperties[i].queueFlags & VK_QUEUE_GRAPHICS_BIT)
 			{
 				pQueueFamilyIndicies->graphicsFamilyIndex = i;
 				goto ASSIGNED;
 			}
 
-			if(0 > pQueueFamilyIndicies->presentFamilyIndex)
+			if(pQueueFamilyIndicies->presentFamilyIndex < 0)
 			{
 				u32 surfaceSupported;
 				VK_VERIFY(vkGetPhysicalDeviceSurfaceSupportKHR(pPhysicalDevice, i, mInstance.GetSurface(), &surfaceSupported));
@@ -144,7 +144,7 @@ namespace CDR::VK {
 				}
 			}
 
-			if(0 > pQueueFamilyIndicies->transferFamilyIndex && VK_QUEUE_TRANSFER_BIT & queueFamilyProperties[i].queueFlags)
+			if(pQueueFamilyIndicies->transferFamilyIndex < 0 && queueFamilyProperties[i].queueFlags & VK_QUEUE_TRANSFER_BIT)
 			{
 				pQueueFamilyIndicies->transferFamilyIndex = i;
 				goto ASSIGNED;
@@ -155,15 +155,15 @@ namespace CDR::VK {
 				break;
 		}
 
-		if(0 > pQueueFamilyIndicies->graphicsFamilyIndex)
+		if(pQueueFamilyIndicies->graphicsFamilyIndex < 0)
 			return 0;
 
-		if(0 > pQueueFamilyIndicies->presentFamilyIndex)
+		if(pQueueFamilyIndicies->presentFamilyIndex < 0)
 			pQueueFamilyIndicies->presentFamilyIndex = pQueueFamilyIndicies->graphicsFamilyIndex;
 		else
 			score++;
 
-		if(0 > pQueueFamilyIndicies->transferFamilyIndex)
+		if(pQueueFamilyIndicies->transferFamilyIndex < 0)
 			pQueueFamilyIndicies->transferFamilyIndex = pQueueFamilyIndicies->graphicsFamilyIndex;
 		else
 			score++;

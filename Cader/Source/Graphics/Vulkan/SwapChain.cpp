@@ -27,7 +27,7 @@ namespace CDR::VK {
 
 		mStaticInfo.imageCount = mStaticInfo.surfaceCapabilities.minImageCount + 1;
 
-		if(0 < mStaticInfo.surfaceCapabilities.maxImageCount && mStaticInfo.surfaceCapabilities.maxImageCount < mStaticInfo.imageCount)
+		if(mStaticInfo.surfaceCapabilities.maxImageCount > 0 && mStaticInfo.imageCount > mStaticInfo.surfaceCapabilities.maxImageCount)
 			mStaticInfo.imageCount = mStaticInfo.surfaceCapabilities.maxImageCount;
 
 		u32 surfaceFormatsCount;
@@ -41,7 +41,7 @@ namespace CDR::VK {
 
 		for(u32 i = 0; i < surfaceFormatsCount; i++)
 		{
-			if(VK_FORMAT_B8G8R8A8_UNORM == surfaceFormats[i].format && VK_COLOR_SPACE_SRGB_NONLINEAR_KHR == surfaceFormats[i].colorSpace)
+			if(surfaceFormats[i].format == VK_FORMAT_B8G8R8A8_UNORM && surfaceFormats[i].colorSpace == VK_COLOR_SPACE_SRGB_NONLINEAR_KHR)
 			{
 				mStaticInfo.surfaceFormat = surfaceFormats[i];
 				desiredFormatFount = true;

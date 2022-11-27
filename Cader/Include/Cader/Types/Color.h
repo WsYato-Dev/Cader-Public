@@ -78,7 +78,7 @@ namespace CDR {
 			);
 		}
 
-		static constexpr Color Random()
+		static Color Random()
 		{
 			return Color(
 				Random::Float(0.0f, 1.0f),

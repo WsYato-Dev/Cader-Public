@@ -6,7 +6,7 @@
 
 #include <vulkan/vulkan.h>
 
-#define VK_VERIFY(expr) CDR_ASSERT(VK_SUCCESS == expr)
+#define VK_VERIFY(expr) CDR_ASSERT(expr == VK_SUCCESS)
 
 #else
 
