@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Cader/Maths/Color.h"
+#include "Cader/Types/Color.h"
 
 #include <glm/vec2.hpp>
 

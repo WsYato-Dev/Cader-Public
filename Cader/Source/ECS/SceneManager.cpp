@@ -1,8 +1,8 @@
 #include "Cader/ECS/SceneManager.h"
 
 #include "Cader/ECS/Scene.h"
-#include "Cader/Maths/Random.h"
 #include "Cader/Utility/Assert.h"
+#include "Cader/Utility/Random.h"
 
 namespace CDR {
 
